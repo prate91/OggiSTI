@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8">
+<!--///////////////////////////////////////////////////////////////////////////
+//
+// Project:   HMR OggiSTI, today in computing history
+// Package:   Web documentation, static HTML pages
+// Title:     HMR: linee guida per partecipare a OggiSTI
+// File:      index.html
+// Path:      /oggiSTI/lineeguida
+// Type:      HTML
+// Started:   2017.12.30
+// Author(s): Giovanni Cignoni & Nicolò Pratelli
+// State:     working
+//
+// Version history.
+// - 2017.12.30  Giovanni
+//   Added typographical hints, revised 1 and 2
+// - 2017.12.30  Giovanni
+//   First version, from previous one with different layout
+// - 2018.02.04  Giovanni
+//   Several upgrades, near to be stable?
+//
+// ////////////////////////////////////////////////////////////////////////////
+//
+// This file is part of software developed by the HMR Project
+// Further information at: http://progettohmr.it
+// Copyright (C) 2017-2018 HMR Project.OggiSTI, G.A. Cignoni, N. Pratelli
+//
+// This is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published
+// by the Free Software Foundation; either version 3.0 of the License,
+// or (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty
+// of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+// ///////////////////////////////////////////////////////////////////////-->
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111997111-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-111997111-1');
+</script>
+
+<title>HMR.OggiSTI: linee guida</title>
+<!-- Load HMR CSS styles & fonts -->
+<link rel="stylesheet" type="text/css" href="../../HMR_Style.css">
+
+<link 
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
+	rel="stylesheet">
+
+<!-- Load favorite icon -->
+<link rel="icon" type="image/png" href="../Assets/Img/logo-oggiSTI16x16.png" />
+
+<!-- Load HMR standard libraries -->
+<script 
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js">
+</script> 
+
+<script type="text/javascript"
+	src="../../EPICAC/JSwebsite/searchAndSharing.js">
+</script>
+
+<script type="text/javascript" 
+	src="../../Assets/JS/HMR_CreaHTML.js">
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta name="description" content="HMR.OggiSTI: lineeguida" />
+
+<meta name="keywords" content="hackerando hacker hacking macchina ridotta calcolatrice elettronica pisana CEP electronic computer storia history informatica computer science archeologia archeology sperimentale experimental ricostruzioni rebuilding replica repliche replicas simulazione simulation simulatori simulators macchine passato past machines 
+documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
+</head>
+
+<body>
+
+<!-- Standard HMRWeb header ///////////////////////////////////////////////////
+// For banner:
+// - set level, 1 = "../", 2 = "../../" and so on;
+// - set image, file name and extension, no path, has to be in /Assets/Images.
+// For menu:
+// - set level, same as banner;
+// - set active menu entry, 1=Cronologia, 2=Eventi and so on.  -->
+
+<div class="HMR_Banner">
+	<script>
+		creaHeader(2, "HMR_2017g_GC-WebHeaderRite-270x105-3.png")
+	</script> 
+</div>
+<div id="HMR_Menu" class="HMR_Menu">
+	<script>
+		creaMenu(2, 5)
+	</script> 
+</div>
+
+<div class="HMR_Content"><div class= "HMR_Text">
+
+<!-- Actual page content starts here ///////////////////////////////////////-->
+
+<h1>Linee guida per partecipare a OggiSTI</h1>
+            
+<p>Dedicate a redattori e revisori, le linee guida aiutano a compilare e a validare gli eventi del nostro almanacco mantenendo lo stile uniforme nella sostanza e nell’aspetto. Nel seguito, dopo alcune <a HREF="#LGIndGen">indicazioni generali</a>, sono discussi in dettaglio e con esempi i vari campi di cui è composto un evento:</p>
+<ul>
+<li><a HREF="#LGData">data</a>, il giorno che vogliamo ricordare;</li>
+<li><a HREF="#LGTitolo">titolo</a>, quel che accadde di importante per la storia dell’informatica;</li>
+<li><a HREF="#LGImg">immagine</a>, di contorno e completamento della pagina dell’evento;</li>
+<li><a HREF="#LGDescr">descrizioni</a>, breve e di approfondimento, per raccontare e spiegare l’evento;</li>
+<li><a HREF="#LGRif">riferimenti</a>, le fonti storiche, documentali e di riferimento;</li>
+<li><a HREF="#LGPChiave">parole chiave</a>, per future funzioni di ricerca e navigazione per temi.</li>
+</ul>
+
+<p>Nelle pagine di compilazione e di visualizzazione di dettaglio degli eventi le linee guida sono riassunte come tooltip dell’icona di informazioni presente accanto al titolo di ogni campo.</p>
+
+<h2 id="LGIndGen">Indicazioni generali e convenzioni tipografiche</h2>
+<p>Essendo destinato a un pubblico molto ampio, il linguaggio di OggiSTI è semplice e diretto, con poche subordinate, preferendo la forma attiva a quella passiva. Gli eventi fra loro sono il più possibile conclusivi, senza assumere particolari conoscenze storiche o tecniche da parte del lettore. Evitare dettagli e termini tecnici che non si possono spiegare: il lettore medio non comprenderebbe comunque, quello esperto probabilmente avrebbe da ridire. Lo scopo di OggiSTI non è esaurire un argomento, ma ricordare un evento spiegando perché è importante nella storia dell’informatica.</p>
+<p>La narrazione deve essere imparziale. La storia dell’informatica è fatta anche di prodotti commerciali, è giusto ricordarli, ma la loro presentazione non deve essere promozione pubblicitaria. Se hanno avuto concorrenti è bene farne cenno.</p>
+<p>Il carattere tipografico usato è quello definito dal CSS di HMR, e non deve essere cambiato in nessun modo.<br/>
+L’uso del <strong>grassetto</strong> è fortemente sconsigliato, così come quello di liste puntate o numerate o altre forme di strutturazione del testo diverse dalla semplice divisione in paragrafi.<br/>
+Al di fuori dei riferimenti bibliografici, il <em>corsivo</em> è usato solamente per nomi propri di macchine, di progetti, di istituzioni, solo la prima volta che sono introdotti e se non sono parte del soggetto dell’evento.<br/>
+Gli apostrofi devono essere apostrofi (e non apici) e le virgolette virgolette (non doppi apici), le virgolette angolate non si usano.
+L’uso delle parentesi deve essere parco, in particolare devono essere evitate come forma pigra di fare incisi.<p>
+<p>Come scelta di stile, i nomi di persona sono citati per esteso e nella loro lingua originale. Successivamente alla prima apparizione, nei testi delle descrizioni si usa solo il cognome.</p>
+<p>Sigle e acronimi devono essere sciolti, se non nel titolo nelle descrizioni. Preferibilmente si deve usare il nome esteso nel titolo, ripetendolo nel testo e introducendo l’acronimo alla prima apparizione, per usarla successivamente quando ricorre nelle descrizioni. Fanno eccezione i casi in cui l’acronimo è molto noto, in quel caso l’origine può essere anche omessa oppure essere sciolta nel testo come informazione, senza parentesi. 
+<p><strong>Esempi</strong>: non “Inizio delle Lezioni di Calcoli Numerici e Grafici all'Università di Pisa, tenute da C. Boehm” ma “Corrado Böhm inizia il suo corso di Calcoli Numerici e Grafici all’Università di Pisa”; non “Giovanni Nepero” ma “John Napier” e assolutamente non “John Nepero” o “Giovanni Napier”, per la cronaca, Böhm era italiano e si chiamava proprio Corrado. Non “CEP” né “CEP (Calcolatrice Elettronica Pisana)” ma “Calcolatrice Elettronica Pisana (CEP)”; non “Radio Detection and Ranging (RADAR)” ma “radar, che in origine era l’acronimo di...”. </p>
+
+<h2 id="LGData">Data</h2>
+<p>La data è l’informazione essenziale dell’evento, quella che lo identifica e lo colloca nel tempo. Deve essere sempre completa di giorno, mese e anno. Ovviamente deve essere una data in cui è accaduto qualcosa di significativo, non necessariamente epocale, ma interessante.</p>
+<p>Considerando un evento, chiedersi sempre se non ce ne è un altro che è direttamente collegato, è più rilevante e non è ancora ricordato in OggiSTI; nel caso, dargli la precedenza: non si ricorda un nominato a un riconoscimento importante se non si è già ricordato chi lo ha vinto; la data di inizio di un progetto è un evento solo se il progetto si è concluso con un risultato rilevante. Fare anche attenzione a non cadere nella cronaca: eventi troppo recenti, a meno di primati attesi da tempo, non sono ancora storia.</p>
+<p>Quando si vuole ricordare un personaggio sono in assoluto preferibili date in cui la persona è stata protagonista di qualcosa di importante: un risultato scientifico, il conseguimento di un titolo, un riconoscimento. Il compleanno si può usare, ma come seconda scelta. La data di morte è assolutamente da evitare, a meno di casi eccezionali in cui la dipartita è effettivamente un evento legato alla storia dell’informatica.</p>
+<p>In caso di eventi di durata superiore al giorno si utilizza la data di inizio, trovando il modo di specificare altre date nella descrizione. Per le date degli articoli scientifici e dei brevetti si utilizza la data di pubblicazione o concessione, nelle descrizioni può essere utile ricordare la data di sottomissione.</p>
+<p class="esempi"><strong>Esempi</strong>: per ricordare Douglas Engelbart si può usare la data della madre di tutte le demo il 9 dicembre 1968; la sconfitta di un umano da parte di un programma al gioco del go il 9 marzo 2016 anche se recente è storia perché per molto tempo considerata impossibile; la morte di Brian Vigneault è effettivamente un evento dato che avvenne durante una maratona di videogiochi per beneficenza il 19 febbraio 2017; per il primo convegno organizzato in Italia sulla Storia dell’Informatica, che si svolse a Siena dal 10 al 12 settembre 1991, si usa il 10 settembre.</p>
+
+<h2 id="LGTitolo">Titolo</h2>
+<p>Il titolo è la prima informazione letta dal visitatore, deve essere efficace, informativo e breve. Ha una limitazione di 140 battute, ma si consiglia di stare intorno alle 70. Il titolo può stare su due righe (non di più), ma l’accapo deve essere studiato favorendo la leggibilità, evitando articoli e attributi orfani.</p>
+<p>Il titolo deve evitare enfasi, la ricerca di brevità ed efficacia non deve dare adito ad affermazioni soggette a interpretazione e discussione. Utilizzare il tempo presente e non ripetere la data.</p>
+<p>I titoli devono avere forme ricorrenti e usare termini consistenti. Per esempio, per i prodotti, “Annunciato...” si riferisce sempre a un evento in cui un prodotto è rivelato come progetto, “Presentato...” implica la presenza del prodotto o di un suo prototipo, “Commercializzato...” indica l’inizio delle vendite al pubblico. Eventuali distinzioni, come la presentazione di un prototipo o la vendita su un mercato ristretto devono essere chiarite, se non nel titolo, nella descrizione breve.</p>
+<p class="esempi"><strong>Esempi:</strong> invece di “Stabilito a Pisa il primo collegamento a internet italiano” meglio “Il CNUCE di Pisa si collega a Internet” (accadde il 30 aprile 1986, ma alcuni sostengono che il Centro Ricerche Olivetti, sempre a Pisa, si fosse collegato prima); dovendolo spezzare su due righe “Il CNUCE di Pisa&lt;br/&gt; si collega a Internet”.</p>
+
+<h2 id="LGImg">Immagine</h2>
+<p>L’immagine è utile per attirare l’attenzione del visitatore, ma deve avere un contenuto serio, attinente all’evento, possibilmente con la caratteristica di documento e capace di completarne la descrizione.</p>
+<p>Tenere conto che l’immagine viene ridotta a 320px di larghezza. Sono preferibili immagini orizzontali (4:3, 3:2, 16:9), al più quadrate (1:1).
+Se si ha a disposizione un’immagine verticale si consiglia di ritagliarne una parte significativa in un formato orizzontale o quadrato. Se proprio non è possibile portare l’immagine a un formato orizzontale si possono introdurre bande laterali con fondo trasparente. I formati utilizzabili sono .png e .jpg. Sono preferibili immagini in bianco e nero, curando definizione e contrasto.</p>
+<p>All’immagine è collegata una didascalia esplicativa che, fra parentesi, deve citare la fonte dell’immagine in forma breve (solo l’archivio o l’istituzione di provenienza).</p>
+<p class="esempi"><strong>Esempi:</strong> come immagine per l’evento “UNIVAC prevede i risultati delle presidenziali USA” del 4 novembre 1952 potendo scegliere fra 1. una scansione della velina con la previsione di UNIVAC, 2. una generica immagine del calcolatore UNIVAC e 3. una foto di uno dei candidati, l’ideale è 1 (è un documento dell’evento), 2 è accettabile (è comunque il protagonista dell’evento), 3 è da evitare (è solamente collegata all’evento e rischia di essere parziale).</p>
+
+<h2 id="LGDescr">Descrizioni, breve e di approfondimento</h2>
+<p>Le due descrizioni sono la sostanza dell’evento. Rispettivamente, propongono un riepilogo di immediata lettura e un approfondimento più articolato ma comunque sintetico. La dimensione consigliata di questi campi è di 50 parole per la descrizione breve e di 150 per quella di approfondimento. </p>
+<p>La descrizione breve può essere usata anche da sola, quindi deve essere completa. Insieme a data e titolo dovrebbe rispettare la regola delle 5 W, cioè (nell’ordine) When, What, Who, Where e, possibilmente, Why. Tuttavia, prima di compromettere la brevità è accettabile finire di soddisfare la regola nella descrizione di approfondimento.</p>
+<p>Sulla pagina web le descrizioni breve e lunga vengono sempre usate insieme e di seguito, quindi le informazioni inserite nella descrizione breve non devono ripetersi in quella lunga.</p>
+
+<h2 id="LGRif">Riferimenti</h2>
+<p>I riferimenti permettono di verificare e approfondire quanto raccontato nell’evento. Almeno un riferimento è obbligatorio e possibilmente deve essere una fonte primaria, in ogni caso di alta attendibilità. Il riferimento alla fonte dell’immagine va inserito in forma completa, a meno che non coincida con la fonte primaria.</p>
+<p>Riferimenti di approfondimento, privilegiando articoli scientifici e monografie di informatica o di storia dell’informatica, possono essere aggiunti in ordine alfabetico in un numero ragionevole, bene uno, due anche, tre già troppi: lo scopo di OggiSTI non è raccogliere bibliografie tematiche.</p>
+<p>Il formato per i riferimenti è quello del <a href="../ChicagoStyle">Chicago manual of style</a>. Quando il riferimento è disponibile su internet l’URL deve essere fornita e deve essere indicata la data dell’ultimo accesso. L’URL va inserita sul titolo del riferimento come link apribile in una nuova finestra.</p>
+
+<h2 id="LGPChiave">Parole chiave</h2>
+<p>Le parole chiave, almeno tre, saranno utilizzate per future funzioni di indirizzamento dei motori di ricerca e di collegamento tra gli eventi, sono termini rilevanti a inquadrare l’argomento dell’evento che non sono già presenti nel titolo.</p>
+
+
+<!-- Actual page content ends here /////////////////////////////////////////-->
+
+</div></div>
+
+<!-- Standard HMRWeb footer////////////////////////////////////////////////////
+// Set:
+// - level, 1 = "../", 2 = "../../" and so on;
+// - set copyright start year, YYYY
+// - set copyright end year, YYYY;
+// - set copyright owner, default "Progetto HMR";
+// - set date of page creation, YYYY/MM/DD.  -->
+
+<div class="HMR_Footer">
+	<script>
+		creaFooter(2, "2017", "2018", "G.A. Cignoni, Nicolò Pratelli", 
+							 "2017/12/30");
+	</script> 
+</div>
+
+</body>
+
+</html>
+

@@ -1,0 +1,446 @@
+
+/* ************************************************************************
+**
+** Project: OggiSTI - Today in computer history
+** Package: OggiSTI Assets
+** Title: OggiSTI CSS
+** File: OggiSTI_Style.css
+** Path: Assets/CSS
+** Type: css
+** Started: 2018-03-14
+** Author(s): Nicolò Pratelli
+** State: in use
+**
+** Version history.
+** - 2018.03.14 Nicolò
+** First version
+** - 2018.03.14 Nicolò
+** Transfered OggiSTI_Style.css content from HMR_Style.css
+** - 2018.03.16 Nicolò
+** Changed background color from grey to white
+** - 2018.03.16 Nicolò
+** Changed sopratitolo style
+**
+** ************************************************************************
+**
+** This file is part of software developed by the HMR Project
+** Further information at: http://progettohmr.it
+** Copyright (C) 2017 HMR Project, Nicolò Pratelli
+**
+** This is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published
+** by the Free Software Foundation; either version 3.0 of the License,
+** or (at your option) any later version.
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty
+** of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, see <http://www.gnu.org/licenses/>.
+**
+** ************************************************************************/
+
+/* ************************ **
+**                          **
+** Index                    **
+** 1. Import font           **
+** 2. General element       **
+** 3. Bootstrap element     **
+** 4. Almanac page          **
+**  4.1 Content             **
+**  4.2 Lateral column      **
+**      4.2.1 Date picker   **
+**      4.2.2 Lateral menu  **
+**  4.3 Main content        **
+** 5. Administration        **
+**  5.1 Content             **  
+**  5.2 Edit page           **
+**  5.3 Event page          **
+**  5.4 Events page         **
+**  5.5 Score page          **
+**                          **
+*************************** */
+
+/* ***************** **
+** 1. Import font    **
+** ***************** */
+
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i&subset=latin-ext');
+
+/* ******************* **
+** 2. General element  **
+** ******************* */
+
+.stop{
+    clear: both; 
+}
+
+/* ********************* **
+** 3. Bootstrap element  **
+** ********************* */
+
+.row{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.jumbotron{
+    width: 864px; /*60%*/
+    /*margin: 36px auto 36px auto;*/
+    padding: 36px;
+    
+}
+
+.navbar{
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus{
+    background-color: #d81a68;
+    border-color: #d81a68;
+}
+
+.panel-default > .panel-heading-custom {
+    background: #fff; color: #d81a68;
+}
+
+.panel {
+    border-color: white;
+    -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, .05);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, .05);  
+}
+
+
+
+/* ***************** **
+** 4. Almanac page   **
+** ***************** */
+
+/* ***************** **
+** 4.1 Content       **
+** ***************** */
+
+
+.oggiSTI_content{
+   width: 864px; /*60%*/
+    margin: 0px auto;   
+    /*background-color: #F9F9F9;*/
+    overflow:auto;
+}
+
+/* ************************ **
+** 4.2 Lateral column       **
+** ************************ */
+
+#oggiSTI_colonnaLaterale{
+    width: 288px;
+    float: left;
+    margin: 0;
+    
+    
+}
+
+#oggiSTI_logoedata{
+   padding: 18px 18px;
+    background-color: white;
+    /*border-right: 3px solid #eee;
+    border-bottom: 3px solid #eee;*/
+}
+
+#oggiSTI_logo{
+    width:200px;
+    display: block;
+  margin:18px auto;
+}
+
+#oggiSTI_dataOggi{
+    text-align:center;
+    margin-right: 18px;
+    height: 145px;
+}
+
+#oggiSTI_dataGiorno{
+    color:black;
+    font-size:100px;
+    position: relative;
+    top: 30px;  
+}
+
+#oggiSTI_dataMese{
+    color:black;
+    font-size:24px;
+    position: relative;
+    top: 54px;
+}
+
+#oggiSTI_titoloStessoGiorno{
+    margin: 37px auto auto auto;
+    padding-left: 23px;
+    color: #606060;
+    font-size: 18px;
+}
+
+#oggiSTI_eventiLaterali{
+    padding-left: 7px;
+}
+.oggiSTI_apriEvento{
+    cursor: pointer;
+    text-align: right;
+    margin: 110px;
+}
+
+/* *********************** **
+** 4.2.1 Date picker       **
+** *********************** */
+
+#oggiSTI_dataPicker{
+    width: 135px;
+    margin: 0 auto;
+}
+#oggiSTI_dataPicker input{
+    display: inline;
+    width: 99px;
+}
+#oggiSTI_dataPicker img{
+    display: inline;
+    margin: 0 0 3px 3px;
+    width: 30px;
+}
+
+
+/* *********************** **
+** 4.2.2 Lateral menu      **
+** *********************** */
+
+#oggiSTI_menuLaterale{
+    margin: 18px 0;
+    font-size: 16px;
+}
+
+#oggiSTI_menuLaterale ul{ 
+    list-style-type: none;
+}
+#oggiSTI_menuLaterale li{
+    margin: 9px 0;
+}
+
+#oggiSTI_spazioEvento{
+    width: 540px;
+    float: left;
+    margin: 0 18px;
+    padding: 0;
+}
+
+/* *********************** **
+** 4.3 Main content        **
+** *********************** */
+
+#oggiSTI_sopraTitolo{
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    visibility: hidden;
+    margin: 0px 0px 0px 158px;
+    background-color: #c43972;
+    width: 400px;
+    border-radius: 0 0 25px 25px;
+}
+
+#oggiSTI_giornoDiverso{
+    font-weight:bold;
+}
+
+#oggiSTI_meseDiverso{
+    font-weight:bold;
+}
+
+#oggiSTI_titoloEvento{
+    font-weight:bold;
+    font-size: 24px;
+    text-align: right;
+    height: 108px;
+    margin-bottom: 0;
+}
+
+#oggiSTI_imm{
+    float: right;
+    /*width:360px;*/
+    min-height: 240px;
+    margin-bottom: 27px;
+}
+
+#oggiSTI_immagineEvento{
+    width:320px;
+    display: block;
+    /*margin-right: 10px;*/
+}
+
+#oggiSTI_dataEvento{
+    font-size:100px;
+    font-weight:normal;
+    width: 198px;
+    text-align: center;
+    margin-top: 49px;
+}
+
+#oggiSTI_differenzaTempo{
+    position: relative;
+    top: 18px;
+    font-size: 24px;
+}
+
+#oggiSTI_descrizione_breve{
+    clear: both;
+}
+
+
+#oggiSTI_titoloRiferimenti{
+    margin: 36px auto 18px auto; /*togliere margine*/
+}
+
+#oggiSTI_riferimenti{
+    color: #777;
+}
+
+#oggiSTI_autoriEvento, #oggiSTI_lineaAutori {
+    text-align: right;
+    margin-top: 45px;
+}
+
+#oggiSTI_autoriEvento span{
+    display: block;
+}
+
+#oggiSTI_revisoriEvento, #oggiSTI_lineaRevisori {
+    text-align: right;
+}
+
+#oggiSTI_revisoriEvento span{
+    display: block;
+}
+
+.oggiSTI_riepilogo{
+    float: left;
+    margin: 9px;
+}
+
+/* ***************** **
+** 5. Administration **
+** ***************** */
+
+/* ***************** **
+** 5.1 Content       **
+** ***************** */
+
+.oggiSTI_content_amm {
+    clear: both;
+    width: 864px; /*60%*/
+    padding: 0px;
+    /*margin-top: 30px;*/
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    /*border: 1px solid black;*/
+
+}
+
+.iconaUser{
+    margin: 8px auto 0px auto;
+    float: right;
+}
+
+
+/* ***************** **
+** 5.2 Edit page     **
+** ***************** */
+
+#btnLanguage{
+    width: 145px;
+    margin:auto;
+}
+
+
+#btnEventi{
+    margin:10px;
+}
+
+/* ***************** **
+** 5.3 Event page    **
+** ***************** */
+
+.table-striped>tbody>.rigaCommento:nth-child(odd)>td,
+.table-striped>tbody>.rigaCommento:nth-child(even)>td{
+    background-color: #337ab7;
+    color: white;
+}
+
+#spazioCommento{
+    margin-left: 9px;
+    width: 850px;
+    
+}
+
+#bottoniCommento{
+    margin: 9px;
+}
+
+#facebookOn, #facebookOff{
+    margin-left: 9px;
+}
+
+
+
+/* ************************ **
+** 5.4 Events table page    **
+** ************************ */
+
+.titoloTabelleEventi{
+    margin:18px 0;
+    text-align: center;
+    font-size: 27px; 
+    
+}
+
+#titoloPannelloControllo{
+    text-align: center;
+    font-size:36px;
+    font-weight:bold;
+    color:#d81a68;
+    
+}
+
+#oggiSTI_visualizza_eventi{
+    width: 860px;
+    font-size: 16px;
+    text-align: center;
+
+}
+
+#oggiSTI_visualizza_eventi td{
+    width: 18px;
+    height: 30px;
+}
+
+/* ************************ **
+** 5.5 Score page           **
+** ************************ */
+
+.oggiSTI_table_legenda{
+    border: 1px solid #9E9E9E;
+    display: inline-block;
+    width: 18px;
+    height: 12px;
+}
+
+#oggiSTI_legenda_eventi_presenti{
+    background: #F293BA;
+}
+
+#oggiSTI_legenda_eventi_proposti{
+    background: #d81a68;
+}
+
+
+

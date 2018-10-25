@@ -120,7 +120,6 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
 	
 <!-- Actual page content starts here ///////////////////////////////////////-->
 <div class="oggiSTI_content">
-<p>prova</p>
     <!-- Lateral column -->
     <div id="oggiSTI_colonnaLaterale">
     <?php

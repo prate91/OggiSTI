@@ -111,6 +111,18 @@ $(document).ready(function(){
                         "<td><button type='button' id='" + item.stato + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>"+ 
                         "<td><button type='button' id='" +  item.stato + "-" + item.id_evento + "' class='btn btn-default btnPreview glyphicon glyphicon-eye-open'> </button></td></tr>"; 
                     }
+                }else if(state=="Pubblicato"){
+                    var fbIcon = "";
+                    if(item.fb==1){
+                        fbIcon = '<img src="../Img/iconFacebook.png" alt="FB Icon" height="32" width="32">'
+                    }
+                    var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
+                    "<td>" + item.titolo_ita + "</td>" +
+                    "<td class=''>" + formatDatemmddyyyy(item.data_evento) + "</td>" +
+                    "<td>" + item.stato + " "+ fbIcon +"</td>" +
+                    "<td>" + item.redattore + "</td>" + 
+                    "<td><button type='button' id='" + state + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>"+ 
+                    "<td><button type='button' id='" +  state + "-" + item.id_evento + "' class='btn btn-default btnPreview glyphicon glyphicon-eye-open'> </button></td></tr>";
                 }else{
                 // all the others tables
                 var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +

@@ -48,6 +48,15 @@ $campi_tabella = array(
 		'stato'
 );
 
+$campi_tabella_pubblicati = array(
+	'id_evento',
+	'titolo_ita',
+	'data_evento',
+	'redattore',
+	'stato',
+	'fb'
+);
+
 $campi_tabella_tutti = array(
     'id_evento_appr',
     'titolo_ita_appr',
@@ -81,8 +90,8 @@ if(isset($_GET['state']))
 			echo carica_dati_tabelle($sql, $campi_tabella);
 			break;
 		case 'Pubblicato':
-			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato FROM eventi";
-			echo carica_dati_tabelle($sql, $campi_tabella);
+			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato, fb FROM eventi";
+			echo carica_dati_tabelle($sql, $campi_tabella_pubblicati);
 			break;
 		case 'Tutti':
 			$sql = "SELECT ea.id_evento AS id_evento_appr, ea.titolo_ita AS titolo_ita_appr, ea.data_evento AS data_evento_appr, ea.stato AS stato_appr, ea.redattore AS redattore_appr, ea.salvato AS salvato_appr, e.id_evento, e.titolo_ita, e.data_evento, e.stato, e.redattore FROM eventiappr ea LEFT JOIN eventi e ON ea.id_evento = e.id_evento UNION SELECT ea.id_evento AS id_evento_appr, ea.titolo_ita AS titolo_ita_appr, ea.data_evento AS data_evento_appr, ea.stato AS stato_appr, ea.redattore AS redattore_appr, ea.salvato AS salvato_appr, e.id_evento, e.titolo_ita, e.data_evento, e.stato, e.redattore FROM eventiappr ea RIGHT JOIN eventi e ON ea.id_evento = e.id_evento";

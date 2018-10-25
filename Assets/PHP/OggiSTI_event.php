@@ -14,6 +14,8 @@
 // Version history.
 // - 2018.05.19 Nicolò
 // First version
+// - 2018.10.25 Nicolò
+// Updated facebook buttons
 //
 // ////////////////////////////////////////////////////////////////////////
 //
@@ -222,7 +224,22 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
         <tr><td>Stato:</td><td id='idStato'><?php echo $stato; ?></td></tr>
         <tr><td>Salvato:</td><td><?php echo $salvato; ?></td></tr>
         <tr><td>Usato:</td><td><?php echo $usato; ?> volta/e</td></tr>
-        <tr><td>Facebook:</td><td><?php if($fb==0){ echo "non pubblicabile";}else{echo "pubblicabile";} ?></td></tr>
+        <tr><td>Facebook:</td><td>
+        <?php 
+            if($fb==0){ 
+                echo "Non pubblicabile";
+                if($stato=="Pubblicato"){
+                    echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success"> ON </button>';
+                    echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger" disabled> OFF  </button>';
+                }
+            }else{
+                echo "Pubblicabile";
+                if($stato=="Pubblicato"){
+                    echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success" disabled> ON </button>';
+                    echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger"> OFF </button>';
+                }
+            } 
+        ?></td></tr>
         <tr class='rigaCommento'><td>Commento:</td><td><?php echo $commento; ?></td></tr>
     </table>
     <?php if(($stato=="Approvazione 0/2"||$stato=="Approvazione 1/2"||$stato=="Pubblicato")&&($revisore==1)) {
@@ -238,29 +255,33 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
     <?php
         echo '<div id="bottoniCommento" class="">';
 
+        // Edit event button, only if isn't saved or saved by user that has editing permission
+        // and the state is "In redazione"
         if((($stato=="In redazione")&&($redattore==1)&&(($salvato==$id_utente)||($salvato==0)))) {
             echo '<button type = "button" id = "modificaEvento" class="btn btn-warning" > Modifica Evento </button>';
         }
 
+        // Quick change button, only if user has review permission 
+        // and event isn't in editing state
         if($revisore==1 && $stato!="In redazione") {
             echo '<button type = "button" id = "modificaVeloce" class="btn btn-warning" > Modifica Veloce </button>';
         }
+
+        // Send in editing and approve buttons, only if event is in review states 
+        // and user has review permission
         if((($stato=="Approvazione 0/2")||($stato=="Approvazione 1/2"))&&($revisore==1)) {
             echo '<button type = "submit" name = "redazione" id = "redazione" class="btn btn-default" > Manda in redazione </button >';
             echo '<button type = "submit" name = "approva" id = "approva" class="btn btn-default" > Approva</button >';
         }
+
+        // Send in editing from published state
         if($stato=="Pubblicato"){
         echo '<button type = "submit" name = "redazionePubblicato" id = "redazionePubblicato" class="btn btn-default" > Manda in redazione </button>';
-        if($fb==0){
-            echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-primary"> Facebook ON </button>';
-        }else{
-             echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger">  Facebook OFF  </button>';
-        } 
-
+        }
     echo "</div>";
         
     echo "</form>";
-            }?>
+        ?>
 
     <h2>Cronologia delle modifiche</h2>
     <ul>

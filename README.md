@@ -2,7 +2,6 @@
 
 [OggiSTI](https://www.progettohmr.it/OggiSTI) - Accadde oggi nella storia dell'informatica è un sottoprogetto di [Hakerando la Macchina Ridotta](https://www.progettohmr.it).
 
-
 ## L’idea
 
 Raccontare la storia dell’informatica in modo accurato a un pubblico più ampio possibile è uno degli obiettivi di HMR. Dalla didattica [1, 2] agli articoli su un quotidiano online [3] diversi sono gli esperimenti di comunicazione già realizzati.

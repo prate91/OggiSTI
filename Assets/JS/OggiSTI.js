@@ -20,6 +20,8 @@
 // Update the method for extract events
 // - 2018.06.06 Nicolò Pratelli
 // Open edit page and event page in the same window
+// - 2018.10.25 Nicolò
+// Added facebook icon control in the publicated events table
 //
 // ////////////////////////////////////////////////////////////////////////
 //
@@ -114,7 +116,7 @@ $(document).ready(function(){
                 }else if(state=="Pubblicato"){
                     var fbIcon = "";
                     if(item.fb==1){
-                        fbIcon = '<img src="../Img/iconFacebook.png" alt="FB Icon" width="40">'
+                        fbIcon = '<img src="../Img/iconFacebook.png" alt="FB Icon" width="50">'
                     }
                     var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
                     "<td>" + item.titolo_ita + "</td>" +

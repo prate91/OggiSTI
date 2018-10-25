@@ -13,8 +13,10 @@
 // State: in use
 //
 // Version history.
-// - 2018-02.26 Nicolò
+// - 2018.02.26 Nicolò
 // First version
+// - 2018.10.25 Nicolò
+// Added array with fb column ancd update publicated events query with fb column
 //
 // ////////////////////////////////////////////////////////////////////////
 //

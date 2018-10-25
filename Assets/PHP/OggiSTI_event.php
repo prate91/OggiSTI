@@ -227,15 +227,13 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
         <tr><td>Facebook:</td><td>
         <?php 
             if($fb==0){ 
-                echo '<button class="btn btn-danger" disabled> Non pubblicabile </button>';
                 if($stato=="Pubblicato"){
                     echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle"> ON </button>';
-                    echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle" disabled> OFF  </button>';
                 }
+                echo '<button class="btn btn-danger" disabled> Non pubblicabile </button>';
             }else{
                 echo '<button class="btn btn-success" disabled> Pubblicabile </button>';
                 if($stato=="Pubblicato"){
-                    echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle" disabled> ON </button>';
                     echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle"> OFF </button>';
                 }
             } 

@@ -229,14 +229,14 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
             if($fb==0){ 
                 echo "Non pubblicabile";
                 if($stato=="Pubblicato"){
-                    echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle"> ON </button>';
-                    echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle" disabled> OFF  </button>';
+                    echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle"><span class="glyphicon glyphicon-off"></span></button>';
+                    echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle" disabled><span class="glyphicon glyphicon-off"></span></button>';
                 }
             }else{
                 echo "Pubblicabile";
                 if($stato=="Pubblicato"){
-                    echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle" disabled> ON </button>';
-                    echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle"> OFF </button>';
+                    echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle" disabled><span class="glyphicon glyphicon-off"></span></button>';
+                    echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle"><span class="glyphicon glyphicon-off"></span></button>';
                 }
             } 
         ?></td></tr>

@@ -194,6 +194,9 @@ if(isset($_GET["preview"])){
 <!-- Load OggiSTI Almanac Javascript -->
 <script src='../JS/OggiSTI.js'></script>
 
+<!-- To prevent most search engine crawlers indexing this page -->  
+<meta name="robots" content="noindex">
+
 </head>
 <body>
 

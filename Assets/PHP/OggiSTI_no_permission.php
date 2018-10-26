@@ -85,11 +85,8 @@ include 'OggiSTI_controlLogged.php';
 <!-- Load OggiSTI Almanac Javascript -->
 <script src='../JS/OggiSTI.js'></script>
     
-<meta name="description" content="HMR.OggiSTI: lineeguida" />
-
-<meta name="keywords" content="hackerando hacker hacking macchina ridotta calcolatrice elettronica pisana CEP electronic computer storia history informatica computer science archeologia archeology sperimentale experimental ricostruzioni rebuilding replica repliche replicas simulazione simulation simulatori simulators macchine passato past machines 
-documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
-
+<!-- To prevent most search engine crawlers indexing this page -->  
+<meta name="robots" content="noindex">
 
 </head>
 <body>

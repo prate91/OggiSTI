@@ -80,19 +80,8 @@ include 'OggiSTI_manageMessagesTables.php';
 <!-- Load OggiSTI Almanac Javascript -->
 <script src='../JS/OggiSTI.js'></script>
     
-<meta name="description" content="HMR.OggiSTI: lineeguida" />
-
-<meta name="keywords" content="hackerando hacker hacking macchina ridotta calcolatrice elettronica pisana CEP electronic computer storia history informatica computer science archeologia archeology sperimentale experimental ricostruzioni rebuilding replica repliche replicas simulazione simulation simulatori simulators macchine passato past machines 
-documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
-
-
-<!-- meta Facebook Open Graph -->
-<meta id="metaImage" property="og:image" content="Asset/Img/logo-oggiSTI.png"/>
-<meta id="metaTitle" property="og:title" content="Oggi nella storia dell'informatica"/>
-<meta id="metaDescription" property="og:description" content="Almanacco per la diffusione della storia dell'informatica" />
-<meta property="og:url" content="https://progettohmr.it/oggiSTI/"/>
-<meta property="og:site_name" content="OggiSTI"/>
-<meta property="og:type" content="website"/>
+<!-- To prevent most search engine crawlers indexing this page -->  
+<meta name="robots" content="noindex">
 
 
 

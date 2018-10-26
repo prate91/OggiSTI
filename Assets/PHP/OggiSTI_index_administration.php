@@ -77,22 +77,10 @@ include 'OggiSTI_controlLogged.php';
 <script src='../JS/OggiSTI_function.js'></script>
 
 <!-- Load OggiSTI Almanac Javascript -->
-<script src='../JS/OggiSTI_preview.js'></script>
-    
-<meta name="description" content="HMR.OggiSTI: lineeguida" />
+<script src='../JS/OggiSTI_panel.js'></script>
 
-<meta name="keywords" content="hackerando hacker hacking macchina ridotta calcolatrice elettronica pisana CEP electronic computer storia history informatica computer science archeologia archeology sperimentale experimental ricostruzioni rebuilding replica repliche replicas simulazione simulation simulatori simulators macchine passato past machines 
-documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
-
-
-<!-- meta Facebook Open Graph -->
-<meta id="metaImage" property="og:image" content="Asset/Img/logo-oggiSTI.png"/>
-<meta id="metaTitle" property="og:title" content="Oggi nella storia dell'informatica"/>
-<meta id="metaDescription" property="og:description" content="Almanacco per la diffusione della storia dell'informatica" />
-<meta property="og:url" content="https://progettohmr.it/oggiSTI/"/>
-<meta property="og:site_name" content="OggiSTI"/>
-<meta property="og:type" content="website"/>
-
+<!-- To prevent most search engine crawlers indexing this page -->  
+<meta name="robots" content="noindex">
 
 
 </head>
@@ -124,7 +112,58 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
 ?>
    
 <div class="jumbotron">
-    <h1 id="titoloPannelloControllo">Pannello di controllo OggiSTI</h1>
+<div class="page-header">
+    <h1 id="titoloPannelloControllo">Pannello di controllo OggiSTI</h1>     
+  </div>
+    <div class="panel-group col-lg-8" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Eventi salvati <span id="savedCount" class="badge"></span></a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse in">
+        <div id="listSavedEvents" class="panel-body">
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Eventi in redazione <span id="notSavedCount" class="badge"></span></a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div id="listNotSavedEvents" class="panel-body">
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Documentazione</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">
+        <a href="../../LineeGuida/">
+        <img src="../Img/iconGuidelines.png" title="Linee Guida per i redattori" class="img-thumbnail" alt="GuideLines" style="width:80px">
+      </a>
+      <a href="../../ChicagoStyle/">
+        <img src="../Img/iconReferences.png" title="Linee Guida per i riferimenti"  class="img-thumbnail" alt="References" style="width:80px">
+      </a>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+  <div class="col-lg-4">
+    <div class="well well-lg"><h2>Eventi redatti <span id="redactedEvents" class="label label-default"></span></h2></div>
+    <div class="well well-lg"><h2>Eventi pubblicati <span id="publicatedEvents" class="label label-default"></span></h2></div>
+    <div class="well well-lg"><a href="mailto:info@progettohmr.it?subject=[support] Problema con OggiSTI"><span class="glyphicon glyphicon-envelope"></span> Segnala un problema</a></div>
+  </div>
+<br class="stop"/>
+    
     <h2>Eventi</h2>
         <ul class="list-group">
             <?php if($redattore==1){ echo '<li class="list-group-item"><a href="OggiSTI_savedEvents.php">I tuoi eventi salvati</a></li>';} ?>

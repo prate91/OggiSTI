@@ -144,7 +144,6 @@ $(document).ready(function(){
             $('#eventList').DataTable({
                 "pageLength": 25
             });
-
         });
 
     

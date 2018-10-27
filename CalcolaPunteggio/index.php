@@ -409,7 +409,7 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
             while ($row = mysqli_fetch_assoc($result)) {
                 echo formatDatemmddyyyy($row["data_evento"])." <a href='https://www.progettohmr.it/OggiSTI/?id=".$row["id_evento"]."'>".strip_tags ($row["titolo_ita"])."</a>";
                 if($row["fb"]==1){
-                    echo ' <img src="../Assets/Img/iconFacebook.png" alt="FB Icon" width="14">';
+                    echo ' <img class="fbIcon" src="../Assets/Img/iconFacebook.png" alt="FB Icon" width="14">';
                 }
                 echo "<br/>";
             }

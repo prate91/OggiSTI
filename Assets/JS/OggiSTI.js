@@ -74,7 +74,6 @@ $(document).ready(function(){
         state = "Tutti";
     }
 
-
     
     // Built events tables
 

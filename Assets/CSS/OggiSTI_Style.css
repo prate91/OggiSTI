@@ -279,8 +279,8 @@
 #oggiSTI_imm{
     float: right;
     /*width:360px;*/
-    min-height: 240px;
-    margin-bottom: 27px;
+    min-height: 200px;
+    margin-bottom: 9px;
 }
 
 #oggiSTI_immagineEvento{

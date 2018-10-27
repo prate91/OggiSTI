@@ -183,7 +183,11 @@ function modificaInfoEvento(data_evento, titolo_ita, abstr_ita, desc_ita, riferi
     $("#oggiSTI_lineaAutori").css("visibility", "visible");
     $("#oggiSTI_lineaRevisori").css("visibility", "visible");
     $( "#oggiSTI_immagineEvento" ).attr( "title", fonteimmagine );
-    var src = "Assets/Img/eventi/"+immagine;
+    if(immagine==""){
+        src = "Assets/Img/lavori.png";
+    }else{
+        var src = "Assets/Img/eventi/"+immagine;
+    }
     $( "#oggiSTI_immagineEvento" ).attr( "src", src );
 
 }

@@ -115,7 +115,7 @@ include 'OggiSTI_controlLogged.php';
 <div class="page-header">
     <h1 id="titoloPannelloControllo">Pannello di controllo OggiSTI</h1>     
   </div>
-    <div class="panel-group col-lg-8" id="accordion">
+    <div class="panel-group col-sm-8" id="accordion">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
@@ -157,9 +157,9 @@ include 'OggiSTI_controlLogged.php';
     </div>
   </div> 
 
-  <div class="col-lg-4">
-    <div class="well well-lg"><h2>Eventi redatti <span id="redactedEvents" class="label label-default"></span></h2></div>
-    <div class="well well-lg"><h2>Eventi pubblicati <span id="publicatedEvents" class="label label-default"></span></h2></div>
+  <div class="col-sm-4">
+    <div class="well well-lg">Eventi redatti <span id="redactedEvents" class="badge"></span></div>
+    <div class="well well-lg">Eventi pubblicati <span id="publicatedEvents" class="badge"></span></div>
     <div class="well well-lg"><a href="mailto:info@progettohmr.it?subject=[support] Problema con OggiSTI"><span class="glyphicon glyphicon-envelope"></span> Segnala un problema</a></div>
   </div>
 <br class="stop"/>

@@ -37,6 +37,13 @@
 // ///////////////////////////////////////////////////////////////////////
 include("../Assets/Api/config.php");
 
+// from yyyy-mm-dd to mm-dd(yyyy)
+function formatDatemmddyyyy($dateStr){
+    $dArr = explode("-",$dateStr);
+    return $dArr[1]. "-" . $dArr[2]. " (" .$dArr[0] . ")";
+}
+
+
 function calcolaOrdinaleGiorno($giorno, $mese){
     $ordinale=0;
     switch ($mese) {
@@ -394,7 +401,20 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
               <span id="oggiSTI_legenda_eventi_presenti" class="oggiSTI_table_legenda"></span><span> Giorni in cui sono presenti degli eventi</span><br/>
               <span class="oggiSTI_table_legenda"></span><span> Giorni in cui non sono presenti eventi</span>
                 
-
+            <h2>Lista eventi pubblicati</h2> 
+            <?php
+            
+            $sql="SELECT id_evento, data_evento, titolo_ita, fb FROM eventi ORDER BY MONTH(data_evento),DAY(data_evento)";
+            $result = mysqli_query($conn,$sql);
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo formatDatemmddyyyy($row["data_evento"])." <a href='https://www.progettohmr.it/OggiSTI/?id=".$row["id_evento"]."'>".strip_tags ($row["titolo_ita"])."</a>";
+                if($row["fb"]==1){
+                    echo ' <img src="../Assets/Img/iconFacebook.png" alt="FB Icon" width="20">';
+                }
+                echo "<br/>";
+            }
+            
+            ?>
 
               
         </div>

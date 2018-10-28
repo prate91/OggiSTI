@@ -18,6 +18,8 @@
 //   Added OggiSTI_Style.css
 // - 2018.10.27 Nicolò
 //   Added a list of all publicated events
+// - 2018.10.28 Nicolò
+//   Solved no space between words after html tags removal
 //
 // ////////////////////////////////////////////////////////////////////////////
 //
@@ -409,7 +411,10 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
             $sql="SELECT id_evento, data_evento, titolo_ita, fb FROM eventi ORDER BY MONTH(data_evento),DAY(data_evento)";
             $result = mysqli_query($conn,$sql);
             while ($row = mysqli_fetch_assoc($result)) {
-                echo formatDatemmddyyyy($row["data_evento"])." <a href='../?id=".$row["id_evento"]."'>".strip_tags ($row["titolo_ita"])."</a>";
+                $spaceString = str_replace( '<', ' <', $row["titolo_ita"] );
+                $doubleSpace = strip_tags( $spaceString );
+                $singleSpace = str_replace( '  ', ' ', $doubleSpace );
+                echo formatDatemmddyyyy($row["data_evento"])." <a href='../?id=".$row["id_evento"]."'>".$singleSpace."</a>";
                 if($row["fb"]==1){
                     echo ' <img class="fbIcon" src="../Assets/Img/iconFacebook.png" alt="FB Icon">';
                 }

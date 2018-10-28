@@ -115,7 +115,7 @@ $(document).ready(function(){
                 }else if(state=="Pubblicato"){
                     var fbIcon = "";
                     if(item.fb==1){
-                        fbIcon = '<img src="../Img/iconFacebook.png" alt="FB Icon" width="10">'
+                        fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
                     }
                     var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
                     "<td>" + item.titolo_ita + "</td>" +

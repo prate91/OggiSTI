@@ -14,8 +14,10 @@
 // Version history.
 // - 2017.03.08  Nicolò
 //   First version
-// - 2018.03.14  Nicolò
+// - 2018.03.14 Nicolò
 //   Added OggiSTI_Style.css
+// - 2018.10.27 Nicolò
+//   Added a list of all publicated events
 //
 // ////////////////////////////////////////////////////////////////////////////
 //
@@ -407,7 +409,7 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
             $sql="SELECT id_evento, data_evento, titolo_ita, fb FROM eventi ORDER BY MONTH(data_evento),DAY(data_evento)";
             $result = mysqli_query($conn,$sql);
             while ($row = mysqli_fetch_assoc($result)) {
-                echo formatDatemmddyyyy($row["data_evento"])." <a href='https://www.progettohmr.it/OggiSTI/?id=".$row["id_evento"]."'>".strip_tags ($row["titolo_ita"])."</a>";
+                echo formatDatemmddyyyy($row["data_evento"])." <a href='../?id=".$row["id_evento"]."'>".strip_tags ($row["titolo_ita"])."</a>";
                 if($row["fb"]==1){
                     echo ' <img class="fbIcon" src="../Assets/Img/iconFacebook.png" alt="FB Icon">';
                 }

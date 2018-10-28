@@ -421,7 +421,6 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
                 echo "<br/>";
             }
             ?>
-              
         </div>
     </div>
 		

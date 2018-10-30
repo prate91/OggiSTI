@@ -81,23 +81,23 @@ if(isset($_GET['state']))
 	{
 		case 'Salvato':
 			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato FROM eventiappr WHERE salvato=$id_utente";
-			echo carica_dati_tabelle($sql, $campi_tabella);
+			echo load_data_tables($sql, $campi_tabella, "no");
 			break;
 		case 'Redazione':
 			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato FROM eventiappr WHERE stato='In redazione'";
-			echo carica_dati_tabelle($sql, $campi_tabella);
+			echo load_data_tables($sql, $campi_tabella, "no");
 			break;
 		case 'Approvazione':
 			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato FROM eventiappr WHERE stato='Approvazione 0/2' OR stato='Approvazione 1/2'";
-			echo carica_dati_tabelle($sql, $campi_tabella);
+			echo load_data_tables($sql, $campi_tabella, "no");
 			break;
 		case 'Pubblicato':
 			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato, fb FROM eventi";
-			echo carica_dati_tabelle($sql, $campi_tabella_pubblicati);
+			echo load_data_tables($sql, $campi_tabella_pubblicati, "no");
 			break;
 		case 'Tutti':
 			$sql = "SELECT ea.id_evento AS id_evento_appr, ea.titolo_ita AS titolo_ita_appr, ea.data_evento AS data_evento_appr, ea.stato AS stato_appr, ea.redattore AS redattore_appr, ea.salvato AS salvato_appr, e.id_evento, e.titolo_ita, e.data_evento, e.stato, e.redattore FROM eventiappr ea LEFT JOIN eventi e ON ea.id_evento = e.id_evento UNION SELECT ea.id_evento AS id_evento_appr, ea.titolo_ita AS titolo_ita_appr, ea.data_evento AS data_evento_appr, ea.stato AS stato_appr, ea.redattore AS redattore_appr, ea.salvato AS salvato_appr, e.id_evento, e.titolo_ita, e.data_evento, e.stato, e.redattore FROM eventiappr ea RIGHT JOIN eventi e ON ea.id_evento = e.id_evento";
-			echo carica_dati_tabelle($sql, $campi_tabella_tutti);
+			echo load_data_tables($sql, $campi_tabella_tutti, "no");
 			break;
 		default:
 			echo json_encode(array("tipo non riconosciuto"));

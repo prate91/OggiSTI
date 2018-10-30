@@ -30,7 +30,7 @@
 	{
 		$id_evento = $_GET['id_evento'];
 		$query = "SELECT * FROM eventi WHERE id_evento='$id_evento'";
-		echo carica_dati_tabelle($query, $campi_tabella);
+		echo load_data_tables($query, $campi_tabella, "yes");
 	}
 	else
 	{

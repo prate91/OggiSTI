@@ -40,6 +40,6 @@
 		stato,
         commento,
 		usato FROM eventi t1 JOIN eventooggi t2 ON t1.id_evento=t2.id_evento";
-		echo carica_dati_tabelle($query, $campi_tabella);
+		echo load_data_tables($query, $campi_tabella, "yes");
 	
 ?>

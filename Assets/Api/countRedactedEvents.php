@@ -47,7 +47,7 @@ $campi_tabella = array(
 );
 
 $sql = "SELECT COUNT(id_evento) as numeroEventi FROM (SELECT id_evento, redattore FROM eventi WHERE redattore LIKE '% $id_utente%' UNION SELECT id_evento, redattore FROM eventi WHERE redattore LIKE '$id_utente' UNION SELECT id_evento, redattore FROM eventiappr WHERE redattore LIKE '% $id_utente%' UNION SELECT id_evento, redattore FROM eventiappr WHERE redattore LIKE '$id_utente') AS t";
-echo carica_dati_tabelle($sql, $campi_tabella);
+echo load_data_tables($sql, $campi_tabella, "no");
 		
 
 ?>

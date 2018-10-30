@@ -32,7 +32,7 @@
         $data_sup = $_GET['dataSup'];
 		$query = "SELECT * FROM eventi WHERE DATE_FORMAT(data_evento, '%m-%d') BETWEEN DATE_FORMAT('$data_inf', '%m-%d') AND DATE_FORMAT('$data_sup', '%m-%d') ";
        // SELECT * FROM eventi WHERE DATE_FORMAT(data_evento, '%m-%d') BETWEEN '05-05' AND '05-12' 
-		echo carica_dati_tabelle($query, $campi_tabella);
+		echo load_data_tables($query, $campi_tabella, "yes");
 	}
 	else
 	{

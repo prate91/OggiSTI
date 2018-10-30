@@ -51,7 +51,7 @@ $campi_tabella = array(
 );
 
 $sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato FROM eventiappr WHERE stato='In redazione' AND salvato=0 ";
-echo carica_dati_tabelle($sql, $campi_tabella);
+echo load_data_tables($sql, $campi_tabella, "no");
 		
 
 ?>

@@ -30,7 +30,7 @@
 	{
 		$data_evento = $_GET['data_evento'];
 		$query = "SELECT * FROM eventi WHERE DAY(data_evento)=DAY('$data_evento') AND MONTH(data_evento)=MONTH('$data_evento') ORDER BY usato, DATE_FORMAT(data_evento, '%Y')";
-		echo carica_dati_tabelle($query, $campi_tabella);
+		echo load_data_tables($query, $campi_tabella, "yes");
 	}
 	else
 	{

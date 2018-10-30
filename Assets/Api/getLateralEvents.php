@@ -28,7 +28,7 @@
 	{
 		$id_evento = $_GET['id_evento'];
 		$query = "SELECT * FROM eventi WHERE id_evento!='$id_evento' AND DAY(data_evento)=(SELECT DAY(data_evento) FROM eventi WHERE id_evento = '$id_evento') AND MONTH(data_evento)=(SELECT MONTH(data_evento) FROM eventi WHERE id_evento = '$id_evento') ORDER BY DATE_FORMAT(data_evento, '%Y')";
-		echo carica_dati_tabelle($query, $campi_tabella);
+		echo load_data_tables($query, $campi_tabella, "yes");
 	}
 	else
 	{

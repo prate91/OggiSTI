@@ -73,12 +73,12 @@ if(isset($_GET['id_evento']))
 		if($id_state=="Pubblicato")
 		{
 			$sql = "SELECT * FROM eventi WHERE id_evento='$id_evento'";
-			echo carica_dati_tabelle($sql, $campi_tabella);
+			echo load_data_tables($sql, $campi_tabella, "yes");
 		}
 		else
 		{
 			$sql = "SELECT * FROM eventiappr WHERE id_evento = '$id_evento'";
-			echo carica_dati_tabelle($sql, $campi_tabella);
+			echo load_data_tables($sql, $campi_tabella, "yes");
 		}
 	}
 	else

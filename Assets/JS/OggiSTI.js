@@ -85,8 +85,8 @@ $(document).ready(function(){
                     if (item.id_evento_appr == item.id_evento) {
                         // event is in editing or reviewed state and publicated
                         var riga = "<tr class='item'><td>" + item.id_evento_appr + "</td>" +
-                        "<td>" + item.titolo_ita_appr + "</td>" +
                         "<td class=''>" + formatDatemmddyyyy(item.data_evento_appr) + "</td>" +
+                        "<td><a href='../../OggiSTI_preview.php?id_evento="+item.id_evento_appr+"&id_state="+ item.stato_appr+"'>"+ item.titolo_ita_appr + "</a></td>" +
                         "<td>" + item.stato_appr + " - " + item.stato + "</td>" +
                         "<td>" + item.redattore + "</td>" + 
                         "<td><button type='button' id='" + item.stato_appr + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button>"+
@@ -96,8 +96,8 @@ $(document).ready(function(){
                     }else if (item.id_evento == null && item.id_evento_appr != null) {
                         // event is only in editing or reviewed state
                         var riga = "<tr class='item'><td>" + item.id_evento_appr + "</td>" +
-                        "<td>" + item.titolo_ita_appr + "</td>" +
                         "<td class=''>" + formatDatemmddyyyy(item.data_evento_appr) + "</td>" +
+                        "<td>" + item.titolo_ita_appr + "</td>" +
                         "<td>" + item.stato_appr + "</td>" +
                         "<td>" + item.redattore_appr + "</td>" + 
                         "<td><button type='button' id='" + item.stato_appr + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>"+ 
@@ -105,8 +105,8 @@ $(document).ready(function(){
                     } else if (item.id_evento_appr == null && item.id_evento != null) {
                         // event only publicated
                         var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
-                        "<td>" + item.titolo_ita + "</td>" +
                         "<td class=''>" + formatDatemmddyyyy(item.data_evento) + "</td>" +
+                        "<td>" + item.titolo_ita + "</td>" +
                         "<td>" + item.stato + "</td>" +
                         "<td>" + item.redattore + "</td>" + 
                         "<td><button type='button' id='" + item.stato + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>"+ 
@@ -118,21 +118,19 @@ $(document).ready(function(){
                         fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
                     }
                     var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
-                    "<td>" + item.titolo_ita + "</td>" +
                     "<td class=''>" + formatDatemmddyyyy(item.data_evento) + "</td>" +
+                    "<td><a href='../../OggiSTI_preview.php?id_evento="+item.id_evento+"&id_state="+ item.stato+"' target='_blank'>"+ item.titolo_ita + "</a></td>" +
                     "<td>" + item.stato + " "+ fbIcon +"</td>" +
                     "<td>" + item.redattore + "</td>" + 
-                    "<td><button type='button' id='" + state + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>"+ 
-                    "<td><button type='button' id='" +  state + "-" + item.id_evento + "' class='btn btn-default btnPreview glyphicon glyphicon-eye-open'> </button></td></tr>";
+                    "<td><button type='button' id='" + state + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>";
                 }else{
                 // all the others tables
                 var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
-                    "<td>" + item.titolo_ita + "</td>" +
                     "<td class=''>" + formatDatemmddyyyy(item.data_evento) + "</td>" +
+                    "<td><a href='../../OggiSTI_preview.php?id_evento="+item.id_evento+"&id_state="+ item.stato+"' target='_blank'>"+ item.titolo_ita + "</a></td>" +
                     "<td>" + item.stato + "</td>" +
                     "<td>" + item.redattore + "</td>" + 
-                    "<td><button type='button' id='" + state + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>"+ 
-                    "<td><button type='button' id='" +  state + "-" + item.id_evento + "' class='btn btn-default btnPreview glyphicon glyphicon-eye-open'> </button></td></tr>";
+                    "<td><button type='button' id='" + state + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>";
                 }
                 // built the table 
                 intestazione_tabella += riga;

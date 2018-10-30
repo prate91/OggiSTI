@@ -1,81 +1,129 @@
 <?php
 
+// ////////////////////////////////////////////////////////////////////////
+//
+// Project: OggiSTI
+// Package:  API OggiSTI
+// Title: function
+// File: functions.php
+// Path: Assets/Api
+// Type: php
+// Started: 2018.06.24
+// Author(s): Nicolò Pratelli
+// State: in use
+//
+// Version history.
+// - 2018.06.24 Nicolò
+// First version
+// - 2018.10.30 Nicolò
+// Inserted clean html function. Inserted variable formatting in the function
+// load_data_tables that permit to choose if return html-formatted data or not
+//
+// ////////////////////////////////////////////////////////////////////////
+//
+// This file is part of software developed by the HMR Project
+// Further information at: http://progettohmr.it
+// Copyright (C) 2017 HMR Project, Nicolò Pratelli
+//
+// This is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published
+// by the Free Software Foundation; either version 3.0 of the License,
+// or (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty
+// of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, see <http://www.gnu.org/licenses/>.
+//
+// ////////////////////////////////////////////////////////////////////////
 
-function carica_dati($query, $campi_tabella)
+
+ /**
+  * Clean a string from html tags. It introduces the space if there isn't.
+  *
+  * @author Nicolò Pratelli
+  *
+  * @since 2.0
+  *
+  * @param string $string  the string to be cleaned
+  */
+function clean_html($string)
 {
-	require("config.php");
-		
-			
-	$risultato = array();
-	$i = 0;
-	$risultato_query = mysqli_query($conn, $query);
-	if($risultato_query != false && mysqli_num_rows($risultato_query) > 0)
-	{
-		while($riga = mysqli_fetch_assoc($risultato_query))
-		{
-			$risultato[$i] = array();
-			foreach($campi_tabella as $campo)
-				$risultato [$i][$campo] = $riga[$campo]; // utf8_encode($riga[$campo])
-			$i++;				
-		}		
-		return json_encode($risultato);
-	}
-	else
-	{			
-		return json_encode(array("status" => "error", "details" => "nessun risultato"));
-	}
+	$spaceString = str_replace( '<', ' <', $string );
+    $doubleSpace = strip_tags( $spaceString );
+    $singleSpace = str_replace( '  ', ' ', $doubleSpace );
+	return $singleSpace;
 }
 
-function carica_dati_tabelle($query, $campi_tabella)
+ /**
+  * Function that execute the query and return json encoded result
+  *
+  * @author Nicolò Pratelli
+  *
+  * @since 1.0
+  *
+  * @param string $query  the query to be executed
+  * @param array $fields ontains the fields of the query
+  * @param string $formatting it permitt to choose yes or no if you want the html formatted field or not
+  */
+function load_data_tables($query, $fields, $formatting)
 {
 	require("config.php");
 	require("../../../Administration/Assets/Api/configUtenti.php");
-	$risultato = array();
+	$result = array();
 	$i = 0;
-	$risultato_query = mysqli_query($conn, $query);
+	$queryResult = mysqli_query($conn, $query);
 	
-	if($risultato_query != false && mysqli_num_rows($risultato_query) > 0)
+	if($queryResult != false && mysqli_num_rows($queryResult) > 0)
 	{
-		while($riga = mysqli_fetch_assoc($risultato_query))
+		while($row = mysqli_fetch_assoc($queryResult))
 		{
-			$risultato[$i] = array();
-			foreach($campi_tabella as $campo){
-				if($campo=='redattore' | $campo=='redattore_appr')
+			$result[$i] = array();
+			foreach($fields as $field){
+				if($field=='redattore' | $field=='redattore_appr')
 				{
-					$autori = $riga[$campo];
-					$pieces = explode(", ", $autori);
-					$riga_redattori = "";
+					$authors = $row[$field];
+					$pieces = explode(", ", $authors);
+					$authorsRow = "";
 					for($j=0; $j<sizeof($pieces); $j++)
 					{
-						$id_utente = intval($pieces[$j]);
-						$queryUtenti = "SELECT * FROM admin WHERE id_auth=$id_utente";
-						$risultato_query_utenti = mysqli_query($connUtenti, $queryUtenti);
-						$riga_utente = mysqli_fetch_array($risultato_query_utenti,MYSQLI_ASSOC);
-						$riga_redattori =  $riga_redattori . $riga_utente["nome"] . " " . $riga_utente["cognome"]. "<br/> ";
+						$userId = intval($pieces[$j]);
+						$queryUtenti = "SELECT * FROM admin WHERE id_auth=$userId";
+						$userQueryResult = mysqli_query($connUtenti, $queryUtenti);
+						$userRow = mysqli_fetch_array($userQueryResult,MYSQLI_ASSOC);
+						$authorsRow =  $authorsRow . $userRow["nome"] . " " . $userRow["cognome"]. "<br/> ";
 					}
-					$risultato [$i][$campo] = $riga_redattori;
+					$result [$i][$field] = $authorsRow;
 				}
-				elseif ($campo == 'ver_1' | $campo == 'ver_2')
+				elseif ($field == 'ver_1' | $field == 'ver_2')
 				{
-					$id_utente = intval($riga[$campo]);
-					$queryUtenti = "SELECT * FROM admin WHERE id_auth=$id_utente";
-					$risultato_query_utenti = mysqli_query($connUtenti, $queryUtenti);
-					$riga_utente = mysqli_fetch_array($risultato_query_utenti,MYSQLI_ASSOC);
-					$revisore =  $riga_utente["nome"] . " " . $riga_utente["cognome"];
-					$risultato [$i][$campo] = $revisore;
+					$userId = intval($row[$field]);
+					$queryUtenti = "SELECT * FROM admin WHERE id_auth=$userId";
+					$userQueryResult = mysqli_query($connUtenti, $queryUtenti);
+					$userRow = mysqli_fetch_array($userQueryResult,MYSQLI_ASSOC);
+					$revisore =  $userRow["nome"] . " " . $userRow["cognome"];
+					$result [$i][$field] = $revisore;
 				}
 				else
-				{
-					$risultato [$i][$campo] = $riga[$campo]; // utf8_encode($riga[$campo])
+				{	
+					if($formatting=="yes")
+					{
+						$result [$i][$field] = $row[$field];
+					}
+					else
+					{
+						$result [$i][$field] = clean_html($row[$field]); // utf8_encode($row[$field])
+					}
 				}	
 			}
 			$i++;		
 		}		
-		return json_encode($risultato);
+		return json_encode($result);
 	}
 	else
 	{			
-		return json_encode(array("status" => "error", "details" => "nessun risultato"));
+		return json_encode(array("status" => "error", "details" => "no result"));
 	}
 }
 

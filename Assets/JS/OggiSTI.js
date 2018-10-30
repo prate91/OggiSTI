@@ -119,7 +119,7 @@ $(document).ready(function(){
                     }
                     var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
                     "<td class=''>" + formatDatemmddyyyy(item.data_evento) + "</td>" +
-                    "<td><a href='../../OggiSTI_preview.php?id_evento="+item.id_evento+"&id_state="+ item.stato+"' target='_blank'>"+ item.titolo_ita + "</a></td>" +
+                    "<td><a href='../../?id="+item.id_evento+"' target='_blank'>"+ item.titolo_ita + "</a></td>" +
                     "<td>" + item.stato + " "+ fbIcon +"</td>" +
                     "<td>" + item.redattore + "</td>" + 
                     "<td><button type='button' id='" + state + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>";

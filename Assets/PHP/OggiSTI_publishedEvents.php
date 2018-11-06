@@ -5,7 +5,7 @@
 // Project: OggiSTI
 // Package: OggiSTI administration
 // Title: Publicated Events
-// File: OggiSTI_publicatedEvents.php
+// File: OggiSTI_publishedEvents.php
 // Path: OggiSTI/Assets/PHP
 // Type: php
 // Started: 2017-03-08

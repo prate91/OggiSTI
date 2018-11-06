@@ -1,37 +1,17 @@
 <?php
-			
-	require("config.php");
+	
+	require("../../../../Config/OggiSTIConfig.php");
 	session_start();
-    if(!isset($_SESSION['login_user'])) {
+    if(!isset($_SESSION['UserLogin'])) {
         header('Location: no_login.php?error=inv_access');
     }
 	//header('Content-Type : application/json');
 	
-	$campi_tabella = array(
-		'id_evento',
-		'data_evento',
-		'titolo_ita',
-		'titolo_eng',
-		'immagine',
-		'icona',
-		'abstr_ita',
-		'abstr_eng',
-		'desc_ita',
-		'desc_eng',
-		'keywords',
-		'redattore',
-		'ver_1',
-		'ver_2',
-		'stato',
-        'commento',
-		'usato'
-	);
-	
-	if(isset($_GET['id_evento']))
+	if(isset($_GET['eventId']))
 	{
-		$id_evento = $_GET['id_evento'];
+		$eventId = $_GET['eventId'];
         
-		$query = "UPDATE eventi SET usato = usato + 1 WHERE id_evento='$id_evento'";
+		$query = "UPDATE publishedEvents SET Views = Views + 1 WHERE Id='$eventId'";
         mysqli_query($conn, $query);
 	}
 	else

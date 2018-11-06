@@ -34,9 +34,9 @@
 //
 // //////////////////////////////////////////////////////////////////////////
 
-$messaggio = $mess = $errore = $notizia = "";
-if(isset($_GET["messaggio"])){
-    $mess=$_GET["messaggio"];
+$message = $mess = $errore = $notizia = "";
+if(isset($_GET["message"])){
+    $mess=$_GET["message"];
     if($mess=="redazione"){
         $notizia='<div class="alert alert-success" id="alertEvento">
         <button type="button" class="close" data-dismiss="alert">x</button>
@@ -45,7 +45,7 @@ if(isset($_GET["messaggio"])){
     if($mess=="approvato"){
        $notizia='<div class="alert alert-success" id="alertEvento">
     <button type="button" class="close" data-dismiss="alert">x</button>
-    <p>Evento approvato da '.$nome_completo.'</p></div>';
+    <p>Evento approvato da '.$completeName.'</p></div>';
     }
     if($mess=="errore"){
         $notizia='<div class="alert alert-danger" id="alertEvento">

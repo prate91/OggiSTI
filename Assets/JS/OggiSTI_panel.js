@@ -43,7 +43,7 @@ var url = "../Api/extractUserSavedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
         countSaved++;
-        var row = '<a href="OggiSTI_event.php?id_evento='+item.id_evento+'&id_state=Redazione" class="list-group-item" target="_blank">'+item.data_evento+' '+item.titolo_ita+'</a>';
+        var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + item.Date + ' ' + item.ItaTitle + '</a>';
         savedList += row;
     });
     $("#listSavedEvents").html(savedList);
@@ -54,7 +54,7 @@ var url = "../Api/extractNotSavedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
         countNotSaved++;
-        var row = '<a href="OggiSTI_event.php?id_evento='+item.id_evento+'&id_state=Redazione" class="list-group-item" target="_blank">'+item.data_evento+' '+item.titolo_ita+'</a>';
+        var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + item.Date + ' ' + item.ItaTitle + '</a>';
         notSavedList += row;
     });
     $("#listNotSavedEvents").html(notSavedList);
@@ -72,10 +72,10 @@ $.getJSON(url, function (result) {
 });
 
 var numberPublicated = "";
-var url = "../Api/countPublicatedEvents.php"
+var url = "../Api/countPublishedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
         numberPublicated = item.numeroEventi;
     });
-    $("#publicatedEvents").html(numberPublicated);
+    $("#publishedEvents").html(numberPublicated);
 });

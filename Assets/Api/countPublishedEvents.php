@@ -5,7 +5,7 @@
 // Project: OggiSTI
 // Package:  API OggiSTI
 // Title: Query of event
-// File: countPublicatedEvents.php
+// File: countPublishedEvents.php
 // Path: Assets/Api
 // Type: php
 // Started: 2018.10.256
@@ -34,20 +34,19 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ////////////////////////////////////////////////////////////////////////
-
-session_start();
-$autore = $_SESSION['login_user'];
-$id_utente = $_SESSION['id_user'];
-$nome_completo = $_SESSION['nome_completo'];
+include '../PHP/OggiSTI_sessionSet.php';
 
 require("functions.php");
 
-$campi_tabella = array(
-		'numeroEventi'
+$tableFiels = array(
+	'eventsNumber'
 );
 
-$sql = "SELECT COUNT(id_evento) as numeroEventi FROM (SELECT id_evento, redattore FROM eventi WHERE redattore LIKE '% $id_utente%' UNION SELECT id_evento, redattore FROM eventi WHERE redattore LIKE '$id_utente') AS t";
-echo load_data_tables($sql, $campi_tabella, "no");
+/**
+ * This query counts how many events have been published by the authenticated user
+ */
+$sql = "SELECT COUNT(Id) as eventsNumber FROM (SELECT Id, Editors FROM publishedEvents WHERE Editors LIKE '% $userId%' UNION SELECT Id, Editors FROM publishedEvents WHERE Editors LIKE '$userId') AS t";
+echo loadDataTables($sql, $tableFiels, "no");
 		
 
 ?>

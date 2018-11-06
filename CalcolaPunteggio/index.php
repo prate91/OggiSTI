@@ -40,6 +40,7 @@
 //
 // ///////////////////////////////////////////////////////////////////////
 include("../Assets/Api/config.php");
+require("../../../Config/OggiSTIConfig.php");
 
 // from yyyy-mm-dd to mm-dd(yyyy)
 function formatDatemmddyyyy($dateStr){

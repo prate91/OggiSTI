@@ -16,7 +16,7 @@
 // - 2018.02.26 Nicolò
 // First version
 // - 2018.10.25 Nicolò
-// Added array with fb column ancd update publicated events query with fb column
+// Added array with Fb column ancd update publicated events query with Fb column
 //
 // ////////////////////////////////////////////////////////////////////////
 //
@@ -36,43 +36,39 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ////////////////////////////////////////////////////////////////////////
-session_start();
-$autore = $_SESSION['login_user'];
-$id_utente = $_SESSION['id_user'];
-$nome_completo = $_SESSION['nome_completo'];
 
 require("functions.php");
-$campi_tabella = array(
-		'id_evento',
-		'titolo_ita',
-		'data_evento',
-        'redattore',
-		'stato'
+
+$tableFields = array(
+		'Id',
+		'ItaTitle',
+		'Date',
+        'Editors',
+		'State'
 );
 
-$campi_tabella_pubblicati = array(
-	'id_evento',
-	'titolo_ita',
-	'data_evento',
-	'redattore',
-	'stato',
-	'fb'
+$publicatedTableFields = array(
+	'Id',
+	'ItaTitle',
+	'Date',
+	'Editors',
+	'State',
+	'Fb'
 );
 
-$campi_tabella_tutti = array(
-    'id_evento_appr',
-    'titolo_ita_appr',
-    'data_evento_appr',
-    'redattore_appr',
-    'stato_appr',
-    'salvato_appr',
-    'id_evento',
-    'titolo_ita',
-    'data_evento',
-    'redattore',
-    'stato'
+$allTableFiels = array(
+    'Id',
+    'ItaTitle',
+    'Date',
+    'Editors',
+	'State',
+	'Views',
+	'Fb'
 );
 
+/**
+ *  Control the state, taken from url, an execute the right query
+ */
 if(isset($_GET['state']))
 {
 	$state = $_GET['state'];
@@ -80,24 +76,24 @@ if(isset($_GET['state']))
 	switch($state)
 	{
 		case 'Salvato':
-			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato FROM eventiappr WHERE salvato=$id_utente";
-			echo load_data_tables($sql, $campi_tabella, "no");
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editingEvents WHERE Saved=$userId";
+			echo loadDataTables($sql, $tableFields, "no");
 			break;
 		case 'Redazione':
-			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato FROM eventiappr WHERE stato='In redazione'";
-			echo load_data_tables($sql, $campi_tabella, "no");
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editingEvents WHERE State='In redazione'";
+			echo loadDataTables($sql, $tableFields, "no");
 			break;
 		case 'Approvazione':
-			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato FROM eventiappr WHERE stato='Approvazione 0/2' OR stato='Approvazione 1/2'";
-			echo load_data_tables($sql, $campi_tabella, "no");
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editingEvents WHERE State='Approvazione 0/2' OR State='Approvazione 1/2'";
+			echo loadDataTables($sql, $tableFields, "no");
 			break;
 		case 'Pubblicato':
-			$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato, fb FROM eventi";
-			echo load_data_tables($sql, $campi_tabella_pubblicati, "no");
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Fb FROM publishedEvents";
+			echo loadDataTables($sql, $publicatedTableFields, "no");
 			break;
 		case 'Tutti':
-			$sql = "SELECT ea.id_evento AS id_evento_appr, ea.titolo_ita AS titolo_ita_appr, ea.data_evento AS data_evento_appr, ea.stato AS stato_appr, ea.redattore AS redattore_appr, ea.salvato AS salvato_appr, e.id_evento, e.titolo_ita, e.data_evento, e.stato, e.redattore FROM eventiappr ea LEFT JOIN eventi e ON ea.id_evento = e.id_evento UNION SELECT ea.id_evento AS id_evento_appr, ea.titolo_ita AS titolo_ita_appr, ea.data_evento AS data_evento_appr, ea.stato AS stato_appr, ea.redattore AS redattore_appr, ea.salvato AS salvato_appr, e.id_evento, e.titolo_ita, e.data_evento, e.stato, e.redattore FROM eventiappr ea RIGHT JOIN eventi e ON ea.id_evento = e.id_evento";
-			echo load_data_tables($sql, $campi_tabella_tutti, "no");
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Views, Fb FROM publishedEvents UNION SELECT Id, ItaTitle, Date, Editors, State, Views, Comment FROM editingEvents";
+			echo loadDataTables($sql, $allTableFiels, "no");
 			break;
 		default:
 			echo json_encode(array("tipo non riconosciuto"));

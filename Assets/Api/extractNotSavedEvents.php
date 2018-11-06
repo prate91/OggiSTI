@@ -34,24 +34,23 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ////////////////////////////////////////////////////////////////////////
-
-session_start();
-$autore = $_SESSION['login_user'];
-$id_utente = $_SESSION['id_user'];
-$nome_completo = $_SESSION['nome_completo'];
+include '../PHP/OggiSTI_sessionSet.php';
 
 require("functions.php");
 
-$campi_tabella = array(
-		'id_evento',
-		'titolo_ita',
-		'data_evento',
-        'redattore',
-		'stato'
+$tableFields = array(
+		'Id',
+		'ItaTitle',
+		'Date',
+        'Editors',
+		'State'
 );
 
-$sql = "SELECT id_evento, titolo_ita, data_evento, redattore, stato FROM eventiappr WHERE stato='In redazione' AND salvato=0 ";
-echo load_data_tables($sql, $campi_tabella, "no");
+/**
+ * Query to extract not saved events with state 'In redazione' (In editing)
+ */
+$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editingEvents WHERE State='In redazione' AND Saved=0 ";
+echo loadDataTables($sql, $tableFields, "no");
 		
 
 ?>

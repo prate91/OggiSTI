@@ -1,45 +1,8 @@
 <?php
-			
+	include 'tablesFields.php';	
 	require("functions.php");
 	
-	//header('Content-Type : application/json');
-	
-	$campi_tabella = array(
-		'id_evento',
-		'data_evento',
-		'titolo_ita',
-		'titolo_eng',
-		'immagine',
-        'fonteimmagine',
-		'icona',
-		'abstr_ita',
-		'abstr_eng',
-		'desc_ita',
-		'desc_eng',
-        'riferimenti',
-		'keywords',
-		'redattore',
-		'ver_1',
-		'ver_2',
-		'stato',
-        'commento',
-		'usato'
-	);
-	
-	
-		$query = "SELECT t1.id_evento, data_evento, titolo_ita, titolo_eng, immagine, fonteimmagine, icona,
-		abstr_ita,
-		abstr_eng,
-		desc_ita,
-		desc_eng,
-        riferimenti,
-		keywords,
-		redattore,
-		ver_1,
-		ver_2,
-		stato,
-        commento,
-		usato FROM eventi t1 JOIN eventooggi t2 ON t1.id_evento=t2.id_evento";
-		echo load_data_tables($query, $campi_tabella, "yes");
+		$query = "SELECT pE.Id, Date, ItaTitle, EngTitle, Image, ImageCaption, Icon, ItaAbstract, EngAbstract, ItaDescription, EngDescription, TextReferences, Keywords,Editors, Reviser_1, Reviser_2, State, Comment, Views, Fb FROM publishedEvents pE JOIN todayEvent tE ON pE.Id=tE.Id";
+		echo loadDataTables($query, $tableFieldsAllPublicated, "yes");
 	
 ?>

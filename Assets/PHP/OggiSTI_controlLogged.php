@@ -34,7 +34,7 @@
 //
 // ///////////////////////////////////////////////////////////////////////////
 
-if(!isset($_SESSION['login_user'])) {
+if(!isset($_SESSION['userLogin'])) {
     header('Location: ../../../Administration/Assets/PHP/autentication.php');
 }
   ?>

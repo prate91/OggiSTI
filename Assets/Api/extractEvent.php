@@ -34,51 +34,28 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ////////////////////////////////////////////////////////////////////////
-session_start();
-$autore = $_SESSION['login_user'];
-$nome_completo = $_SESSION['nome_completo'];
+
+include 'tablesFields.php';	
 
 require("functions.php");
-$campi_tabella = array(
-	'id_evento',
-	'data_evento',
-	'titolo_ita',
-	'titolo_eng',
-	'immagine',
-    'fonteimmagine',
-	'icona',
-	'abstr_ita',
-	'abstr_eng',
-	'desc_ita',
-	'desc_eng',
-    'riferimenti',
-	'keywords',
-	'redattore',
-	'ver_1',
-	'ver_2',
-	'stato',
-    'commento',
-	'usato'
-);
 
 
-
-if(isset($_GET['id_evento']))
+if(isset($_GET['eventId']))
 {
-	$id_evento = $_GET['id_evento'];
-	if(isset($_GET['id_state']))
+	$eventId = $_GET['eventId'];
+	if(isset($_GET['stateId']))
 	{
-		$id_state = $_GET['id_state'];
+		$stateId = $_GET['stateId'];
 		$sql = "";
-		if($id_state=="Pubblicato")
+		if($stateId=="Pubblicato")
 		{
-			$sql = "SELECT * FROM eventi WHERE id_evento='$id_evento'";
-			echo load_data_tables($sql, $campi_tabella, "yes");
+			$sql = "SELECT * FROM publishedEvents WHERE Id='$eventId'";
+			echo loadDataTables($sql, $tableFieldsAllPublicated, "yes");
 		}
 		else
 		{
-			$sql = "SELECT * FROM eventiappr WHERE id_evento = '$id_evento'";
-			echo load_data_tables($sql, $campi_tabella, "yes");
+			$sql = "SELECT * FROM editingEvents WHERE Id = '$eventId'";
+			echo loadDataTables($sql, $tableFieldsAllEditing, "yes");
 		}
 	}
 	else

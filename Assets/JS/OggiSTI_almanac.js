@@ -37,8 +37,8 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-//var dataEvento="";
-var pannelli = "";
+//var eventDate="";
+var panels = "";
 
 $(document).ready(function(){
 
@@ -60,82 +60,82 @@ $( "#oggiSTI_picker" ).datepicker({
         var msec = Date.parse(selectedDate); // data convert
         var i = new Date(estremoInf(msec));  // get first day of the week
         var s = new Date(estremoSup(msec));  // get last day of the week
-        var dataInf = formatDate(i); 
-        var dataSup =  formatDate(s); 
+        var lowerDate = formatDate(i); 
+        var upperDate =  formatDate(s); 
         var dataSelezionata = this.value; // assign today date
-        var data_evento = reformatDateToEng(dataSelezionata); // data convert in yyyy-mm-dd format
+        var eventDate = reformatDateToEng(dataSelezionata); // data convert in yyyy-mm-dd format
         // set url of the query that get event of choosen date by user
         var url = "Assets/Api/getCalendarDateEvent.php";
         var count = 0;
-        var id_pannello = 1;
-        pannelli = "";
+        var panelId = 1;
+        panels = "";
   		  // AJAX  call get event of choosen date by user
-  		  $.getJSON(url, {"data_evento":data_evento}, function(result){
+  		  $.getJSON(url, {"eventDate":eventDate}, function(result){
   				$.each(result, function(index, item){
             if(index=="status"){
             // empty result, search other event in the week
               var d = new Date();
               var arrayDataSelezionata = dataSelezionata.split('/');
-              var giornoEvento = arrayDataSelezionata[0];
-              var meseEvento = arrayDataSelezionata[1];
+              var eventDay = arrayDataSelezionata[0];
+              var eventMonth = arrayDataSelezionata[1];
               d.setDate(arrayDataSelezionata[0]);
               d.setMonth(arrayDataSelezionata[1]-1);
-              giornoEvento = convertiGiorni(giornoEvento);
-              meseEvento = convertiMesi(meseEvento);
+              eventDay = convertiGiorni(eventDay);
+              eventMonth = convertiMesi(eventMonth);
               $("#oggiSTI_sopraTitolo").html("Nella stessa settimana del <span id='oggiSTI_giornoDiverso'></span> <span id='oggiSTI_meseDiverso'></span>");
-              $("#oggiSTI_dataGiorno").html(giornoEvento);
-              $("#oggiSTI_dataMese").html(meseEvento);
-              $("#oggiSTI_giornoDiverso").html(giornoEvento);
-              $("#oggiSTI_meseDiverso").html(meseEvento);
-              var contaEventiSettimana = 0;
-              var id_pannello_settimana = 1;
-              pannelli = "";
+              $("#oggiSTI_dataGiorno").html(eventDay);
+              $("#oggiSTI_dataMese").html(eventMonth);
+              $("#oggiSTI_giornoDiverso").html(eventDay);
+              $("#oggiSTI_meseDiverso").html(eventMonth);
+              var weekEventCount = 0;
+              var weekPanelId = 1;
+              panels = "";
               // set url of other event in the week
               var url = "Assets/Api/getWeekEvents.php";
-              $.getJSON(url, {"dataInf":dataInf, "dataSup":dataSup}, function(result){
+              $.getJSON(url, {"lowerDate":lowerDate, "upperDate":upperDate}, function(result){
                 $.each(result, function(index, item){
 			            if(index=="status"){
                   // empty result
 			              pulisciCampi();
                   }else {
-                    if (contaEventiSettimana == 0) {
-                      modificaInfoEvento(item.data_evento, item.titolo_ita, item.abstr_ita, item.desc_ita, item.riferimenti, item.redattore, item.ver_1, item.ver_2, item.fonteimmagine, item.immagine);
+                    if (weekEventCount == 0) {
+                      modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
                       $("#oggiSTI_sopraTitolo").css("visibility", "visible");
-                      var id_evento = item.id_evento;
+                      var eventId = item.Id;
                       // update counter of the event
                       var urlGet = "Assets/Api/updateCounter.php";
-                      $.get(urlGet, {"id_evento": id_evento});
+                      $.get(urlGet, {"eventId": eventId});
                     }else {
                       $("#oggiSTI_titoloStessoGiorno").html("Altri eventi della settimana");
-                      var dataEvento = item.data_evento;
-                      var arrayDataEvento = dataEvento.split('-');
-                      var annoEvento = arrayDataEvento[0];
-                      pannelli += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + id_pannello_settimana + '"><table><tr><td>' + annoEvento + '</td></tr><tr><td>' + item.titolo_ita + '</td></tr></table></a></h4></div><div id="collapse' + id_pannello_settimana + '" class="panel-collapse collapse"><div class="panel-body">' + item.abstr_ita + '</div><a id="evento-' + item.id_evento + '" class="oggiSTI_apriEvento">apri evento</a></div></div>';
-                      id_pannello_settimana++;
+                      var eventDate = item.Date;
+                      var eventDateArray = eventDate.split('-');
+                      var eventYear = eventDateArray[0];
+                      panels += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + weekPanelId + '"><table><tr><td>' + eventYear + '</td></tr><tr><td>' + item.ItaTitle + '</td></tr></table></a></h4></div><div id="collapse' + weekPanelId + '" class="panel-collapse collapse"><div class="panel-body">' + item.ItaAbstract + '</div><a id="evento-' + item.Id + '" class="oggiSTI_apriEvento">apri evento</a></div></div>';
+                      weekPanelId++;
                     }
-                    $("#oggiSTI_eventiLaterali").html(pannelli);
-                    contaEventiSettimana++
+                    $("#oggiSTI_eventiLaterali").html(panels);
+                    weekEventCount++
                   }
                 });
               });
             }else{
               // there is an event
   						if(count==0){
-                modificaInfoEvento(item.data_evento, item.titolo_ita, item.abstr_ita, item.desc_ita, item.riferimenti, item.redattore, item.ver_1, item.ver_2,  item.fonteimmagine, item.immagine);
+                modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2,  item.ImageCaption, item.Image);
                 $("#oggiSTI_sopraTitolo").css("visibility", "hidden");
-                var id_evento = item.id_evento;
+                var eventId = item.Id;
                 var urlGet = "Assets/Api/updateCounter.php";
   			        //chiamata AJAX
-                $.get( urlGet, {"id_evento":id_evento} );
+                $.get( urlGet, {"eventId":eventId} );
               }else{
                 $("#oggiSTI_titoloStessoGiorno").html("Altri eventi del giorno");
-                var dataEvento = item.data_evento;
-                var arrayDataEvento = dataEvento.split('-');
-                var annoEvento = arrayDataEvento[0];
-                pannelli += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+id_pannello+'"><table><tr><td>' + annoEvento + '</td></tr><tr><td>' + item.titolo_ita + '</td></tr></table></a></h4></div><div id="collapse'+id_pannello+'" class="panel-collapse collapse"><div class="panel-body">'+item.abstr_ita+'</div><a id="evento-'+item.id_evento+'" class="oggiSTI_apriEvento">apri evento</a></div></div>';
-                id_pannello++;
+                var eventDate = item.Date;
+                var eventDateArray = eventDate.split('-');
+                var eventYear = eventDateArray[0];
+                panels += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+panelId+'"><table><tr><td>' + eventYear + '</td></tr><tr><td>' + item.ItaTitle + '</td></tr></table></a></h4></div><div id="collapse'+panelId+'" class="panel-collapse collapse"><div class="panel-body">'+item.ItaAbstract+'</div><a id="evento-'+item.Id+'" class="oggiSTI_apriEvento">apri evento</a></div></div>';
+                panelId++;
               }
-              $("#oggiSTI_eventiLaterali").html(pannelli);
+              $("#oggiSTI_eventiLaterali").html(panels);
               count++;
             }
   				});
@@ -148,41 +148,41 @@ $( "#oggiSTI_picker" ).datepicker({
 
 // Open lateral events
 $( "#oggiSTI_eventiLaterali" ).on( "click", ".oggiSTI_apriEvento", function() {
-    var id_eventoStr=$(this).attr("id");
-    idArr = id_eventoStr.split("-"); 
-    var id_evento = idArr[1];    
+    var eventIdStr=$(this).attr("id");
+    idArr = eventIdStr.split("-"); 
+    var eventId = idArr[1];    
      var url = "Assets/Api/getLateralEvent.php";
-     var id_pannello = 1;
-        pannelli ="";
+     var panelId = 1;
+        panels ="";
 		// Ajax call
-		$.getJSON(url, {"id_evento":id_evento}, function(result){
+		$.getJSON(url, {"eventId":eventId}, function(result){
 				$.each(result, function(index, item){
-            modificaInfoEvento(item.data_evento, item.titolo_ita, item.abstr_ita, item.desc_ita, item.riferimenti, item.redattore, item.ver_1, item.ver_2, item.fonteimmagine, item.immagine);
+            modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
             $("#oggiSTI_sopraTitolo").css("visibility", "hidden");
             $("#oggiSTI_giornoDiverso").html("");
             $("#oggiSTI_meseDiverso").html("");
-            var id_evento = item.id_evento;
+            var eventId = item.Id;
             var urlGet = "Assets/Api/updateCounter.php";
 		        //chiamata AJAX
-            $.get( urlGet, {"id_evento":id_evento} );
+            $.get( urlGet, {"eventId":eventId} );
             $("#oggiSTI_titoloStessoGiorno").html("");
             var url = "Assets/Api/getLateralEvents.php";
 		        //chiamata AJAX
-            $.getJSON(url, {"id_evento":id_evento}, function(result){
+            $.getJSON(url, {"eventId":eventId}, function(result){
               $.each(result, function(index, item){
                 if(index=="status"){
                     $("#oggiSTI_titoloStessoGiorno").html("");
-                    $("#oggiSTI_eventiLaterali").html(pannelli);
+                    $("#oggiSTI_eventiLaterali").html(panels);
                 }else{         
                     $("#oggiSTI_titoloStessoGiorno").html("Altri eventi del giorno");
-                    var dataEvento = item.data_evento;
-                    var arrayDataEvento = dataEvento.split('-');
-                    var annoEvento = arrayDataEvento[0];
-                    pannelli += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+id_pannello+'"><table><tr><td>' + annoEvento + '</td></tr><tr><td>' + item.titolo_ita + '</td></tr></table></a></h4></div><div id="collapse'+id_pannello+'" class="panel-collapse collapse"><div class="panel-body">'+item.abstr_ita+'</div><a id="evento-'+item.id_evento+'" class="oggiSTI_apriEvento">apri evento</a></div></div>';
-                        id_pannello++;
+                    var eventDate = item.Date;
+                    var eventDateArray = eventDate.split('-');
+                    var eventYear = eventDateArray[0];
+                    panels += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+panelId+'"><table><tr><td>' + eventYear + '</td></tr><tr><td>' + item.ItaTitle + '</td></tr></table></a></h4></div><div id="collapse'+panelId+'" class="panel-collapse collapse"><div class="panel-body">'+item.ItaAbstract+'</div><a id="evento-'+item.Id+'" class="oggiSTI_apriEvento">apri evento</a></div></div>';
+                        panelId++;
                     }
               });
-              $("#oggiSTI_eventiLaterali").html(pannelli);
+              $("#oggiSTI_eventiLaterali").html(panels);
             });
 				});
 		});
@@ -193,38 +193,38 @@ $( "#oggiSTI_eventiLaterali" ).on( "click", ".oggiSTI_apriEvento", function() {
     var id = getUrlParameter('id');
     if(id){
         var url = "Assets/Api/getLateralEvent.php";
-        var id_pannello = 1;
-        pannelli ="";
+        var panelId = 1;
+        panels ="";
         //chiamata AJAX
-        $.getJSON(url, {"id_evento":id}, function(result){
+        $.getJSON(url, {"eventId":id}, function(result){
             $.each(result, function(index, item){
                 if(index=="status"){
                     pulisciCampi();
                 }else {
-                    modificaInfoEvento(item.data_evento, item.titolo_ita, item.abstr_ita, item.desc_ita, item.riferimenti, item.redattore, item.ver_1, item.ver_2, item.fonteimmagine, item.immagine);
+                    modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
                     $("#oggiSTI_sopraTitolo").css("visibility", "hidden");
                     $("#oggiSTI_giornoDiverso").html("");
                     $("#oggiSTI_meseDiverso").html("");
-                    var id_evento = item.id_evento;
+                    var eventId = item.Id;
                     var urlGet = "asset/api/updateCounter.php";
                     //chiamata AJAX
-                    $.get(urlGet, {"id_evento": id_evento});
+                    $.get(urlGet, {"eventId": eventId});
                     var url = "Assets/Api/getLateralEvents.php";
                     //chiamata AJAX
-                    $.getJSON(url, {"id_evento": id_evento}, function (result) {
+                    $.getJSON(url, {"eventId": eventId}, function (result) {
                         $.each(result, function (index, item) {
                             if (index == "status") {
-                                $("#oggiSTI_eventiLaterali").html(pannelli);
+                                $("#oggiSTI_eventiLaterali").html(panels);
                             } else {
-                                var dataEvento = item.data_evento;
-                                var arrayDataEvento = dataEvento.split('-');
-                                var annoEvento = arrayDataEvento[0];
-                                pannelli += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + id_pannello + '"><table><tr><td>' + annoEvento + '</td></tr><tr><td>' + item.titolo_ita + '</td></tr></table></a></h4></div><div id="collapse' + id_pannello + '" class="panel-collapse collapse"><div class="panel-body">' + item.abstr_ita + '</div><a id="evento-' + item.id_evento + '" class="oggiSTI_apriEvento">apri evento</a></div></div>';
-                                id_pannello++;
+                                var eventDate = item.Date;
+                                var eventDateArray = eventDate.split('-');
+                                var eventYear = eventDateArray[0];
+                                panels += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + panelId + '"><table><tr><td>' + eventYear + '</td></tr><tr><td>' + item.ItaTitle + '</td></tr></table></a></h4></div><div id="collapse' + panelId + '" class="panel-collapse collapse"><div class="panel-body">' + item.ItaAbstract + '</div><a id="evento-' + item.Id + '" class="oggiSTI_apriEvento">apri evento</a></div></div>';
+                                panelId++;
                             }
                         });
                         $("#oggiSTI_titoloStessoGiorno").html("Altri eventi del giorno");
-                        $("#oggiSTI_eventiLaterali").html(pannelli);
+                        $("#oggiSTI_eventiLaterali").html(panels);
                     });
                 }
             });
@@ -247,46 +247,46 @@ $( "#oggiSTI_eventiLaterali" ).on( "click", ".oggiSTI_apriEvento", function() {
         var msec = Date.parse(data);
         var i = new Date(estremoInf(msec));
         var s = new Date(estremoSup(msec));
-        var dataInf = formatDate(i);
-        var dataSup = formatDate(s);
+        var lowerDate = formatDate(i);
+        var upperDate = formatDate(s);
 
         //var url = "asset/api/controllaEventiGiornalieri.php"
         $.get("Assets/Api/checkTodayEvents.php", function (data){
             if (data == 0) {
-                var contaEventiSettimana = 0;
-                var id_pannello_settimana = 1;
-                pannelli = "";
+                var weekEventCount = 0;
+                var weekPanelId = 1;
+                panels = "";
                 var url = "Assets/Api/getWeekEvents.php";
-                $.getJSON(url, {"dataInf": dataInf, "dataSup": dataSup}, function (result) {
+                $.getJSON(url, {"lowerDate": lowerDate, "upperDate": upperDate}, function (result) {
                     $.each(result, function (index, item) {
                         if (index == "status") {
                             pulisciCampi();
                         } else {
-                            if (contaEventiSettimana == 0) {
-                                modificaInfoEvento(item.data_evento, item.titolo_ita, item.abstr_ita, item.desc_ita, item.riferimenti, item.redattore, item.ver_1, item.ver_2, item.fonteimmagine, item.immagine);
+                            if (weekEventCount == 0) {
+                                modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
                                 $("#oggiSTI_sopraTitolo").css("visibility", "visible");
-                                var id_evento = item.id_evento;
+                                var eventId = item.Id;
                                 var urlGet = "Assets/Api/updateCounter.php";
                                 //chiamata AJAX
-                                $.get(urlGet, {"id_evento": id_evento});
+                                $.get(urlGet, {"eventId": eventId});
                             } else {
-                                var dataEvento = item.data_evento;
-                                var arrayDataEvento = dataEvento.split('-');
-                                var annoEvento = arrayDataEvento[0];
-                                pannelli += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + id_pannello_settimana + '"><table><tr><td>' + annoEvento + '</td></tr><tr><td>' + item.titolo_ita + '</td></tr></table></a></h4></div><div id="collapse' + id_pannello_settimana + '" class="panel-collapse collapse"><div class="panel-body">' + item.abstr_ita + '</div><a id="evento-' + item.id_evento + '" class="oggiSTI_apriEvento">apri evento</a></div></div>';
-                                id_pannello_settimana++;
+                                var eventDate = item.Date;
+                                var eventDateArray = eventDate.split('-');
+                                var eventYear = eventDateArray[0];
+                                panels += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + weekPanelId + '"><table><tr><td>' + eventYear + '</td></tr><tr><td>' + item.ItaTitle + '</td></tr></table></a></h4></div><div id="collapse' + weekPanelId + '" class="panel-collapse collapse"><div class="panel-body">' + item.ItaAbstract + '</div><a id="evento-' + item.Id + '" class="oggiSTI_apriEvento">apri evento</a></div></div>';
+                                weekPanelId++;
                             }
                             $("#oggiSTI_titoloStessoGiorno").html("Altri eventi della settimana");
-                            $("#oggiSTI_eventiLaterali").html(pannelli);
-                            contaEventiSettimana++
+                            $("#oggiSTI_eventiLaterali").html(panels);
+                            weekEventCount++
                         }
                     });
                 });
             } else {
-                var data_evento = dataOggi;
+                var eventDate = dataOggi;
                 var url = "Assets/Api/getTodayEvent.php";
-                var id_pannello = 1;
-                pannelli = "";
+                var panelId = 1;
+                panels = "";
                 //chiamata AJAX
                 $.getJSON(url, function (result) {
                     $.each(result, function (index, item) {
@@ -296,27 +296,27 @@ $( "#oggiSTI_eventiLaterali" ).on( "click", ".oggiSTI_apriEvento", function() {
                             });
                             //window.location = "asset/api/estraiEventoGiornaliero.php";
                         } else {
-                            modificaInfoEvento(item.data_evento, item.titolo_ita, item.abstr_ita, item.desc_ita, item.riferimenti, item.redattore, item.ver_1, item.ver_2, item.fonteimmagine, item.immagine);
-                            var id_evento = item.id_evento;
+                            modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
+                            var eventId = item.Id;
                             var urlGet = "Assets/Api/updateCounter.php";
                             //chiamata AJAX
-                            $.get(urlGet, {"id_evento": id_evento});
+                            $.get(urlGet, {"eventId": eventId});
                             var url = "Assets/Api/getLateralEvents.php";
                             //chiamata AJAX
-                            $.getJSON(url, {"id_evento": id_evento}, function (result) {
+                            $.getJSON(url, {"eventId": eventId}, function (result) {
                                 $.each(result, function (index, item) {
                                     if (index == "status") {
-                                        $("#oggiSTI_eventiLaterali").html(pannelli);
+                                        $("#oggiSTI_eventiLaterali").html(panels);
                                     } else {
-                                        var dataEvento = item.data_evento;
-                                        var arrayDataEvento = dataEvento.split('-');
-                                        var annoEvento = arrayDataEvento[0];
-                                        pannelli += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + id_pannello + '"><table><tr><td>' + annoEvento + '</td></tr><tr><td>' + item.titolo_ita + '</td></tr></table></a></h4></div><div id="collapse' + id_pannello + '" class="panel-collapse collapse"><div class="panel-body">' + item.abstr_ita + '</div><a id="evento-' + item.id_evento + '" class="oggiSTI_apriEvento">apri evento</a></div></div>';
-                                        id_pannello++;
+                                        var eventDate = item.Date;
+                                        var eventDateArray = eventDate.split('-');
+                                        var eventYear = eventDateArray[0];
+                                        panels += '<div class="panel panel-default"><div class="panel-heading panel-heading-custom"><h4 class="panel-title"><a data-toggle="collapse" href="#collapse' + panelId + '"><table><tr><td>' + eventYear + '</td></tr><tr><td>' + item.ItaTitle + '</td></tr></table></a></h4></div><div id="collapse' + panelId + '" class="panel-collapse collapse"><div class="panel-body">' + item.ItaAbstract + '</div><a id="evento-' + item.Id + '" class="oggiSTI_apriEvento">apri evento</a></div></div>';
+                                        panelId++;
                                     }
                                 });
                                 $("#oggiSTI_titoloStessoGiorno").html("Altri eventi del giorno");
-                                $("#oggiSTI_eventiLaterali").html(pannelli);
+                                $("#oggiSTI_eventiLaterali").html(panels);
                             });
                         }
                     });

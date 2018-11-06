@@ -39,61 +39,62 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require("config.php");
+//require("config.php");
+require("../../../../Config/OggiSTIConfig.php");
 include '../PHP/OggiSTI_sessionSet.php';
 include '../PHP/OggiSTI_controlLogged.php';
 
 // define variables and set to empty values
-$id_evento = $stato = $commento = $inserito =  $comm = "";
+$eventId = $state = $comment = $inserito =  $comm = "";
 $err = 0;
 
 if(isset($_POST['facebookOn'])) {
-  $id_evento = isset($_POST["id_evento"]) ? $_POST['id_evento'] : '';
-  $toinsert = "UPDATE eventi SET fb = 1 WHERE id_evento = '$id_evento'";
+  $eventId = isset($_POST["eventId"]) ? $_POST['eventId'] : '';
+  $toinsert = "UPDATE publishedEvents SET Fb = 1 WHERE Id = '$eventId'";
   $result = mysqli_query($conn, $toinsert); //order executes
   if($result){
-    $sql2 = "INSERT INTO revisione (id_evento, revisore, tipo_revisione) VALUES ('$id_evento', '$id_utente', '3')";
+    $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '3')";
     mysqli_query($conn, $sql2);
-    header( "Location:../PHP/OggiSTI_event.php?id_evento=$id_evento&id_state=Pubblicato" );
+    header( "Location:../PHP/OggiSTI_event.php?eventId=$eventId&stateId=Pubblicato" );
   }
 }
 
 if(isset($_POST['facebookOff'])) {
-  $id_evento = isset($_POST["id_evento"]) ? $_POST['id_evento'] : '';
-  $toinsert = "UPDATE eventi SET fb = 0 WHERE id_evento = '$id_evento'";
+  $eventId = isset($_POST["eventId"]) ? $_POST['eventId'] : '';
+  $toinsert = "UPDATE publishedEvents SET Fb = 0 WHERE Id = '$eventId'";
   $result = mysqli_query($conn, $toinsert); //order executes
   if($result){
-    $sql2 = "INSERT INTO revisione (id_evento, revisore, tipo_revisione) VALUES ('$id_evento', '$id_utente', '4')";
+    $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '4')";
     mysqli_query($conn, $sql2);
-    header( "Location:../PHP/OggiSTI_event.php?id_evento=$id_evento&id_state=Pubblicato" );
+    header( "Location:../PHP/OggiSTI_event.php?eventId=$eventId&stateId=Pubblicato" );
   }
 }
 
 if(isset($_POST['redazione'])) {
    // è stato premuto il primo pulsante
     
-  $stato = 'In redazione';
-  $id_evento = isset($_POST["id_evento"]) ? $_POST['id_evento'] : '';
-  $commento = isset($_POST["commento"]) ? $_POST['commento'] : '';
-  $ver_1 = isset($_POST["ver_1"]) ? $_POST['ver_1'] : '';
-  $ver_2 = isset($_POST["ver_2"]) ? $_POST['ver_2'] : '';
+  $state = 'In redazione';
+  $eventId = isset($_POST["eventId"]) ? $_POST['eventId'] : '';
+  $comment = isset($_POST["comment"]) ? $_POST['comment'] : '';
+  $reviser1 = isset($_POST["reviser1"]) ? $_POST['reviser1'] : '';
+  $reviser2 = isset($_POST["reviser2"]) ? $_POST['reviser2'] : '';
     
-  $commento = mysqli_real_escape_string($conn, $commento);
+  $comment = mysqli_real_escape_string($conn, $comment);
   
  
 //inserting data order
-$toinsert = "UPDATE eventiappr SET stato = '$stato', commento = '$commento' WHERE id_evento = '$id_evento'";
+$toinsert = "UPDATE editingEvents SET State = '$state', Comment = '$comment' WHERE Id = '$eventId'";
 
 //declare in the order variable
 $result = mysqli_query($conn, $toinsert);	//order executes
 if($result){
    $inserito="Commento inserito correttamente ed evento mandato in redazione";
-   $sql2 = "INSERT INTO revisione (id_evento, revisore, tipo_revisione, commento) VALUES ('$id_evento', '$id_utente', '2', '$commento')";
+   $sql2 = "INSERT INTO review (Event_Id, Reviser, Type, Comment) VALUES ('$eventId', '$userId', '2', '$comment')";
    mysqli_query($conn, $sql2);
-   header( "Location:../PHP/OggiSTI_redactionEvents.php?messaggio=redazione" );
+   header( "Location:../PHP/OggiSTI_redactionEvents.php?message=redazione" );
 }else{
 	$inserito="Inserimento non eseguito";
-  header( "Location:../PHP/OggiSTI_redactionEvents.php?messaggio=errore" );
+  header( "Location:../PHP/OggiSTI_redactionEvents.php?message=errore" );
 }
 
 }
@@ -102,39 +103,39 @@ if(isset($_POST['approva'])) {
    // è stato premuto il secondo pulsante
 
 
-  $id_evento = isset($_POST["id_evento"]) ? $_POST['id_evento'] : '';
-  $ver_1 = isset($_POST["ver_1"]) ? $_POST['ver_1'] : '';
-  $ver_2 = isset($_POST["ver_2"]) ? $_POST['ver_2'] : '';
-  $commento = isset($_POST["commento"]) ? $_POST['commento'] : '';
+  $eventId = isset($_POST["eventId"]) ? $_POST['eventId'] : '';
+  $reviser1 = isset($_POST["reviser1"]) ? $_POST['reviser1'] : '';
+  $reviser2 = isset($_POST["reviser2"]) ? $_POST['reviser2'] : '';
+  $comment = isset($_POST["comment"]) ? $_POST['comment'] : '';
     
-  $commento = mysqli_real_escape_string($conn, $commento);
+  $comment = mysqli_real_escape_string($conn, $comment);
     
-  if($ver_1==0 && $ver_2==0 ){
-      $stato = "Approvazione 1/2";
-      $ver_1 = $id_utente;
+  if($reviser1==0 && $reviser2==0 ){
+      $state = "Approvazione 1/2";
+      $reviser1 = $userId;
       $comm = "Mandato in attesa della II approvazione";
-      $toinsert = "UPDATE eventiappr SET ver_1 = '$ver_1', ver_2 = '$ver_2', stato = '$stato',  commento = '$commento' WHERE id_evento = '$id_evento'";
+      $toinsert = "UPDATE editingEvents SET Reviser_1 = '$reviser1', Reviser_2 = '$reviser2', State = '$state',  Comment = '$comment' WHERE Id = '$eventId'";
       $result = mysqli_query($conn, $toinsert); //order
       if($result){
-         $sql2 = "INSERT INTO revisione (id_evento, revisore, tipo_revisione, commento) VALUES ('$id_evento', '$id_utente', '1', '$commento')";
+         $sql2 = "INSERT INTO review (Event_Id, Reviser, Type, Comment) VALUES ('$eventId', '$userId', '1', '$comment')";
          mysqli_query($conn, $sql2);
      }
   }else{
-      if($ver_1==$id_utente){
+      if($reviser1==$userId){
          $err=1;
       }else{
-      $stato = "Pubblicato";
-      $ver_2 = $id_utente;
+      $state = "Pubblicato";
+      $reviser2 = $userId;
       $comm = "Pubblicato";
-      $toinsert = "INSERT INTO eventi (id_evento, ver_1, ver_2,  stato, commento) 
-      VALUES ('$id_evento','$ver_1','$ver_2','$stato','$commento') ON DUPLICATE KEY UPDATE ver_1='$ver_1',ver_2='$ver_2',stato='$stato',commento='$commento'";
-      $query= "UPDATE eventi t1, eventiappr t2 SET t1.data_evento = t2.data_evento,  t1.titolo_ita=t2.titolo_ita, t1.titolo_eng=t2.titolo_eng, t1.immagine=t2.immagine, t1.fonteimmagine=t2.fonteimmagine, t1.abstr_ita=t2.abstr_ita, t1.abstr_eng=t2.abstr_eng, t1.desc_ita=t2.desc_ita, t1.desc_eng=t2.desc_eng, t1.riferimenti=t2.riferimenti, t1.keywords=t2.keywords, t1.redattore=t2.redattore WHERE t1.id_evento = t2.id_evento AND t2.id_evento = '$id_evento'";
-      $query2="DELETE FROM eventiappr WHERE id_evento='$id_evento'";
+      $toinsert = "INSERT INTO publishedEvents (Id, Reviser_1, Reviser_2, State, Comment) 
+      VALUES ('$eventId','$reviser1','$reviser2','$state','$comment') ON DUPLICATE KEY UPDATE Reviser_1='$reviser1',Reviser_2='$reviser2',State='$state',Comment='$comment'";
+      $query= "UPDATE publishedEvents pE, editingEvents eE SET pE.Date = eE.Date,  pE.ItaTitle=eE.ItaTitle, pE.EngTitle=eE.EngTitle, pE.Image=eE.Image, pE.ImageCaption=eE.ImageCaption, pE.ItaAbstract=eE.ItaAbstract, pE.EngAbstract=eE.EngAbstract, pE.ItaDescription=eE.ItaDescription, pE.EngDescription=eE.EngDescription, pE.TextReferences=eE.TextReferences, pE.Keywords=eE.Keywords, pE.Editors=eE.Editors WHERE pE.Id = eE.Id AND eE.Id = '$eventId'";
+      $query2="DELETE FROM editingEvents WHERE Id='$eventId'";
       $result = mysqli_query($conn, $toinsert); //order
       mysqli_query($conn, $query);
       mysqli_query($conn, $query2);
       if($result){
-         $sql2 = "INSERT INTO revisione (id_evento, revisore, tipo_revisione, commento) VALUES ('$id_evento', '$id_utente', '1', '$commento')";
+         $sql2 = "INSERT INTO review (Event_Id, Reviser, Type, Comment) VALUES ('$eventId', '$userId', '1', '$comment')";
          mysqli_query($conn, $sql2);
      }
       }
@@ -148,15 +149,15 @@ if($err==0){
 $result = mysqli_query($conn, $toinsert); //order 
 if($result){
    $inserito="Commento inserito correttamente ed evento $comm";
-   header( "Location:../PHP/OggiSTI_publicatedEvents.php?messaggio=approvato");
+   header( "Location:../PHP/OggiSTI_publishedEvents.php?message=approvato");
 
 } else{
  $inserito="Inserimento non eseguito";
- header( "Location:../PHP/OggiSTI_publicatedEvents.php?messaggio=errore" );
+ header( "Location:../PHP/OggiSTI_publishedEvents.php?message=errore" );
 
 }
 }else{
-    header( "Location:../PHP/OggiSTI_reviewedEvents.php?messaggio=erroreappr" );
+    header( "Location:../PHP/OggiSTI_reviewedEvents.php?message=erroreappr" );
 }
 
 
@@ -167,26 +168,26 @@ if(isset($_POST['redazionePubblicato'])) {
    // è stato premuto il primo pulsante
 
 
-  $id_evento = isset($_POST["id_evento"]) ? $_POST['id_evento'] : '';
-  $stato = 'In redazione';
-  $commento = isset($_POST["commento"]) ? $_POST['commento'] : '';
-  $commento = mysqli_real_escape_string($conn, $commento);
+  $eventId = isset($_POST["eventId"]) ? $_POST['eventId'] : '';
+  $state = 'In redazione';
+  $comment = isset($_POST["comment"]) ? $_POST['comment'] : '';
+  $comment = mysqli_real_escape_string($conn, $comment);
  
-$toinsert = "INSERT INTO eventiappr (id_evento, stato, commento) VALUES ('$id_evento','$stato','$commento')";
-$query= "UPDATE eventiappr t1, eventi t2 SET t1.data_evento = t2.data_evento,  t1.titolo_ita=t2.titolo_ita, t1.titolo_eng=t2.titolo_eng, t1.immagine=t2.immagine, t1.fonteimmagine=t2.fonteimmagine, t1.abstr_ita=t2.abstr_ita, t1.abstr_eng=t2.abstr_eng, t1.desc_ita=t2.desc_ita, t1.desc_eng=t2.desc_eng, t1.riferimenti=t2.riferimenti, t1.keywords=t2.keywords, t1.redattore=t2.redattore, t1.ver_1='in attesa', t1.ver_2='in attesa' WHERE t1.id_evento = t2.id_evento AND t2.id_evento = '$id_evento'";
+$toinsert = "INSERT INTO editingEvents (Id, State, Comment) VALUES ('$eventId','$state','$comment')";
+$query= "UPDATE editingEvents pE, publishedEvents eE SET pE.Date = eE.Date,  pE.ItaTitle=eE.ItaTitle, pE.EngTitle=eE.EngTitle, pE.Image=eE.Image, pE.ImageCaption=eE.ImageCaption, pE.ItaAbstract=eE.ItaAbstract, pE.EngAbstract=eE.EngAbstract, pE.ItaDescription=eE.ItaDescription, pE.EngDescription=eE.EngDescription, pE.TextReferences=eE.TextReferences, pE.Keywords=eE.Keywords, pE.Editors=eE.Editors, pE.Reviser_1='in attesa', pE.Reviser_2='in attesa' WHERE pE.Id = eE.Id AND eE.Id = '$eventId'";
 
 //declare in the order variable
 $result = mysqli_query($conn, $toinsert);	//order executes
 if($result){
    $inserito="Inserimento avvenuto correttamente";
    mysqli_query($conn, $query);
-   $sql2 = "INSERT INTO revisione (id_evento, revisore, tipo_revisione, commento) VALUES ('$id_evento', '$id_utente', '2', '$commento')";
+   $sql2 = "INSERT INTO review (Event_Id, Reviser, Type, Comment) VALUES ('$eventId', '$userId', '2', '$comment')";
   mysqli_query($conn, $sql2);
-  header( "Location:../PHP/OggiSTI_redactionEvents.php?messaggio=redazione" );
+  header( "Location:../PHP/OggiSTI_redactionEvents.php?message=redazione" );
 	
 }else{
 	$inserito="Inserimento non eseguito";
- header( "Location:../PHP/OggiSTI_publicatedEvents.php?messaggio=errore" );
+ header( "Location:../PHP/OggiSTI_publishedEvents.php?message=errore" );
 }
 
 

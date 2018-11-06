@@ -159,20 +159,20 @@ include 'OggiSTI_controlLogged.php';
 
   <div class="col-sm-4">
     <div class="well well-lg">Eventi redatti <span id="redactedEvents" class="badge"></span></div>
-    <div class="well well-lg">Eventi pubblicati <span id="publicatedEvents" class="badge"></span></div>
+    <div class="well well-lg">Eventi pubblicati <span id="publishedEvents" class="badge"></span></div>
     <div class="well well-lg"><a href="mailto:info@progettohmr.it?subject=[support] Problema con OggiSTI"><span class="glyphicon glyphicon-envelope"></span> Segnala un problema</a></div>
   </div>
 <br class="stop"/>
     
     <h2>Eventi</h2>
         <ul class="list-group">
-            <?php if($redattore==1){ echo '<li class="list-group-item"><a href="OggiSTI_savedEvents.php">I tuoi eventi salvati</a></li>';} ?>
-            <?php if($redattore==1){ echo '<li class="list-group-item"><a href="OggiSTI_redactionEvents.php">In redazione</a></li>';} ?>
+            <?php if($editorPermission==1){ echo '<li class="list-group-item"><a href="OggiSTI_savedEvents.php">I tuoi eventi salvati</a></li>';} ?>
+            <?php if($editorPermission==1){ echo '<li class="list-group-item"><a href="OggiSTI_redactionEvents.php">In redazione</a></li>';} ?>
             <li class="list-group-item"><a href="OggiSTI_reviewedEvents.php">In attesa di approvazione</a></li>
-            <li class="list-group-item"><a href="OggiSTI_publicatedEvents.php">Lista eventi Pubblicati</a></li>
-            <?php if($redattore==1){ echo '<li class="list-group-item"><a href="OggiSTI_edit.php">Inserisci un nuovo evento</a></li>';} ?>
+            <li class="list-group-item"><a href="OggiSTI_publishedEvents.php">Lista eventi Pubblicati</a></li>
+            <?php if($editorPermission==1){ echo '<li class="list-group-item"><a href="OggiSTI_edit.php">Inserisci un nuovo evento</a></li>';} ?>
         </ul>
-        <?php if($amministratore==1){
+        <?php if($administratorPermission==1){
             echo '<h2>Amministrazione</h2>';
             echo '<ul class="list-group">';
             echo "<li class='list-group-item'><a href='OggiSTI_allEvents.php'>Gestione Eventi</a></li>";

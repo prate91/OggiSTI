@@ -37,83 +37,73 @@
 // ////////////////////////////////////////////////////////////////////////
 
 // include PHP files
-include("../../../Administration/Assets/Api/configUtenti.php");
-include("../Api/config.php");
+require("../../../../Config/UsersConfig.php");
+require("../../../../Config/OggiSTIConfig.php");
+include("../Api/functions.php");
 include 'OggiSTI_sessionSet.php';
 include 'OggiSTI_controlLogged.php';
 
 // initialize empty variables
-    $messaggio = $mess = $errore = $notizia = "";
-    $id_evento = $dateCorr = $titolo_ita = $titolo_eng = $abstr_ita = $abstr_eng = $immagine = $desc_ita = $desc_eng = $riferimenti = $keywords = $salvato = $fonte_img = $commento = "";
+    $message = $mess = $errore = $notizia = "";
+    $eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $itaDescription = $engDescription = $textReferences = $keywords = $saved = $savedName = $imageCaption = $comment = $editors =  "";
     $fb=0;
-    if(isset($_GET["id_evento"])&&isset($_GET["id_state"])) {
+    if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
         $menuEvento = "Modifica evento";
-        $id_evento = $_GET["id_evento"];
-        $id_state = $_GET["id_state"];
-        if($id_state=="Pubblicato"){
-            $sql = "SELECT * FROM eventi WHERE id_evento = '$id_evento'";
+        $eventId = $_GET["eventId"];
+        $stateId = $_GET["stateId"];
+        if($stateId=="Pubblicato"){
+            $sql = "SELECT * FROM publishedEvents WHERE Id = '$eventId'";
         } else {
-            $sql = "SELECT * FROM eventiappr WHERE id_evento = '$id_evento'";
+            $sql = "SELECT * FROM editingEvents WHERE Id = '$eventId'";
         }
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-        $oldDate = $row["data_evento"];
+        $oldDate = $row["Date"];
         $date = date('d-m-Y', strtotime($oldDate));
         $dateCorr = str_replace('-', '/', $date);
-        $titolo_ita = $row["titolo_ita"];
-        $titolo_eng = $row["titolo_eng"];
-        $abstr_ita = $row["abstr_ita"];
-        $abstr_eng = $row["abstr_eng"];
-        $immagine = $row["immagine"];
-        $icona = $row["icona"];
-        $fonte_img = $row["fonteimmagine"];
-        $desc_ita = $row["desc_ita"];
-        $desc_eng = $row["desc_eng"];
-        $riferimenti = $row["riferimenti"];
-        $keywords = $row["keywords"];
-        $autori = $row["redattore"];
-        $pieces = explode(", ", $autori);
-        $riga_redattori = "";
+        $itaTitle = $row["ItaTitle"];
+        $engTitle = $row["EngTitle"];
+        $itaAbstract = $row["ItaAbstract"];
+        $engAbstract = $row["EngAbstract"];
+        $image = $row["Image"];
+        $icon = $row["Icon"];
+        $imageCaption = $row["ImageCaption"];
+        $itaDescription = $row["ItaDescription"];
+        $engDescription = $row["EngDescription"];
+        $textReferences = $row["TextReferences"];
+        $keywords = $row["Keywords"];
+        $editors = $row["Editors"];
+        $pieces = explode(", ", $editors);
+        $editorsRow = "";
         for($j=0; $j<sizeof($pieces); $j++){
-            $id_utente = intval($pieces[$j]);
-            $queryUtenti = "SELECT * FROM admin WHERE id_auth=$id_utente";
-            $risultato_query_utenti = mysqli_query($connUtenti, $queryUtenti);
-            $riga_utente = mysqli_fetch_array($risultato_query_utenti,MYSQLI_ASSOC);
-            $riga_redattori =  $riga_redattori . $riga_utente["nome"] . " " . $riga_utente["cognome"]. "<br/> ";
+            $idUser = intval($pieces[$j]);
+            $editorsRow =  $editorsRow . loadCompletefName(loadPeopleId($idUser)) . "<br/> ";
+            //$riga_utente["nome"] . " " . $riga_utente["cognome"]. "<br/> ";
         }
-        $revisore_1 = "";
-        $ver_1 = $row["ver_1"];
-        if($ver_1!=0){
-            $id_utente = intval($ver_1);
-            $queryUtenti = "SELECT * FROM admin WHERE id_auth=$id_utente";
-            $risultato_query_utenti = mysqli_query($connUtenti, $queryUtenti);
-            $riga_utente = mysqli_fetch_array($risultato_query_utenti,MYSQLI_ASSOC);
-            $revisore_1 =  $riga_utente["nome"] . " " . $riga_utente["cognome"];
+        $nameReviser1 = "";
+        $reviser1 = $row["Reviser_1"];
+        if($reviser1!=0){
+            $idUser = intval($reviser1);
+            $nameReviser1 =  loadCompletefName(loadPeopleId($idUser));
         }
-        $ver_2 = $row["ver_2"];
-        $revisore_2 = "";
-        if($ver_2!=0){
-            $id_utente = intval($ver_2);
-            $queryUtenti = "SELECT * FROM admin WHERE id_auth=$id_utente";
-            $risultato_query_utenti = mysqli_query($connUtenti, $queryUtenti);
-            $riga_utente = mysqli_fetch_array($risultato_query_utenti,MYSQLI_ASSOC);
-            $revisore_2 =  $riga_utente["nome"] . " " . $riga_utente["cognome"];
+        $reviser2 = $row["Reviser_2"];
+        $nameReviser2 = "";
+        if($reviser2!=0){
+            $idUser = intval($reviser2);
+            $nameReviser2 =  loadCompletefName(loadPeopleId($idUser));
         }
-        $stato = $row["stato"];
-        if($id_state!="Pubblicato"){
-            $salvato = $row["salvato"];
-            if($salvato!=0){
-                $id_utente = intval($salvato);
-                $queryUtenti = "SELECT * FROM admin WHERE id_auth=$id_utente";
-                $risultato_query_utenti = mysqli_query($connUtenti, $queryUtenti);
-                $riga_utente = mysqli_fetch_array($risultato_query_utenti,MYSQLI_ASSOC);
-                $salvato =  $riga_utente["nome"] . " " . $riga_utente["cognome"];
+        $state = $row["State"];
+        if($stateId!="Pubblicato"){
+            $saved = $row["Saved"];
+            if($saved!=0){
+                $idUser = intval($saved);
+                $savedName =  loadCompletefName(loadPeopleId($idUser));
             }
         }
-        $usato = $row["usato"];
-        $commento = $row["commento"];
-        if($id_state=="Pubblicato"){
-            $fb = intval($row["fb"]);
+        $views = $row["Views"];
+        $comment = $row["Comment"];
+        if($stateId=="Pubblicato"){
+            $fb = intval($row["Fb"]);
         }
                    
                     
@@ -191,77 +181,81 @@ include 'OggiSTI_controlLogged.php';
 ?>
 
     <table id="eventoAperto" class="table table-striped display"  width="100%" cellspacing="0">
-        <tr><td>Evento:</td><td id='idEvento'><?php echo $id_evento; ?></td></tr>
+        <tr><td>Evento:</td><td id='idEvento'><?php echo $eventId; ?></td></tr>
         <tr><td>Data:</td><td><?php echo $dateCorr; ?></td></tr>
-        <tr><td>Titolo:</td><td><?php echo $titolo_ita; ?></td></tr>
-        <tr><td>Title:</td><td><?php echo $titolo_eng; ?></td></tr>
-        <tr><td>Immagine:</td><td><img id='oggiSTI_immagineEvento' src='../Img/eventi/<?php echo $immagine; ?>' alt='Nessuna immagine'/></td></tr>
-        <tr><td>Link immagine:</td><td><?php echo $immagine; ?></td></tr>
-        <tr><td>Fonte immagine:</td><td><?php echo $fonte_img; ?></td></tr>
-        <tr><td>Link icona:</td><td><?php echo $icona; ?></td></tr>
-        <tr><td>Descrizione Breve:</td><td><?php echo $abstr_ita; ?></td></tr>
-        <tr><td>Brief description:</td><td><?php echo $abstr_eng; ?></td></tr>
-        <tr><td>Descrizione:</td><td><?php echo $desc_ita; ?></td></tr>
-        <tr><td>Description:</td><td><?php echo $desc_eng; ?></td></tr>
-        <tr><td>Riferimenti:</td><td><?php echo $riferimenti; ?></td></tr>
+        <tr><td>Titolo:</td><td><?php echo $itaTitle; ?></td></tr>
+        <tr><td>Title:</td><td><?php echo $engTitle; ?></td></tr>
+        <tr><td>Immagine:</td><td><img id='oggiSTI_immagineEvento' src='../Img/eventi/<?php echo $image; ?>' alt='Nessuna image'/></td></tr>
+        <tr><td>Link image:</td><td><?php echo $image; ?></td></tr>
+        <tr><td>Fonte image:</td><td><?php echo $imageCaption; ?></td></tr>
+        <tr><td>Link icon:</td><td><?php echo $icon; ?></td></tr>
+        <tr><td>Descrizione Breve:</td><td><?php echo $itaAbstract; ?></td></tr>
+        <tr><td>Brief description:</td><td><?php echo $engAbstract; ?></td></tr>
+        <tr><td>Descrizione:</td><td><?php echo $itaDescription; ?></td></tr>
+        <tr><td>Description:</td><td><?php echo $engDescription; ?></td></tr>
+        <tr><td>Riferimenti:</td><td><?php echo $textReferences; ?></td></tr>
         <tr><td>Keywords:</td><td><?php echo $keywords; ?></td></tr>
-        <tr><td>Redattore:</td><td><?php echo $riga_redattori; ?></td></tr>
-        <tr><td>Verifica 1:</td><td><?php echo $revisore_1; ?></td></tr>
-        <tr><td>Verifica 2:</td><td><?php echo $revisore_2; ?></td></tr>
-        <tr><td>Stato:</td><td id='idStato'><?php echo $stato; ?></td></tr>
-        <tr><td>Salvato:</td><td><?php echo $salvato; ?></td></tr>
-        <tr><td>Usato:</td><td><?php echo $usato; ?> volta/e</td></tr>
+        <tr><td>Redattore:</td><td><?php echo $editorsRow; ?></td></tr>
+        <tr><td>Verifica 1:</td><td><?php echo $nameReviser1; ?></td></tr>
+        <tr><td>Verifica 2:</td><td><?php echo $nameReviser2; ?></td></tr>
+        <tr><td>Stato:</td><td id='idStato'><?php echo $state; ?></td></tr>
+        <tr><td>Salvato:</td><td><?php echo $savedName; ?></td></tr>
+        <tr><td>Usato:</td><td><?php echo $views; ?> volta/e</td></tr>
         <tr><td>Facebook:</td><td>
         <?php 
             if($fb==0){ 
                 echo '<button class="btn btn-danger" disabled> Non pubblicabile </button>';
-                if($stato=="Pubblicato"){
+                if($state=="Pubblicato"){
                     echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle"> ON </button>';
                 }
             }else{
                 echo '<button class="btn btn-success" disabled> Pubblicabile </button>';
-                if($stato=="Pubblicato"){
+                if($state=="Pubblicato"){
                     echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle"> OFF </button>';
                 }
             } 
         ?></td></tr>
-        <tr class='rigaCommento'><td>Commento:</td><td><?php echo $commento; ?></td></tr>
+        <tr class='rigaCommento'><td>Commento:</td><td><?php echo $comment; ?></td></tr>
     </table>
-    <?php if(($stato=="Approvazione 0/2"||$stato=="Approvazione 1/2"||$stato=="Pubblicato")&&($revisore==1)) {
+    <?php if(($state=="Approvazione 0/2"||$state=="Approvazione 1/2"||$state=="Pubblicato")&&($reviserPermission==1)) {
         echo '<form id = "formCommento" method = "post" action = "../Api/updateReview.php" class="form-horizontal">';
         echo '<div id = "spazioCommento" class="form-group">';
-        echo "<input type = 'hidden' class='hidden_id_evento' name = 'id_evento' value = '$id_evento' />";
-        echo "<input type = 'hidden' id = 'hidden_ver_1' name = 'ver_1' value = '$ver_1' />";
-        echo "<input type = 'hidden' id = 'hidden_ver_2' name = 'ver_2' value = '$ver_2' />";
+        echo "<input type = 'hidden' class='hidden_eventId' name = 'eventId' value = '$eventId' />";
+        echo "<input type = 'hidden' id = 'hidden_reviser1' name = 'reviser1' value = '$reviser1' />";
+        echo "<input type = 'hidden' id = 'hidden_reviser2' name = 'reviser2' value = '$reviser2' />";
         echo '<label for="comment" > Commento:</label >';
-        echo '<textarea class="form-control" name = "commento" rows = "5" id = "comment" ></textarea >';
-        echo '<span class="help-block" > Inserisci un commento </span>';
+        echo '<textarea class="form-control" name = "comment" rows = "5" id = "comment" ></textarea >';
+        echo '<span class="help-block" > Inserisci un comment </span>';
     }?>
     <?php
         echo '<div id="bottoniCommento" class="">';
 
         // Edit event button, only if isn't saved or saved by user that has editing permission
-        // and the state is "In redazione"
-        if((($stato=="In redazione")&&($redattore==1)&&(($salvato==$id_utente)||($salvato==0)))) {
+        // and the state is "In editing"
+        if((($state=="In redazione")&&($editorPermission==1)&&(($saved==$idUser)||($saved==0)))) {
             echo '<button type = "button" id = "modificaEvento" class="btn btn-warning" > Modifica Evento </button>';
         }
 
         // Quick change button, only if user has review permission 
         // and event isn't in editing state
-        if($revisore==1 && $stato!="In redazione") {
+        if($reviserPermission==1 && $state!="In redazione") {
             echo '<button type = "button" id = "modificaVeloce" class="btn btn-warning" > Modifica Veloce </button>';
         }
 
         // Send in editing and approve buttons, only if event is in review states 
         // and user has review permission
-        if((($stato=="Approvazione 0/2")||($stato=="Approvazione 1/2"))&&($revisore==1)) {
+        if((($state=="Approvazione 0/2")||($state=="Approvazione 1/2"))&&($reviserPermission==1)) {
             echo '<button type = "submit" name = "redazione" id = "redazione" class="btn btn-default" > Manda in redazione </button >';
             echo '<button type = "submit" name = "approva" id = "approva" class="btn btn-default" > Approva</button >';
         }
 
         // Send in editing from published state
-        if($stato=="Pubblicato"){
+        if($state=="Pubblicato"){
         echo '<button type = "submit" name = "redazionePubblicato" id = "redazionePubblicato" class="btn btn-default" > Manda in redazione </button>';
+        }
+
+        if($administratorPermission==1){
+            echo '<button type="button" id="updateEventState" class="btn btn-danger" data-toggle="modal" data-target="#updateStateModal">Aggiorna state</button>';
         }
     echo "</div>";
         
@@ -270,67 +264,49 @@ include 'OggiSTI_controlLogged.php';
 
     <h2>Cronologia delle modifiche</h2>
     <ul>
-    <?php
-        $queryUtente = "SELECT * FROM admin WHERE id_auth='$redattore'";
-        $sql2 = "SELECT * FROM redazione WHERE id_evento='$id_evento'";
-        $result2 = mysqli_query($conn, $sql2);
-        // $row = mysqli_fetch_array($result2, MYSQLI_ASSOC);
-        while ($row2 = mysqli_fetch_assoc($result2)) {
-            $redattore=$row2["redattore"];
-            $queryUtente = "SELECT * FROM admin WHERE id_auth='$redattore'";
-            $resultQueryUtente = mysqli_query($connUtenti, $queryUtente);
-            $rowUtente = mysqli_fetch_array($resultQueryUtente,MYSQLI_ASSOC);
-            switch ($row2["tipo_modifica"]) {
-                case 1:
-                    $tipo="creato";
-                    break;
-                case 2:
-                    $tipo="salvato";
-                    break;
-                case 3:
-                    $tipo="inviato in approvazione";
-                    break;
-                case 4:
-                    $tipo="modifica rapida";
-            }
-    echo "<li>" . $row2["data"] . " - " . $rowUtente["cognome"] . " " . $rowUtente["nome"] . " - ".  $tipo ."</li>";
-            }
-        ?>
+    <?php echo loadEditingChronology($eventId); ?>
     </ul>
 
     <h2>Cronologia delle revisioni</h2>
     <ul>
-    <?php
-        $queryUtente = "SELECT * FROM admin WHERE id_auth='$redattore'";
-        $sql2 = "SELECT * FROM revisione WHERE id_evento='$id_evento'";
-        $result2 = mysqli_query($conn, $sql2);
-        // $row = mysqli_fetch_array($result2, MYSQLI_ASSOC);
-        while ($row2 = mysqli_fetch_assoc($result2)) {
-            $revisore=$row2["revisore"];
-            $queryUtente = "SELECT * FROM admin WHERE id_auth='$revisore'";
-            $resultQueryUtente = mysqli_query($connUtenti, $queryUtente);
-            $rowUtente = mysqli_fetch_array($resultQueryUtente,MYSQLI_ASSOC);
-            switch ($row2["tipo_revisione"]) {
-                case 1:
-                    $tipo="approvato";
-                    break;
-                case 2:
-                    $tipo="inviato in redazione";
-                    break;
-                case 3:
-                    $tipo="pubblicabile su Facebook";
-                    break;
-                case 4:
-                    $tipo="non pubblicabile su Facebook";
-                    break;
-            }
-    echo "<li>" . $row2["data"] . " - " . $rowUtente["cognome"] . " " . $rowUtente["nome"] . " - ".  $tipo ."</li>";
-            }
-        ?>
+    <?php echo loadReviewChronology($eventId); ?>
     </ul>
 
 </div>
 <span class="stop"></span>
+    <!-- Update state modal -->
+    <div id="updateStateModal" class="modal fade">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Cambia lo state dell'evento</h4>
+    </div>
+    <div class="modal-body">
+    <div class="form-group">
+        <label for="sel1">Elimina evento dai pubblicati e:</label>
+        <select class="form-control" id="sel1">
+            <?php
+            if(isset($_GET["stateId"])) {
+                $stateId=$_GET["stateId"];
+                if($stateId=="Pubblicato"){
+                    echo "<option>mettilo dormiente</option>";
+                    echo "<option>mettilo in redazione</option>";
+                }else{
+                    echo "<option>Sposta l'evento in uno state dormiente</option>";
+                }
+            }
+            ?>
+        </select>
+    </div> 
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+    <input type="submit" name="updateState" id="updateState" class="btn btn-warning" value="Effettua la modifica">
+    </div>
+    </div>
+    </div>
+    </div>
 
 <!-- Standard HMRWeb footer////////////////////////////////////////////////////
 // Set:

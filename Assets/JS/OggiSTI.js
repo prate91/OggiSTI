@@ -47,10 +47,11 @@ var intestazione_tabella_redazione = "";
 var intestazione_tabella_approvazione = "";
 var intestazione_tabella_utenti = "";
 var intestazione_tabella_temp = "";
+var fbIcon = "";
 //var intestazione = "";
 
 
-$(document).ready(function(){
+$(document).ready(function () {
 
     var pathname = window.location.pathname;
     var state = "";
@@ -58,149 +59,129 @@ $(document).ready(function(){
 
     // Get the path name of the page
 
-     if(/OggiSTI_savedEvents.php/.test(pathname)) {
+    if (/OggiSTI_savedEvents.php/.test(pathname)) {
         state = "Salvato";
     }
-    if(/OggiSTI_redactionEvents.php/.test(pathname)) {
+    if (/OggiSTI_redactionEvents.php/.test(pathname)) {
         state = "Redazione";
     }
-    if(/OggiSTI_reviewedEvents.php/.test(pathname)) {
-        state="Approvazione";
+    if (/OggiSTI_reviewedEvents.php/.test(pathname)) {
+        state = "Approvazione";
     }
-    if(/OggiSTI_publicatedEvents.php/.test(pathname)) {
+    if (/OggiSTI_publishedEvents.php/.test(pathname)) {
         state = "Pubblicato";
     }
-    if(/OggiSTI_allEvents.php/.test(pathname)) {
+    if (/OggiSTI_allEvents.php/.test(pathname)) {
         state = "Tutti";
     }
 
-    
+
     // Built events tables
 
     var url = "../Api/extractEvents.php"
-    $.getJSON(url, {"state":state}, function (result) {
-            $.each(result, function (index, item) {
-                if(state=="Tutti"){
-                // tables composed by all events    
-                    if (item.id_evento_appr == item.id_evento) {
-                        // event is in editing or reviewed state and publicated
-                        var riga = "<tr class='item'><td>" + item.id_evento_appr + "</td>" +
-                        "<td class=''>" + formatDatemmddyyyy(item.data_evento_appr) + "</td>" +
-                        "<td><a href='../../OggiSTI_preview.php?id_evento="+item.id_evento_appr+"&id_state="+ item.stato_appr+"'>"+ item.titolo_ita_appr + "</a></td>" +
-                        "<td>" + item.stato_appr + " - " + item.stato + "</td>" +
-                        "<td>" + item.redattore + "</td>" + 
-                        "<td><button type='button' id='" + item.stato_appr + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button>"+
-                        "<button type='button' id='" + item.stato + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>"+
-                        "<td><button type='button' id='" +  item.stato_appr + "-" + item.id_evento + "' class='btn btn-default btnPreview glyphicon glyphicon-eye-open'> </button>" + 
-                        "<button type='button' id='" +  item.stato + "-" + item.id_evento + "' class='btn btn-default btnPreview glyphicon glyphicon-eye-open'> </button></td></tr>";
-                    }else if (item.id_evento == null && item.id_evento_appr != null) {
-                        // event is only in editing or reviewed state
-                        var riga = "<tr class='item'><td>" + item.id_evento_appr + "</td>" +
-                        "<td class=''>" + formatDatemmddyyyy(item.data_evento_appr) + "</td>" +
-                        "<td>" + item.titolo_ita_appr + "</td>" +
-                        "<td>" + item.stato_appr + "</td>" +
-                        "<td>" + item.redattore_appr + "</td>" + 
-                        "<td><button type='button' id='" + item.stato_appr + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>"+ 
-                        "<td><button type='button' id='" +  item.stato_appr + "-" + item.id_evento + "' class='btn btn-default btnPreview glyphicon glyphicon-eye-open'> </button></td></tr>";
-                    } else if (item.id_evento_appr == null && item.id_evento != null) {
-                        // event only publicated
-                        var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
-                        "<td class=''>" + formatDatemmddyyyy(item.data_evento) + "</td>" +
-                        "<td>" + item.titolo_ita + "</td>" +
-                        "<td>" + item.stato + "</td>" +
-                        "<td>" + item.redattore + "</td>" + 
-                        "<td><button type='button' id='" + item.stato + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>"+ 
-                        "<td><button type='button' id='" +  item.stato + "-" + item.id_evento + "' class='btn btn-default btnPreview glyphicon glyphicon-eye-open'> </button></td></tr>"; 
-                    }
-                }else if(state=="Pubblicato"){
-                    var fbIcon = "";
-                    if(item.fb==1){
-                        fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
-                    }
-                    var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
-                    "<td class=''>" + formatDatemmddyyyy(item.data_evento) + "</td>" +
-                    "<td><a href='../../?id="+item.id_evento+"' target='_blank'>"+ item.titolo_ita + "</a></td>" +
-                    "<td>" + item.stato + " "+ fbIcon +"</td>" +
-                    "<td>" + item.redattore + "</td>" + 
-                    "<td><button type='button' id='" + state + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>";
-                }else{
-                // all the others tables
-                var riga = "<tr class='item'><td>" + item.id_evento + "</td>" +
-                    "<td class=''>" + formatDatemmddyyyy(item.data_evento) + "</td>" +
-                    "<td><a href='../../OggiSTI_preview.php?id_evento="+item.id_evento+"&id_state="+ item.stato+"' target='_blank'>"+ item.titolo_ita + "</a></td>" +
-                    "<td>" + item.stato + "</td>" +
-                    "<td>" + item.redattore + "</td>" + 
-                    "<td><button type='button' id='" + state + "-" + item.id_evento + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>";
+    $.getJSON(url, { "state": state }, function (result) {
+        $.each(result, function (index, item) {
+            if (state == "Tutti") {
+                // tables composed by all events
+                fbIcon = "";
+                if (item.fb == 1) {
+                    fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
                 }
-                // built the table 
-                intestazione_tabella += riga;
-                $("#eventListBody").html(intestazione_tabella);
+                var riga = "<tr class='item'><td>" + item.Id + "</td>" +
+                    "<td class=''>" + formatDatemmddyyyy(item.Date) + "</td>" +
+                    "<td><a href='../../OggiSTI_preview.php?eventId=" + item.Id + "&stateId=" + item.State + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
+                    "<td>" + item.State + " " + fbIcon + "<br/>" + item.Views + "</td>" +
+                    "<td>" + item.Editors + "</td>" +
+                    "<td><button type='button' id='" + item.State + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button>";
+            } else if (state == "Pubblicato") {
+                fbIcon = "";
+                if (item.fb == 1) {
+                    fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
+                }
+                var riga = "<tr class='item'><td>" + item.Id + "</td>" +
+                    "<td class=''>" + formatDatemmddyyyy(item.Date) + "</td>" +
+                    "<td><a href='../../?id=" + item.Id + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
+                    "<td>" + item.State + " " + fbIcon + "</td>" +
+                    "<td>" + item.Editors + "</td>" +
+                    "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>";
+            } else {
+                // all the others tables
+                var riga = "<tr class='item'><td>" + item.Id + "</td>" +
+                    "<td class=''>" + formatDatemmddyyyy(item.Date) + "</td>" +
+                    "<td><a href='../../OggiSTI_preview.php?eventId=" + item.Id + "&stateId=" + item.State + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
+                    "<td>" + item.State + "</td>" +
+                    "<td>" + item.Editors + "</td>" +
+                    "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>";
+            }
+            // built the table 
+            intestazione_tabella += riga;
+            $("#eventListBody").html(intestazione_tabella);
 
-            });
-            // set 25 events per table
-            $('#eventList').DataTable({
-                "pageLength": 25
-            });
         });
+        // set 25 events per table
+        $('#eventList').DataTable({
+            "pageLength": 25
+        });
+    });
 
-    
+
     // event click that open event page
-    $( "table" ).on( "click", ".btnEvento", function() {
-        var idTotal=$(this).attr("id");
+    $("table").on("click", ".btnEvento", function () {
+        var idTotal = $(this).attr("id");
         var idTotalArray = idTotal.split("-");
         var idState = idTotalArray[0];
         var idEvent = idTotalArray[1];
-        var indirizzo = "OggiSTI_event.php?id_evento="+idEvent+"&id_state="+idState;
-        window.open(indirizzo,  "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
+        var indirizzo = "OggiSTI_event.php?eventId=" + idEvent + "&stateId=" + idState;
+        window.open(indirizzo, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
     });
 
     // event click that open preview page
-    $( "table" ).on( "click", ".btnPreview", function() {
-        var idTotal=$(this).attr("id");
+    $("table").on("click", ".btnPreview", function () {
+        var idTotal = $(this).attr("id");
         var idTotalArray = idTotal.split("-");
         var idState = idTotalArray[0];
         var idEvent = idTotalArray[1];
-        var indirizzo = "../../OggiSTI_preview.php?id_evento="+idEvent+"&id_state="+idState;
-        window.open(indirizzo,  "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
+        var indirizzo = "../../OggiSTI_preview.php?eventId=" + idEvent + "&stateId=" + idState;
+        window.open(indirizzo, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
     });
 
     // event click that open edit page
-    $("#modificaEvento").click(function() {
-        var id_evento = $("#idEvento").text();
-        var indirizzo = "OggiSTI_edit.php?id_evento="+id_evento+"&messaggio=modifica";
-        window.open(indirizzo,  "_self", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
+    $("#modificaEvento").click(function () {
+        var eventId = $("#idEvento").text();
+        var indirizzo = "OggiSTI_edit.php?eventId=" + eventId + "&messaggio=modifica";
+        window.open(indirizzo, "_self", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
         //location.assign(indirizzo);
-        //location.href = "modifica.php?id_evento="+id_evento+"";
+        //location.href = "modifica.php?eventId="+eventId+"";
     });
 
-     // event click that open edit page for quickly update
-     $("#modificaVeloce").click(function() {
-        var id_evento = $("#idEvento").text();
-        var id_state = $("#idStato").text();
-        var indirizzo = "OggiSTI_edit.php?id_evento="+id_evento+"&messaggio=modificaVeloce&id_state="+id_state+"";
-        window.open(indirizzo,  "_self", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
+    // event click that open edit page for quickly update
+    $("#modificaVeloce").click(function () {
+        var eventId = $("#idEvento").text();
+        var stateId = $("#idStato").text();
+        var indirizzo = "OggiSTI_edit.php?eventId=" + eventId + "&messaggio=modificaVeloce&stateId=" + stateId + "";
+        window.open(indirizzo, "_self", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
         //location.assign(indirizzo);
-        //location.href = "modifica.php?id_evento="+id_evento+"";
+        //location.href = "modifica.php?eventId="+eventId+"";
     });
 
 
-    
+
     // $("#modalEliminaEvento").on('click','#eliminaDef',function(){
-    //     var id_evento = $('.hidden_id_evento').val();
-    //     window.location = "../api/eliminaEvento.php?id_evento="+id_evento+"";
+    //     var eventId = $('.hidden_eventId').val();
+    //     window.location = "../api/eliminaEvento.php?eventId="+eventId+"";
 
     // });
     // $("#modalEliminaEventoPubblicato").on('click','#eliminaDef',function(){
-    //     var id_evento = $('.hidden_id_evento').val();
-    //     window.location = "../api/eliminaEventoPubblicato.php?id_evento="+id_evento+"";
+    //     var eventId = $('.hidden_eventId').val();
+    //     window.location = "../api/eliminaEventoPubblicato.php?eventId="+eventId+"";
 
     // });
     // $("#modalEliminaEventoTutti").on('click','#eliminaDef',function(){
-    //     var id_evento = $('.hidden_id_evento').val();
-    //     window.location = "../api/eliminaEventoTutti.php?id_evento="+id_evento+"";
+    //     var eventId = $('.hidden_eventId').val();
+    //     window.location = "../api/eliminaEventoTutti.php?eventId="+eventId+"";
 
     // });
-    
+
 
 
     // ///////////////////
@@ -209,9 +190,9 @@ $(document).ready(function(){
 
     // disable enter 
 
-    $('#addEvent').keypress(function(tasto) {
+    $('#addEvent').keypress(function (tasto) {
 
-        if(tasto.which == 13) {
+        if (tasto.which == 13) {
 
             return false;
 
@@ -219,54 +200,54 @@ $(document).ready(function(){
 
     });
 
-    $("#date").focus(function(){
+    $("#date").focus(function () {
         $('#formData').removeClass("has-error has-feedback");
         $("#helpDate").html("");
         $('#glyphiconDate').removeClass("glyphicon glyphicon-remove form-control-feedback");
     });
 
-    $("#title_ita").focus(function(){
-        $('#formTitle_ita').removeClass("has-error has-feedback");
+    $("#title_ita").focus(function () {
+        $('#formItaTitle').removeClass("has-error has-feedback");
         $("#helpTitleIta").html("<span id='helpTitleIta' class='help-block'>La dimensione massima consigliata è di 70 caratteri. Consultare le <a href='../../LineeGuida/#LGTitolo' target='_blank'>linee guida sul titolo</a> per maggiori informazioni</span>");
         $('#glyphiconTitleIta').removeClass("glyphicon glyphicon-remove form-control-feedback");
     });
 
-    $("#abstr_ita").focus(function(){
-        $('#formAbstr_ita').removeClass("has-error has-feedback");
+    $("#abstr_ita").focus(function () {
+        $('#formItaAbstract').removeClass("has-error has-feedback");
         $("#helpAbstrIta").html("La dimensione massima consigliata è di 280 caratteri");
         $('#glyphiconAbstrIta').removeClass("glyphicon glyphicon-remove form-control-feedback");
     });
 
-    $("#applica").click(function() {
+    $("#applica").click(function () {
         tinyMCE.triggerSave();
         var data = $('[name="date"]').val();
         var titolo_ita = $('[name="title_ita"]').val();
         var abstr_ita = $("#abstr_ita").val();
         var desc_ita = $('[name="desc_ita"]').val();
-        var campi="";
-        if(!checkDate(data)){
-            campi=campi+"<strong>Data</strong><br/>";
+        var campi = "";
+        if (!checkDate(data)) {
+            campi = campi + "<strong>Data</strong><br/>";
 
             //$('#formData').addClass("has-error has-feedback");
             //$('body,html').animate({scrollTop:0},800);
             //$("#helpDate").html("La data è inserita in un formato non valido, usare il formato dd/mm/yyyy");
             //$('#glyphiconDate').addClass("glyphicon glyphicon-remove form-control-feedback");
         }
-        if(titolo_ita==""){
-            campi=campi+"<strong>Titolo</strong><br/>";
+        if (titolo_ita == "") {
+            campi = campi + "<strong>Titolo</strong><br/>";
             //$('body,html').animate({scrollTop:0},800);
-            //$('#formTitle_ita').addClass("has-error has-feedback");
+            //$('#formItaTitle').addClass("has-error has-feedback");
             //$("#helpTitleIta").html("Questo campo non può rimanere vuoto");
             //$('#glyphiconTitleIta').addClass("glyphicon glyphicon-remove form-control-feedback");
         }
-        if(abstr_ita==""){
-            campi=campi+"<strong>Descrizione Breve</strong><br/>";
-            //$('body,html').animate({scrollTop:$('#formAbstr_ita').offset().top},800);
-            //$('#formAbstr_ita').addClass("has-error has-feedback");
+        if (abstr_ita == "") {
+            campi = campi + "<strong>Descrizione Breve</strong><br/>";
+            //$('body,html').animate({scrollTop:$('#formItaAbstract').offset().top},800);
+            //$('#formItaAbstract').addClass("has-error has-feedback");
             //$("#helpAbstrIta").html("Questo campo non può rimanere vuoto");
         }
-        if(campi!=""){
-            campi="I seguenti campi non possono essere vuoti:<br/>"+campi;
+        if (campi != "") {
+            campi = "I seguenti campi non possono essere vuoti:<br/>" + campi;
             $("#campiMancanti").html(campi);
             $("#campiMancanti").show();
         }
@@ -276,48 +257,48 @@ $(document).ready(function(){
     // Count characters
 
     // italian title
-    $outMax=140;
-    $('#title_ita').keyup(function() {
+    $outMax = 140;
+    $('#title_ita').keyup(function () {
         $max = $outMax;
-        $len=$('#title_ita').val().length;
-        $('#countBox_title_ita').text($max-$len);
-        if($max-$len<30){
-            $('#countBox_title_ita').css('color','#C30');
-            $('#formTitle_ita').addClass("has-warning has-feedback");
+        $len = $('#title_ita').val().length;
+        $('#countBox_title_ita').text($max - $len);
+        if ($max - $len < 30) {
+            $('#countBox_title_ita').css('color', '#C30');
+            $('#formItaTitle').addClass("has-warning has-feedback");
             $('#glyphiconTitleIta').addClass("glyphicon glyphicon-warning-sign form-control-feedback");
         }
-        if($max-$len>=30){
-            $('#countBox_title_ita').css('color','#737373');
-            $('#formTitle_ita').removeClass("has-warning has-feedback");
+        if ($max - $len >= 30) {
+            $('#countBox_title_ita').css('color', '#737373');
+            $('#formItaTitle').removeClass("has-warning has-feedback");
             $('#glyphiconTitleIta').removeClass("glyphicon glyphicon-warning-sign form-control-feedback");
         }
-        if ($max-$len<0){
+        if ($max - $len < 0) {
             $str = $('#title_ita').val();
-            $str = $str.substring(0,$max);
+            $str = $str.substring(0, $max);
             $('#title_ita').val($str);
             $('#countBox_title_ita').text(0);
         }
     });
 
     // english title
-    $outMax=140;
-    $('#title_eng').keyup(function() {
+    $outMax = 140;
+    $('#title_eng').keyup(function () {
         $max = $outMax;
-        $len=$('#title_eng').val().length;
-        $('#countBox_title_eng').text($max-$len);
-        if($max-$len<30){
-            $('#countBox_title_eng').css('color','#C30');
-            $('#formTitle_eng').addClass("has-warning has-feedback");
+        $len = $('#title_eng').val().length;
+        $('#countBox_title_eng').text($max - $len);
+        if ($max - $len < 30) {
+            $('#countBox_title_eng').css('color', '#C30');
+            $('#formEngTitle').addClass("has-warning has-feedback");
             $('#glyphiconTitleEng').addClass("glyphicon glyphicon-warning-sign form-control-feedback");
         }
-        if($max-$len>=30){
-            $('#countBox_title_eng').css('color','#737373');
-            $('#formTitle_eng').removeClass("has-warning has-feedback");
+        if ($max - $len >= 30) {
+            $('#countBox_title_eng').css('color', '#737373');
+            $('#formEngTitle').removeClass("has-warning has-feedback");
             $('#glyphiconTitleEng').removeClass("glyphicon glyphicon-warning-sign form-control-feedback");
         }
-        if ($max-$len<0){
+        if ($max - $len < 0) {
             $str = $('#title_eng').val();
-            $str = $str.substring(0,$max);
+            $str = $str.substring(0, $max);
             $('#title_eng').val($str);
             $('#countBox_title_eng').text(0);
         }
@@ -326,48 +307,48 @@ $(document).ready(function(){
 
 
     $("#alertEvento").alert();
-    $("#alertEvento").fadeTo(3000, 1000).slideUp(1000, function(){
+    $("#alertEvento").fadeTo(3000, 1000).slideUp(1000, function () {
         $("#alertEvento").slideUp(1000);
     });
 
     // Change language
 
     // eng to ita
-    $("#btnItalian").click(function() {
+    $("#btnItalian").click(function () {
         $('#btnItalian').addClass("active");
         $('#btnEnglish').removeClass("active");
-        $('#formTitle_ita').removeClass("hidden");
-        $('#formAbstr_ita').removeClass("hidden");
-        $('#formDesc_ita').removeClass("hidden");
-        $('#formTitle_eng').addClass("hidden");
-        $('#formAbstr_eng').addClass("hidden");
-        $('#formDesc_eng').addClass("hidden");
+        $('#formItaTitle').removeClass("hidden");
+        $('#formItaAbstract').removeClass("hidden");
+        $('#formItaDescription').removeClass("hidden");
+        $('#formEngTitle').addClass("hidden");
+        $('#formEngAbstract').addClass("hidden");
+        $('#formEngDescription').addClass("hidden");
     });
 
     // ita to eng
-    $("#btnEnglish").click(function() {
+    $("#btnEnglish").click(function () {
         $('#btnItalian').removeClass("active");
         $('#btnEnglish').addClass("active");
-        $('#formTitle_ita').addClass("hidden");
-        $('#formAbstr_ita').addClass("hidden");
-        $('#formDesc_ita').addClass("hidden");
-        $('#formTitle_eng').removeClass("hidden");
-        $('#formAbstr_eng').removeClass("hidden");
-        $('#formDesc_eng').removeClass("hidden");
+        $('#formItaTitle').addClass("hidden");
+        $('#formItaAbstract').addClass("hidden");
+        $('#formItaDescription').addClass("hidden");
+        $('#formEngTitle').removeClass("hidden");
+        $('#formEngAbstract').removeClass("hidden");
+        $('#formEngDescription').removeClass("hidden");
     });
 
-   
+
 
     // text editor tinyMCE
 
     tinymce.init({
         selector: '.textControl',
         height: 100,
-        menu : { // this is the complete default configuration
-            edit   : {title : 'Edit'  , items : 'undo redo | cut copy paste pastetext | selectall'},
-            insert : {title : 'Insert', items : 'link | template hr charmap'},
-            format : {title : 'Format', items : 'bold italic underline superscript subscript'},
-            tools  : {title : 'Tools' , items : 'spellchecker code'}
+        menu: { // this is the complete default configuration
+            edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall' },
+            insert: { title: 'Insert', items: 'link | template hr charmap' },
+            format: { title: 'Format', items: 'bold italic underline superscript subscript' },
+            tools: { title: 'Tools', items: 'spellchecker code' }
         }
         ,
         plugins: [
@@ -390,11 +371,11 @@ $(document).ready(function(){
     tinymce.init({
         selector: '.longTextControl',
         height: 300,
-        menu : { // this is the complete default configuration
-            edit   : {title : 'Edit'  , items : 'undo redo | cut copy paste pastetext | selectall'},
-            insert : {title : 'Insert', items : 'link | template hr charmap'},
-            format : {title : 'Format', items : 'bold italic underline superscript subscript'},
-            tools  : {title : 'Tools' , items : 'spellchecker code'}
+        menu: { // this is the complete default configuration
+            edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall' },
+            insert: { title: 'Insert', items: 'link | template hr charmap' },
+            format: { title: 'Format', items: 'bold italic underline superscript subscript' },
+            tools: { title: 'Tools', items: 'spellchecker code' }
         }
         ,
         plugins: [
@@ -415,9 +396,9 @@ $(document).ready(function(){
     });
 
     // Insert <br/> if press shift+enter in title
-    $(".form-control").on("keypress", function(e){
-        if ( e.which === 13 && e.shiftKey ) {
-            $(this).val(function(i,v){
+    $(".form-control").on("keypress", function (e) {
+        if (e.which === 13 && e.shiftKey) {
+            $(this).val(function (i, v) {
                 return v + "<br/>"; // or return v + "\n"; (whatever you want)
             });
         }

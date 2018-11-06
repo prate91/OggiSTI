@@ -4,8 +4,8 @@
 //
 // Project: OggiSTI
 // Package: OggiSTI administration
-// Title: updateEvents
-// File: updateEvents.php
+// Title: upeventDates
+// File: upeventDates.php
 // Path: OggiSTI/assets/api
 // Type: php
 // Started: 2017-03-08
@@ -47,14 +47,14 @@ function imageCount($imageName)
   return $number;
 }
 
-function imgRename($dateEvent, $idEvent, $imageFileType, $number) 
+function imgRename($eventDate, $eventId, $imageFileType, $number) 
 {
-  $dateUnix = str_replace('-', '', $dateEvent);
+  $unixDate = str_replace('-', '', $eventDate);
   if($number==10){
-    return $dateUnix . "_" . $idEvent . "_" . "1" . "." . $imageFileType;
+    return $unixDate . "_" . $eventId . "_" . "1" . "." . $imageFileType;
   } else{
     $number=$number+1;
-    return $dateUnix . "_" . $idEvent . "_" . $number . "." . $imageFileType;
+    return $unixDate . "_" . $eventId . "_" . $number . "." . $imageFileType;
   }
 }
 
@@ -63,59 +63,60 @@ function deleteImg($imgPath)
    unlink($imgPath);
 }
 
-require("config.php");
+//require("config.php");
+require("../../../../Config/OggiSTIConfig.php");
 include '../PHP/OggiSTI_sessionSet.php';
 include '../PHP/OggiSTI_controlLogged.php';
 
 // define variables and set to empty values
-$var = $date = $dateCorr = $title_ita = $title_eng = $abstr_ita = $abstr_eng = $desc_ita = $desc_eng = $riferimenti = $keywords = $autore =$salvato= $stato = $verifica1 = $verifica2 = "";
-$linkImg = $immagine = $inserito = $fonte_img = $textMessage = "";
+$var = $eventDate = $eventDateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $itaDescription = $engDescription = $textReferences = $keywords = $editors =$saved= $state = $reviser1 = $reviser2 = "";
+$imageLink = $image = $inserito = $imageCaption = $textMessage = "";
 $nessunaImmagine = 0;
 
 
-$id_evento = isset($_POST["id_evento"]) ? $_POST['id_evento'] : '';
-$var = isset($_POST["date"]) ? $_POST['date'] : '';
-$date = str_replace('/', '-', $var);
-$dateCorr = date('Y-m-d', strtotime($date));
-$title_ita = isset($_POST["title_ita"]) ? $_POST['title_ita'] : '';
-$title_eng = isset($_POST["title_eng"]) ? $_POST['title_eng'] : '';
-$abstr_ita = isset($_POST["abstr_ita"]) ? $_POST['abstr_ita'] : '';
-$abstr_eng = isset($_POST["abstr_eng"]) ? $_POST['abstr_eng'] : '';
-$desc_ita = isset($_POST["desc_ita"]) ? $_POST['desc_ita'] : '';
-$desc_eng = isset($_POST["desc_eng"]) ? $_POST['desc_eng'] : '';
-$riferimenti = isset($_POST["riferimenti"]) ? $_POST['riferimenti'] : '';
+$eventId = isset($_POST["eventId"]) ? $_POST['eventId'] : '';
+$var = isset($_POST["eventDate"]) ? $_POST['eventDate'] : '';
+$eventDate = str_replace('/', '-', $var);
+$eventDateCorr = date('Y-m-d', strtotime($eventDate));
+$itaTitle = isset($_POST["itaTitle"]) ? $_POST['itaTitle'] : '';
+$engTitle = isset($_POST["engTitle"]) ? $_POST['engTitle'] : '';
+$itaAbstract = isset($_POST["itaAbstract"]) ? $_POST['itaAbstract'] : '';
+$engAbstract = isset($_POST["engAbstract"]) ? $_POST['engAbstract'] : '';
+$itaDescription = isset($_POST["itaDescription"]) ? $_POST['itaDescription'] : '';
+$engDescription = isset($_POST["engDescription"]) ? $_POST['engDescription'] : '';
+$textReferences = isset($_POST["textReferences"]) ? $_POST['textReferences'] : '';
 $keywords = isset($_POST["keywords"]) ? $_POST['keywords'] : '';
-$linkImg = isset($_POST["vecchiaImmagine"]) ? $_POST['vecchiaImmagine'] : '';
-$fonte_img = isset($_POST["fonte_img"]) ? $_POST['fonte_img'] : '';
-$autore = isset($_POST["autore"]) ? $_POST['autore'] : '';
-$stato = isset($_POST["stato"]) ? $_POST['stato'] : '';
-$salvato = isset($_POST["salvato"]) ? $_POST['salvato'] : '';
-$verifica1 = isset($_POST["Iapprovazione"]) ? $_POST['Iapprovazione'] : '';
-$verifica2 = isset($_POST["IIapprovazione"]) ? $_POST['IIapprovazione'] : '';
+$imageLink = isset($_POST["oldImage"]) ? $_POST['oldImage'] : '';
+$imageCaption = isset($_POST["imageCaption"]) ? $_POST['imageCaption'] : '';
+$editors = isset($_POST["editors"]) ? $_POST['editors'] : '';
+$state = isset($_POST["state"]) ? $_POST['state'] : '';
+$saved = isset($_POST["saved"]) ? $_POST['saved'] : '';
+$reviser1 = isset($_POST["IApprovation"]) ? $_POST['IApprovation'] : '';
+$reviser2 = isset($_POST["IIApprovation"]) ? $_POST['IIApprovation'] : '';
 
-$_SESSION['id_evento'] = $id_evento;    
-$_SESSION['data_evento'] = $var;
-$_SESSION['titolo_ita'] = $title_ita = mysqli_real_escape_string($conn, $title_ita);
-$_SESSION['titolo_eng'] = $title_eng = mysqli_real_escape_string($conn, $title_eng);
-$_SESSION['abstr_ita'] = $abstr_ita = mysqli_real_escape_string($conn, $abstr_ita);
-$_SESSION['abstr_eng'] = $abstr_eng = mysqli_real_escape_string($conn, $abstr_eng);
-$_SESSION['desc_ita'] = $desc_ita = mysqli_real_escape_string($conn, $desc_ita);
-$_SESSION['desc_eng'] = $desc_eng = mysqli_real_escape_string($conn, $desc_eng);
+$_SESSION['eventId'] = $eventId;    
+$_SESSION['eventDate'] = $var;
+$_SESSION['itaTitle'] = $itaTitle = mysqli_real_escape_string($conn, $itaTitle);
+$_SESSION['engTitle'] = $engTitle = mysqli_real_escape_string($conn, $engTitle);
+$_SESSION['itaAbstract'] = $itaAbstract = mysqli_real_escape_string($conn, $itaAbstract);
+$_SESSION['engAbstract'] = $engAbstract = mysqli_real_escape_string($conn, $engAbstract);
+$_SESSION['itaDescription'] = $itaDescription = mysqli_real_escape_string($conn, $itaDescription);
+$_SESSION['engDescription'] = $engDescription = mysqli_real_escape_string($conn, $engDescription);
 $_SESSION['keywords'] = $keywords = mysqli_real_escape_string($conn, $keywords);
-$_SESSION['riferimenti'] = $riferimenti = mysqli_real_escape_string($conn, $riferimenti);
-$_SESSION['fonte_img'] = $fonte_img = mysqli_real_escape_string($conn, $fonte_img);
-$_SESSION['immagine'] = $linkImg;
+$_SESSION['textReferences'] = $textReferences = mysqli_real_escape_string($conn, $textReferences);
+$_SESSION['imageCaption'] = $imageCaption = mysqli_real_escape_string($conn, $imageCaption);
+$_SESSION['image'] = $imageLink;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // If user is going to upload an image
-  if($_FILES["immagine"]["name"]!=""){
+  if($_FILES["image"]["name"]!=""){
 
     // UPLOAD IMAGE
 
     // set the PATH
     $target_dir = "Img/eventi/";
-    $target_file = $target_dir . basename($_FILES["immagine"]["name"]);
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
 
     // set a control variable
     $uploadOk = 1;
@@ -124,33 +125,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 
     // if there are ten previous images
-    if (imageCount($linkImg)==10) {
+    if (imageCount($imageLink)==10) {
       // delete all the previous images
       for($i=1; $i<10; $i++){
-        $tmp_img_name = imgRename($dateCorr, $id_evento, $imageFileType, $i);
+        $tmp_img_name = imgRename($eventDateCorr, $eventId, $imageFileType, $i);
         $tmp_img_name = "../" .  $target_dir . $tmp_img_name;
         deleteImg($tmp_img_name);
       }
     }
     // initialize variable of new image name
-    $img_rename="";
+    $imgRename="";
 
     // if there isn't a previous image
-    if($linkImg==""){
+    if($imageLink==""){
       // rename the image
-      $img_rename = imgRename($dateCorr, $id_evento, $imageFileType, 0);
+      $imgRename = imgRename($eventDateCorr, $eventId, $imageFileType, 0);
     }else{
       // control the number of old version and rename the image 
-      $oldVersion = imageCount($linkImg);
-      $img_rename = imgRename($dateCorr, $id_evento, $imageFileType, $oldVersion);
+      $oldVersion = imageCount($imageLink);
+      $imgRename = imgRename($eventDateCorr, $eventId, $imageFileType, $oldVersion);
     }
 
     // set the PATH with new image name
-    $new_loc = $target_dir . $img_rename;
+    $new_loc = $target_dir . $imgRename;
     $indirizzo = "../".$new_loc;
       
     // Check if image file is a actual image or fake image
-    $check = getimagesize($_FILES["immagine"]["tmp_name"]);
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
     if($check !== false) {
         $uploadOk = 1;
     } else {
@@ -158,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check file size
-    if ($_FILES["immagine"]["size"] > 1048576) { // max size 1MB
+    if ($_FILES["image"]["size"] > 1048576) { // max size 1MB
         $uploadOk = 0;
     }
 
@@ -169,17 +170,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-        $textMessage = "Mi spiace, l'immagine non è stata caricata.";
+        $textMessage = "Mi spiace, l'image non è stata caricata.";
 
     // if everything is ok, try to upload file
     } else {
-        if (move_uploaded_file($_FILES["immagine"]["tmp_name"], $indirizzo)) {
-            $textMessage = "L'immagine ". basename( $_FILES["immagine"]["name"]). " è stata caricata con il nome ". $img_rename;
-    		    $linkImg = $img_rename;
-            $_SESSION['immagine'] = $linkImg;
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $indirizzo)) {
+            $textMessage = "L'image ". basename( $_FILES["image"]["name"]). " è stata caricata con il nome ". $imgRename;
+    		    $imageLink = $imgRename;
+            $_SESSION['image'] = $imageLink;
         } else {
-            $textMessage = "Mi space, c'è stato un errore nel caricamento della tua immagine.";
-            $linkImg = "";
+            $textMessage = "Mi space, c'è state un errore nel caricamento della tua image.";
+            $imageLink = "";
         }
     }
   }
@@ -191,7 +192,7 @@ if(isset($_POST['invia'])) {
    
 
 //inserting data order
-$toinsert =  "UPDATE eventiappr SET eventiappr.data_evento = '$dateCorr', eventiappr.titolo_ita ='$title_ita', eventiappr.titolo_eng = '$title_eng', eventiappr.immagine = '$linkImg', eventiappr.fonteimmagine = '$fonte_img', eventiappr.abstr_ita = '$abstr_ita', eventiappr.abstr_eng = '$abstr_eng', eventiappr.desc_ita = '$desc_ita', eventiappr.desc_eng = '$desc_eng', eventiappr.riferimenti = '$riferimenti', eventiappr.keywords = '$keywords', eventiappr.redattore = '$autore', eventiappr.ver_1 = '$verifica1', eventiappr.ver_2 = '$verifica2', eventiappr.stato = '$stato', eventiappr.salvato = '' WHERE eventiappr.id_evento = '$id_evento'";
+$toinsert =  "UPDATE editingEvents SET editingEvents.Date = '$eventDateCorr', editingEvents.ItaTitle ='$itaTitle', editingEvents.EngTitle = '$engTitle', editingEvents.Image = '$imageLink', editingEvents.ImageCaption = '$imageCaption', editingEvents.ItaAbstract = '$itaAbstract', editingEvents.EngAbstract = '$engAbstract', editingEvents.ItaDescription = '$itaDescription', editingEvents.EngDescription = '$engDescription', editingEvents.TextReferences = '$textReferences', editingEvents.Keywords = '$keywords', editingEvents.Editors = '$editors', editingEvents.Reviser_1 = '$reviser1', editingEvents.Reviser_2 = '$reviser2', editingEvents.State = '$state', editingEvents.Saved = '' WHERE editingEvents.Id = '$eventId'";
 
 
 //declare in the order variable
@@ -199,44 +200,44 @@ $result = mysqli_query($conn, $toinsert);	//order executes
 if($result){
 
    $inserito="Inserimento avvenuto correttamente";
-   $sql2 = "INSERT INTO redazione (id_evento, redattore, tipo_modifica) VALUES ('$id_evento', '$id_utente', '3')";
+   $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '3')";
    mysqli_query($conn, $sql2);
-   header( "Location:../PHP/OggiSTI_reviewedEvents.php?messaggio=inserito&messaggioImmagine=".$textMessage);
+   header( "Location:../PHP/OggiSTI_reviewedEvents.php?message=inserito&messageImmagine=".$textMessage);
 
 	
 
 }else{
 
 	$inserito="Inserimento non eseguito";
-  header('Location:../PHP/OggiSTI_edit.php?messaggio=errore');
+  header('Location:../PHP/OggiSTI_edit.php?message=errore');
 
 }
 
 }
 
 if(isset($_POST['salva'])) {
-   // è stato premuto il secondo pulsante
+   // è state premuto il secondo pulsante
 
 
 //inserting data order
-$toinsert =  "UPDATE eventiappr SET eventiappr.data_evento = '$dateCorr', eventiappr.titolo_ita ='$title_ita', eventiappr.titolo_eng = '$title_eng', eventiappr.immagine = '$linkImg', eventiappr.fonteimmagine = '$fonte_img', eventiappr.abstr_ita = '$abstr_ita', eventiappr.abstr_eng = '$abstr_eng', eventiappr.desc_ita = '$desc_ita', eventiappr.desc_eng = '$desc_eng', eventiappr.riferimenti = '$riferimenti', eventiappr.keywords = '$keywords', eventiappr.redattore = '$autore', eventiappr.ver_1 = '$verifica1', eventiappr.ver_2 = '$verifica2', eventiappr.stato = 'In redazione', eventiappr.salvato = '$salvato' WHERE eventiappr.id_evento = '$id_evento'";
+$toinsert =  "UPDATE editingEvents SET editingEvents.Date = '$eventDateCorr', editingEvents.ItaTitle ='$itaTitle', editingEvents.EngTitle = '$engTitle', editingEvents.Image = '$imageLink', editingEvents.ImageCaption = '$imageCaption', editingEvents.ItaAbstract = '$itaAbstract', editingEvents.EngAbstract = '$engAbstract', editingEvents.ItaDescription = '$itaDescription', editingEvents.EngDescription = '$engDescription', editingEvents.TextReferences = '$textReferences', editingEvents.Keywords = '$keywords', editingEvents.Editors = '$editors', editingEvents.Reviser_1 = '$reviser1', editingEvents.Reviser_2 = '$reviser2', editingEvents.State = 'In redazione', editingEvents.Saved = '$saved' WHERE editingEvents.Id = '$eventId'";
 
 //declare in the order variable
 $result = mysqli_query($conn, $toinsert); //order 
 if($result){
 
    $inserito="Inserimento avvenuto correttamente";
-   $sql2 = "INSERT INTO redazione (id_evento, redattore, tipo_modifica) VALUES ('$id_evento', '$id_utente', '2')";
+   $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')";
    mysqli_query($conn, $sql2);
-   //$risultato = mysqli_query($conn, "SELECT MAX(id_evento) FROM eventiappr");
+   //$risultato = mysqli_query($conn, "SELECT MAX(eventId) FROM editingEvents");
    //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
-   //$id = $riga["MAX(id_evento)"];
-   header( "Location:../PHP/OggiSTI_edit.php?id_evento=$id_evento&messaggio=salva&messaggioImmagine=".$textMessage );
+   //$id = $riga["MAX(eventId)"];
+   header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&messageImmagine=".$textMessage );
 
 } else{
 
   $inserito="Inserimento non eseguito";
-  header("Location:../PHP/OggiSTI_edit.php?id_evento=$id&messaggio=errore");
+  header("Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
 
 }
 
@@ -244,13 +245,13 @@ if($result){
 }
 
 if(isset($_POST['salvaChiudi'])) {
-  // è stato premuto il secondo pulsante
+  // è state premuto il secondo pulsante
 
-  if($stato=="Pubblicato"){
-    $toinsert =  "UPDATE eventi SET eventi.data_evento = '$dateCorr', eventi.titolo_ita ='$title_ita', eventi.titolo_eng = '$title_eng', eventi.immagine = '$linkImg', eventi.fonteimmagine = '$fonte_img', eventi.abstr_ita = '$abstr_ita', eventi.abstr_eng = '$abstr_eng', eventi.desc_ita = '$desc_ita', eventi.desc_eng = '$desc_eng', eventi.riferimenti = '$riferimenti', eventi.keywords = '$keywords' WHERE eventi.id_evento = '$id_evento'";
+  if($state=="Pubblicato"){
+    $toinsert =  "UPDATE eventi SET eventi.eventDate = '$eventDateCorr', eventi.itaTitle ='$itaTitle', eventi.engTitle = '$engTitle', eventi.image = '$imageLink', eventi.fonteimage = '$imageCaption', eventi.itaAbstract = '$itaAbstract', eventi.engAbstract = '$engAbstract', eventi.itaDescription = '$itaDescription', eventi.engDescription = '$engDescription', eventi.textReferences = '$textReferences', eventi.keywords = '$keywords' WHERE eventi.Id = '$eventId'";
   }else{
     //inserting data order
-    $toinsert =  "UPDATE eventiappr SET eventiappr.data_evento = '$dateCorr', eventiappr.titolo_ita ='$title_ita', eventiappr.titolo_eng = '$title_eng', eventiappr.immagine = '$linkImg', eventiappr.fonteimmagine = '$fonte_img', eventiappr.abstr_ita = '$abstr_ita', eventiappr.abstr_eng = '$abstr_eng', eventiappr.desc_ita = '$desc_ita', eventiappr.desc_eng = '$desc_eng', eventiappr.riferimenti = '$riferimenti', eventiappr.keywords = '$keywords' WHERE eventiappr.id_evento = '$id_evento'";
+    $toinsert =  "UPDATE editingEvents SET editingEvents.eventDate = '$eventDateCorr', editingEvents.itaTitle ='$itaTitle', editingEvents.engTitle = '$engTitle', editingEvents.image = '$imageLink', editingEvents.fonteimage = '$imageCaption', editingEvents.itaAbstract = '$itaAbstract', editingEvents.engAbstract = '$engAbstract', editingEvents.itaDescription = '$itaDescription', editingEvents.engDescription = '$engDescription', editingEvents.textReferences = '$textReferences', editingEvents.keywords = '$keywords' WHERE editingEvents.eventId = '$eventId'";
   }
 
 
@@ -259,17 +260,17 @@ $result = mysqli_query($conn, $toinsert); //order
 if($result){
 
   $inserito="Inserimento avvenuto correttamente";
-  $sql2 = "INSERT INTO redazione (id_evento, redattore, tipo_modifica) VALUES ('$id_evento', '$id_utente', '4')";
+  $sql2 = "INSERT INTO editing (eventId, Editors, Type) VALUES ('$eventId', '$userId', '4')";
   mysqli_query($conn, $sql2);
-  //$risultato = mysqli_query($conn, "SELECT MAX(id_evento) FROM eventiappr");
+  //$risultato = mysqli_query($conn, "SELECT MAX(eventId) FROM editingEvents");
   //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
-  //$id = $riga["MAX(id_evento)"];
-  header( "Location:../PHP/OggiSTI_event.php?id_evento=$id_evento&id_state=$stato");
+  //$id = $riga["MAX(eventId)"];
+  header( "Location:../PHP/OggiSTI_event.php?eventId=$eventId&stateId=$state");
 
 } else{
 
  $inserito="Inserimento non eseguito";
- header("Location:../PHP/OggiSTI_edit.php?id_evento=$id&messaggio=errore");
+ header("Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
 
 }
 
@@ -277,28 +278,28 @@ if($result){
 }
 
 if(isset($_POST['preview'])) {
-   // è stato premuto il secondo pulsante
+   // è state premuto il secondo pulsante
 
 
 //inserting data order
-    $toinsert =  "UPDATE eventiappr SET eventiappr.data_evento = '$dateCorr', eventiappr.titolo_ita ='$title_ita', eventiappr.titolo_eng = '$title_eng', eventiappr.immagine = '$linkImg', eventiappr.fonteimmagine = '$fonte_img', eventiappr.abstr_ita = '$abstr_ita', eventiappr.abstr_eng = '$abstr_eng', eventiappr.desc_ita = '$desc_ita', eventiappr.desc_eng = '$desc_eng', eventiappr.riferimenti = '$riferimenti', eventiappr.keywords = '$keywords', eventiappr.redattore = '$autore', eventiappr.ver_1 = '$verifica1', eventiappr.ver_2 = '$verifica2', eventiappr.stato = 'In redazione', eventiappr.salvato = '$salvato' WHERE eventiappr.id_evento = '$id_evento'";
+    $toinsert =  "UPDATE editingEvents SET editingEvents.Date = '$eventDateCorr', editingEvents.ItaTitle ='$itaTitle', editingEvents.EngTitle = '$engTitle', editingEvents.Image = '$imageLink', editingEvents.ImageCaption = '$imageCaption', editingEvents.ItaAbstract = '$itaAbstract', editingEvents.EngAbstract = '$engAbstract', editingEvents.ItaDescription = '$itaDescription', editingEvents.EngDescription = '$engDescription', editingEvents.TextReferences = '$textReferences', editingEvents.Keywords = '$keywords', editingEvents.Editors = '$editors', editingEvents.Reviser_1 = '$reviser1', editingEvents.Reviser_2 = '$reviser2', editingEvents.State = 'In redazione', editingEvents.Saved = '$saved' WHERE editingEvents.Id = '$eventId'";
 
 //declare in the order variable
 $result = mysqli_query($conn, $toinsert); //order 
 if($result){
 
    $inserito="Inserimento avvenuto correttamente";
-   $sql2 = "INSERT INTO redazione (id_evento, redattore, tipo_modifica) VALUES ('$id_evento', '$id_utente', '2')";
+   $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')";
    mysqli_query($conn, $sql2);
-   //$risultato = mysqli_query($conn, "SELECT MAX(id_evento) FROM eventiappr");
+   //$risultato = mysqli_query($conn, "SELECT MAX(eventId) FROM editingEvents");
    //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
-   //$id = $riga["MAX(id_evento)"];
-   header( "Location:../PHP/OggiSTI_edit.php?id_evento=$id_evento&messaggio=salva&preview=ok&messaggioImmagine=".$textMessage );
+   //$id = $riga["MAX(eventId)"];
+   header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&preview=ok&messageImmagine=".$textMessage );
 
 } else{
 
   $inserito="Inserimento non eseguito";
-  header("Location:../PHP/OggiSTI_edit.php?id_evento=$id&messaggio=errore");
+  header("Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
 
 }
 

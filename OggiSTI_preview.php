@@ -36,7 +36,7 @@
 // ///////////////////////////////////////////////////////////////////////-->
 <?php
 session_start();
-if(!isset($_SESSION['login_user'])) {
+if(!isset($_SESSION['userLogin'])) {
     header('Location: no_login.php?error=inv_access');
 }
 ?>

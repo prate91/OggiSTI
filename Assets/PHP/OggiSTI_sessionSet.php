@@ -34,13 +34,14 @@
 //
 // //////////////////////////////////////////////////////////////////////////
 session_start();
-$autore = $_SESSION['login_user'];
-$id_utente = $_SESSION['id_user'];
-$nome_completo = $_SESSION['nome_completo'];
-$nome_utente =  $_SESSION['nome_utente'];
-$cognome_utente =  $_SESSION['cognome_utente'];
-$amministratore = $_SESSION['amministratore'];
-$webeditor = $_SESSION['webeditor'];
-$redattore = $_SESSION['redattore'];
-$revisore = $_SESSION['revisore'];
+$editor = $_SESSION['userLogin'];
+$userId = $_SESSION['authId'];
+$completeName = $_SESSION['completeName'];
+$name =  $_SESSION['name'];
+$surname =  $_SESSION['surname'];
+$briefName = $_SESSION['briefName'];
+$administratorPermission = $_SESSION['administratorPermission'];
+$webEditorPermission = $_SESSION['webEditorPermission'];
+$editorPermission = $_SESSION['editorPermission'];
+$reviserPermission = $_SESSION['reviserPermission'];
 ?>

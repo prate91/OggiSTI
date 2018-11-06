@@ -17,7 +17,7 @@
 // First version
 // - 2018.10.30 Nicolò
 // Inserted clean html function. Inserted variable formatting in the function
-// load_data_tables that permit to choose if return html-formatted data or not
+// loadDataTables that permit to choose if return html-formatted data or not
 //
 // ////////////////////////////////////////////////////////////////////////
 //
@@ -48,12 +48,137 @@
   *
   * @param string $string  the string to be cleaned
   */
-function clean_html($string)
+function cleanHTML($string)
 {
 	$spaceString = str_replace( '<', ' <', $string );
     $doubleSpace = strip_tags( $spaceString );
     $singleSpace = str_replace( '  ', ' ', $doubleSpace );
 	return $singleSpace;
+}
+
+ /**
+  * Load brief name from database EPICAC, table people.
+  *
+  * @author Nicolò Pratelli
+  *
+  * @since 2.0
+  *
+  * @param string $idUser  id of the user that have to be linked to table people
+  */
+function loadBriefName($idUser)
+{
+	require("../../../../Config/EPICACConfig.php");
+	$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
+	$userDataQueryResult = mysqli_query($connEpicac, $userDataQuery);
+	$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
+	return $userDataRow["Brief"];
+}
+
+/**
+  * Load complete name, composed by name and surname, from database EPICAC, table people.
+  *
+  * @author Nicolò Pratelli
+  *
+  * @since 2.0
+  *
+  * @param string $idUser  id of the user that have to be linked to table people
+  */
+  function loadCompletefName($idUser)
+  {
+	require("../../../../Config/EPICACConfig.php");
+	$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
+	$userDataQueryResult = mysqli_query($connEpicac, $userDataQuery);
+	$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
+	return $userDataRow["Name"] . " " . $userDataRow["Surname"];
+  }
+
+/**
+  * Load link id from table admin.
+  *
+  * @author Nicolò Pratelli
+  *
+  * @since 2.0
+  *
+  * @param string $idUser  id of the user
+  */
+function loadPeopleId($idUser)
+{
+	require("../../../../Config/UsersConfig.php");
+	$userQuery = "SELECT * FROM admin WHERE AuthId=$idUser";
+	$userQueryResult = mysqli_query($connUtenti, $userQuery);
+	$userRow = mysqli_fetch_array($userQueryResult,MYSQLI_ASSOC);
+	return $userRow["IdPp_Id"];
+}
+
+
+
+/**
+  * Load and build editing chronology of every event.
+  *
+  * @author Nicolò Pratelli
+  *
+  * @since 3.0
+  *
+  * @param string $eventId id of the event
+  */
+function loadEditingChronology($eventId)
+{
+	$editingsList = "";
+	require("../../../../Config/OggiSTIConfig.php");
+	$queryEditing = "SELECT * FROM editing WHERE Event_Id='$eventId'";
+	$resultEditing = mysqli_query($conn, $queryEditing);
+	while ($rowEditing = mysqli_fetch_assoc($resultEditing)) {
+		switch ($rowEditing["Type"]) {
+			case 1:
+				$type="creato";
+				break;
+			case 2:
+				$type="salvato";
+				break;
+			case 3:
+				$type="inviato in approvazione";
+				break;
+			case 4:
+				$type="modifica rapida";
+		}
+		$editingsList = $editingsList . "<li>" . $rowEditing["EditDate"] . " - " .loadBriefName(loadPeopleId($rowEditing["Editor"])) .  " - ".  $type ."</li>";
+			}
+		return $editingsList;
+}
+
+/**
+  * Load and build review chronology of every event.
+  *
+  * @author Nicolò Pratelli
+  *
+  * @since 3.0
+  *
+  * @param string $eventId id of the event
+  */
+function loadReviewChronology($eventId)
+{
+	$reviewsList = "";
+	require("../../../../Config/OggiSTIConfig.php");
+	$queryReview = "SELECT * FROM review WHERE Event_Id='$eventId'";
+	$resurlReview = mysqli_query($conn, $queryReview);
+	while ($rowReview = mysqli_fetch_assoc($resurlReview)) {
+		switch ($rowReview["Type"]) {
+			case 1:
+				$type="approvato";
+				break;
+			case 2:
+				$type="inviato in redazione";
+				break;
+			case 3:
+				$type="pubblicabile su Facebook";
+				break;
+			case 4:
+				$type="non pubblicabile su Facebook";
+				break;
+		}
+	$reviewsList = $reviewsList . "<li>" . $rowReview["ReviewDate"] . " - " . loadBriefName(loadPeopleId($rowReview["Reviser"])) . " - ".  $type ."</li>";
+		}
+		return $reviewsList;
 }
 
  /**
@@ -67,10 +192,10 @@ function clean_html($string)
   * @param array $fields ontains the fields of the query
   * @param string $formatting it permitt to choose yes or no if you want the html formatted field or not
   */
-function load_data_tables($query, $fields, $formatting)
+function loadDataTables($query, $fields, $formatting)
 {
-	require("config.php");
-	require("../../../Administration/Assets/Api/configUtenti.php");
+	// require("config.php");
+	require("../../../../Config/OggiSTIConfig.php");
 	$result = array();
 	$i = 0;
 	$queryResult = mysqli_query($conn, $query);
@@ -81,7 +206,7 @@ function load_data_tables($query, $fields, $formatting)
 		{
 			$result[$i] = array();
 			foreach($fields as $field){
-				if($field=='redattore' | $field=='redattore_appr')
+				if($field=='Editors')
 				{
 					$authors = $row[$field];
 					$pieces = explode(", ", $authors);
@@ -89,21 +214,14 @@ function load_data_tables($query, $fields, $formatting)
 					for($j=0; $j<sizeof($pieces); $j++)
 					{
 						$userId = intval($pieces[$j]);
-						$queryUtenti = "SELECT * FROM admin WHERE id_auth=$userId";
-						$userQueryResult = mysqli_query($connUtenti, $queryUtenti);
-						$userRow = mysqli_fetch_array($userQueryResult,MYSQLI_ASSOC);
-						$authorsRow =  $authorsRow . $userRow["nome"] . " " . $userRow["cognome"]. "<br/> ";
+						$authorsRow =  $authorsRow . loadBriefName(loadPeopleId($userId)) . "<br/> ";
 					}
 					$result [$i][$field] = $authorsRow;
 				}
-				elseif ($field == 'ver_1' | $field == 'ver_2')
+				elseif ($field == 'Reviser_1' | $field == 'Reviser_2')
 				{
 					$userId = intval($row[$field]);
-					$queryUtenti = "SELECT * FROM admin WHERE id_auth=$userId";
-					$userQueryResult = mysqli_query($connUtenti, $queryUtenti);
-					$userRow = mysqli_fetch_array($userQueryResult,MYSQLI_ASSOC);
-					$revisore =  $userRow["nome"] . " " . $userRow["cognome"];
-					$result [$i][$field] = $revisore;
+					$result [$i][$field] = loadBriefName(loadPeopleId($userId));
 				}
 				else
 				{	
@@ -113,7 +231,7 @@ function load_data_tables($query, $fields, $formatting)
 					}
 					else
 					{
-						$result [$i][$field] = clean_html($row[$field]); // utf8_encode($row[$field])
+						$result [$i][$field] = cleanHTML($row[$field]); // utf8_encode($row[$field])
 					}
 				}	
 			}

@@ -51,13 +51,13 @@
           <li><a href="OggiSTI_savedEvents.php">Salvati</a></li>
           <li><a href="OggiSTI_redactionEvents.php">In redazione</a></li>
           <li><a href="OggiSTI_reviewedEvents.php">In approvazione</a></li>
-          <li><a href="OggiSTI_publicatedEvents.php">Pubblicati</a></li>
+          <li><a href="OggiSTI_publishedEvents.php">Pubblicati</a></li>
         </ul>
       </li>
 		<li><a href="OggiSTI_edit.php">Aggiungi evento</a></li>
 	</ul>
 	<form class="navbar-form navbar-right" role="search">
-		<div class="text-right iconaUser"><a href="../../../Administration/Assets/PHP/welcome.php"><span class="glyphicon glyphicon-user"></span> <?php echo $autore; ?></a></div>
+		<div class="text-right iconaUser"><a href="../../../Administration/Assets/PHP/welcome.php"><span class="glyphicon glyphicon-user"></span> <?php echo $editor; ?></a></div>
 		</form>
 	</div>
 </nav>

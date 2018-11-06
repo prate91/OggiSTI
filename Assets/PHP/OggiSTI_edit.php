@@ -41,103 +41,103 @@
 
 
 // include PHP files
-include("../Api/config.php");
+require("../../../../Config/OggiSTIConfig.php");
 include 'OggiSTI_sessionSet.php';
 include 'OggiSTI_controlLogged.php';
 
 // Control if user has redaction permission
-if($redattore==0&&$revisore==0) {
+if($editorPermission==0&&$reviserPermission==0) {
     header('Location: OggiSTI_no_permission.php');
 }
 
 // initialize empty variables
-$autori="";
-$messaggio = $mess = $errore = $classe = $messaggioImmagine = "";
+$editors="";
+$message = $mess = $errore = $class = $imageMessage = "";
 $prev="";
-$id_evento = $dateCorr = $titolo_ita = $titolo_eng = $abstr_ita = $abstr_eng = $immagine = $desc_ita = $desc_eng = $riferimenti = $keywords = $fonte_img = $commento = $state = "";
+$eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $editors = $itaDescription = $engDescription = $textReferences = $keywords = $imageCaption = $comment = $state = "";
 
 
 // Control if is an update or a creation 
-if(isset($_GET["id_evento"])){
+if(isset($_GET["eventId"])){
     // Event exists
     $menuEvento = "Modifica evento";
-    $id_evento = $_GET["id_evento"];
-    if(isset($_GET["id_state"])){
-        $state=$_GET["id_state"];
+    $eventId = $_GET["eventId"];
+    if(isset($_GET["stateId"])){
+        $state=$_GET["stateId"];
         if($state=="Pubblicato"){
-            $sql = "SELECT * FROM eventi WHERE id_evento = '$id_evento'";
+            $sql = "SELECT * FROM publishedEvents WHERE Id = '$eventId'";
         }else{
-            $sql = "SELECT * FROM eventiappr WHERE id_evento = '$id_evento'";
+            $sql = "SELECT * FROM editingEvents WHERE Id = '$eventId'";
         }
     }else{
-        $sql = "SELECT * FROM eventiappr WHERE id_evento = '$id_evento'";
+        $sql = "SELECT * FROM editingEvents WHERE Id = '$eventId'";
     }
     $result = mysqli_query($conn,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $oldDate = $row["data_evento"];
+    $oldDate = $row["Date"];
     $date = date('d-m-Y', strtotime($oldDate));
     $dateCorr = str_replace('-', '/', $date);
-    $titolo_ita = $row["titolo_ita"]; 
-    $titolo_eng = $row["titolo_eng"];
-    $abstr_ita = $row["abstr_ita"];
-    $abstr_eng = $row["abstr_eng"];
-    $immagine = $row["immagine"];
-    $fonte_img = $row["fonteimmagine"];
-    $desc_ita = $row["desc_ita"];
-    $desc_eng = $row["desc_eng"];
-    $riferimenti = $row["riferimenti"];
-    $keywords = $row["keywords"];
-    $autori = $row["redattore"];
-    $commento = $row["commento"];
-    $stato = $row["stato"];
-    if($stato=="In redazione"){
-        $autoreMatch="/".$id_utente."/i";
-        if (preg_match($autoreMatch, $autori)) {
-            $autori = $autori;
+    $itaTitle = $row["ItaTitle"]; 
+    $engTitle = $row["EngTitle"];
+    $itaAbstract = $row["ItaAbstract"];
+    $engAbstract = $row["EngAbstract"];
+    $image = $row["Image"];
+    $imageCaption = $row["ImageCaption"];
+    $itaDescription = $row["ItaDescription"];
+    $engDescription = $row["EngDescription"];
+    $textReferences = $row["TextReferences"];
+    $keywords = $row["Keywords"];
+    $editors = $row["Editors"];
+    $comment = $row["Comment"];
+    $state = $row["State"];
+    if($state=="In redazione"){
+        $editorsMatch="/".$userId."/i";
+        if (preg_match($editorsMatch, $editors)) {
+            $editors = $editors;
         }else{
-            $autori = $autori.", ".$id_utente;
+            $editors = $editors.", ".$userId;
         }
     }
 }else{
     // Create a new event
     $menuEvento = "Aggiungi evento";
-    $sql = "INSERT INTO eventiappr (titolo_ita) VALUES ('')";
-    mysqli_query($conn, $sql);    
-    $risultato = mysqli_query($conn, "SELECT MAX(id_evento) FROM eventiappr");
-    $riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
-    $id_evento = $riga["MAX(id_evento)"];
-    $autori=$id_utente;
-    $sql2 = "INSERT INTO redazione (id_evento, redattore, tipo_modifica) VALUES ('$id_evento', '$id_utente', '1')";
+    $creationQuery = "INSERT INTO editingEvents (ItaTitle) VALUES ('')";
+    mysqli_query($conn, $creationQuery);    
+    $result = mysqli_query($conn, "SELECT MAX(Id) FROM editingEvents");
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $eventId = $row["MAX(Id)"];
+    $editors=$userId;
+    $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '1')";
     mysqli_query($conn, $sql2);
 }
 // Check if there is an image message
-if(isset($_GET["messaggioImmagine"])){
-    $messaggioImmagine="<br/>".$_GET["messaggioImmagine"];
+if(isset($_GET["imageMessage"])){
+    $imageMessage="<br/>".$_GET["imageMessage"];
     }
 
 // Check if there is a message
-if(isset($_GET["messaggio"])){
-    $mess=$_GET["messaggio"];
+if(isset($_GET["message"])){
+    $mess=$_GET["message"];
     if($mess=="salva"){
-        $messaggio="Evento salvato correttamente".$messaggioImmagine;
-        $classe="alert alert-success";
+        $message="Evento salvato correttamente".$imageMessage;
+        $class="alert alert-success";
     }
     if($mess=="modifica"){
-        $messaggio="Stai modificando un evento".$messaggioImmagine;
-        $classe="alert alert-warning";
+        $message="Stai modificando un evento".$imageMessage;
+        $class="alert alert-warning";
     }
     if($mess=="modificaVeloce"){
-        $messaggio="Stai modificando un evento senza lasciare traccia della redazione".$messaggioImmagine;
-        $classe="alert alert-danger";
+        $message="Stai modificando un evento senza lasciare traccia della redazione".$imageMessage;
+        $class="alert alert-danger";
     }
     if($mess=="errore"){
-        $messaggio="Evento NON salvato".$messaggioImmagine;
-        $classe="alert alert-danger";
+        $message="Evento NON salvato".$imageMessage;
+        $class="alert alert-danger";
     }
     
 }else{
-    $messaggio="Hai creato un nuovo evento".$messaggioImmagine;
-    $classe="alert alert-warning";
+    $message="Hai creato un nuovo evento".$imageMessage;
+    $class="alert alert-warning";
 }
 
 
@@ -147,7 +147,7 @@ if(isset($_GET["messaggio"])){
 if(isset($_GET["preview"])){
     $prev = $_GET["preview"];
     if($prev=="ok"){
-        $link = "<script>window.open(\"../../OggiSTI_preview.php?id_evento=$id_evento&id_state=Preview\", \"previewOggiSTI\", \"width=864,height=1000\")</script>";
+        $link = "<script>window.open(\"../../OggiSTI_preview.php?eventId=$eventId&stateId=Preview\", \"previewOggiSTI\", \"width=864,height=1000\")</script>";
         echo $link;       
         
     }
@@ -225,7 +225,7 @@ if(isset($_GET["preview"])){
 ?>
 
 <!--<div id="visualizzaCommento" class="alert alert-info">
-<strong>Commento:</strong> <?php echo $commento; ?>
+<strong>Commento:</strong> <?php echo $comment; ?>
 </div>-->
     
 
@@ -233,13 +233,13 @@ if(isset($_GET["preview"])){
 <div class="jumbotron">
 <!-- Comment -->
 <div id="visualizzaCommento" class="panel panel-default">
-    <div class="panel-body">Commento: <br/> <?php echo $commento; ?> </div>
+    <div class="panel-body">Commento: <br/> <?php echo $comment; ?> </div>
 </div>
 <br class="stop"/>
 <!-- Message alert -->
-<div class="<?php echo $classe; ?>" id="alertEvento">
+<div class="<?php echo $class; ?>" id="alertEvento">
     <button type="button" class="close" data-dismiss="alert">x</button>
-    <p><?php echo $messaggio; ?></p>
+    <p><?php echo $message; ?></p>
 </div>
 <!-- Language button -->
 <div id="btnLanguage">
@@ -247,18 +247,19 @@ if(isset($_GET["preview"])){
 </div>
 
 <!-- Form starts here -->
+<!-- This form allows the writing of events -->
 <form id="addEvent" method="post" action="../Api/updateEvents.php" enctype="multipart/form-data">
 
     <!-- ID -->
     <div class="col-xs-2">
-    <label for="id_evento">Id evento</label>
-	<input type="text" name="id_evento" class="form-control" id="id_evento" readonly value="<?php if($mess=="errore"){echo $_SESSION['id_evento'];}else{ echo $id_evento;} ?>">
+    <label for="eventId">Id evento</label>
+	<input type="text" name="eventId" class="form-control" id="eventId" readonly value="<?php if($mess=="errore"){echo $_SESSION['eventId'];}else{ echo $eventId;} ?>">
     </div>
 
 	<!-- Date -->
 	<div id="formData" class="form-group col-xs-10">
-	<label for="date">Data dell'evento</label>
-	<input type="datetime" name="date" class="form-control" id="date" placeholder="dd/mm/yyyy" value="<?php if($mess=="errore"){echo $_SESSION['data_evento'];}else{echo $dateCorr;} ?>">
+	<label for="eventDate">Data dell'evento</label>
+	<input type="datetime" name="eventDate" class="form-control" id="eventDate" placeholder="dd/mm/yyyy" value="<?php if($mess=="errore"){echo $_SESSION['eventDate'];}else{echo $dateCorr;} ?>">
 	<span id="glyphiconDate"></span>
 	<span id="helpDate" class="help-block">Per maggiori informazioni consultare le <a href="../../LineeGuida/#LGData" target="_blank">linee guida sulla data</a></span>
 	</div>
@@ -268,39 +269,39 @@ if(isset($_GET["preview"])){
 	<!-- Title -->
     <h2 id="editTitle">Titolo</h2>
     <!-- Italian -->
-	<div id="formTitle_ita" class="form-group col-xs-12">
-	<label for='title_ita'>in italiano</label>
-	<textarea name="title_ita" class="form-control" rows="2" id="title_ita"><?php if($mess=="errore"){echo $_SESSION['titolo_ita'];}else{ echo $titolo_ita;} ?></textarea>
+	<div id="formItaTitle" class="form-group col-xs-12">
+	<label for='itaTitle'>in italiano</label>
+	<textarea name="itaTitle" class="form-control" rows="2" id="itaTitle"><?php if($mess=="errore"){echo $_SESSION['itaTitle'];}else{ echo $itaTitle;} ?></textarea>
 	<span id="glyphiconTitleIta"></span>
-	<span id="countBox_title_ita" class="help-block pull-right">140</span>
+	<span id="countBoxItaTitle" class="help-block pull-right">140</span>
 	<span id="helpTitleIta" class="help-block">La dimensione massima consigliata è di 70 caratteri. Per maggiori informazioni consultare le <a href="../../LineeGuida/#LGTitolo" target="_blank">linee guida sul titolo</a></span>
 	</div>
     <!-- English -->
-	<div id="formTitle_eng" class="form-group col-xs-12 hidden">
-	<label for='title_eng'>in English</label>
-	<textarea name="title_eng" class="form-control" rows="2" id="title_eng"><?php if($mess=="errore"){echo $_SESSION['titolo_eng'];}else{ echo $titolo_eng;} ?></textarea>
+	<div id="formEngTitle" class="form-group col-xs-12 hidden">
+	<label for='engTitle'>in English</label>
+	<textarea name="engTitle" class="form-control" rows="2" id="engTitle"><?php if($mess=="errore"){echo $_SESSION['engTitle'];}else{ echo $engTitle;} ?></textarea>
 	<span id="glyphiconTitleEng"></span>
-	<span id="countBox_title_eng" class="help-block pull-right">140</span>
+	<span id="countBox_engTitle" class="help-block pull-right">140</span>
 	<span id="helpTitleEng" class="help-block">The maximum recommended size is 70 characters. For more information consult <a href="../../LineeGuida/#LGTitolo" target="_blank">title's guidelines</a></span>
 	</div>
 
 	<!-- Image -->
     <br/>
     <h2 id="editImg" class="custom-file">Immagine</h2>
-    <img id="oggiSTI_immagineEvento" src="<?php if($mess=="errore"){echo "../Img/eventi/".$_SESSION['immagine'];}else{ echo "../Img/eventi/".$immagine;} ?>" alt="Nessuna immagine precedente"/>
+    <img id="oggiSTI_imageEvento" src="<?php if($mess=="errore"){echo "../Img/publishedEvents/".$_SESSION['image'];}else{ echo "../Img/publishedEvents/".$image;} ?>" alt="Nessuna image precedente"/>
     <div class="col-xs-8">
-    <input type="text" name="vecchiaImmagine" class="form-control" id="vecchiaImmagine" readonly value="<?php if($mess=="errore"){echo $_SESSION['immagine'];}else{ echo $immagine;} ?>">
+    <input type="text" name="oldImage" class="form-control" id="oldImage" readonly value="<?php if($mess=="errore"){echo $_SESSION['image'];}else{ echo $image;} ?>">
 	<br/>
     </div>
     <div class="col-xs-4">
-	<input type="file" name="immagine" id="immagine" class="custom-file-input"/>
+	<input type="file" name="image" id="image" class="custom-file-input"/>
     </div>
     <br class="stop" />
     <!-- Reference Image -->
     <div class="col-xs-12">
-    <label for='abstr_ita'>Fonte dell'immagine</label>
-	<textarea name="fonte_img" class="form-control" rows="1" id="fonte_img"><?php if($mess=="errore"){echo $_SESSION['fonte_img'];}else{ echo $fonte_img;} ?></textarea>
-    <span id="helpImg" class="help-block">Per maggiori informazioni consultare le <a href="../../LineeGuida/#LGImm" target="_blank">linee guida sull'immagine</a></span>
+    <label for='imageCaption'>Fonte dell'image</label>
+	<textarea name="imageCaption" class="form-control" rows="1" id="imageCaption"><?php if($mess=="errore"){echo $_SESSION['imageCaption'];}else{ echo $imageCaption;} ?></textarea>
+    <span id="helpImg" class="help-block">Per maggiori informazioni consultare le <a href="../../LineeGuida/#LGImm" target="_blank">linee guida sull'image</a></span>
     </div>
 
 	<br class="stop" />
@@ -316,17 +317,17 @@ if(isset($_GET["preview"])){
 	<!-- Brief description --> 
     <h2 id="editDesc">Descrizione breve</h2>
     <!-- Italian -->
-	<div id="formAbstr_ita" class="form-group col-xs-12">
-    <label for='abstr_ita'>in Italiano</label>
-	<textarea name="abstr_ita" class="form-control textControl" rows="5" id="abstr_ita"><?php if($mess=="errore"){echo $_SESSION['abstr_ita'];}else{ echo $abstr_ita;} ?></textarea>
+	<div id="formItaAbstract" class="form-group col-xs-12">
+    <label for='itaAbstract'>in Italiano</label>
+	<textarea name="itaAbstract" class="form-control textControl" rows="5" id="itaAbstract"><?php if($mess=="errore"){echo $_SESSION['itaAbstract'];}else{ echo $itaAbstract;} ?></textarea>
 	<span id="glyphiconAbstrIta"></span>
 	<span id="helpAbstrIta" class="help-block">La dimensione massima consigliata è di 30 parole. Per maggiori informazioni consultare le <a href="../../LineeGuida/#LGDescr" target="_blank">linee guida sulla descrizione</a></span>
     </div>
     <!-- English -->
-	<div id="formAbstr_eng" class="form-group col-xs-12 hidden">
-	<label for='abstr_eng'>in English</label>
+	<div id="formEngAbstract" class="form-group col-xs-12 hidden">
+	<label for='engAbstract'>in English</label>
     <a href="#" data-toggle="tooltip" title="Brief description have to provide information to excite curiosity. The recommended size is about 30 words."><span class="glyphicon glyphicon-info-sign"></span></a>
-	<textarea name="abstr_eng" class="form-control textControl" rows="5" id="abstr_eng"><?php if($mess=="errore"){echo $_SESSION['abstr_eng'];}else{ echo $abstr_eng;} ?></textarea>
+	<textarea name="engAbstract" class="form-control textControl" rows="5" id="engAbstract"><?php if($mess=="errore"){echo $_SESSION['engAbstract'];}else{ echo $engAbstract;} ?></textarea>
 	<span id="glyphiconAbstrEng"></span>
 	<span id="helpAbstrEng" class="help-block">The maximum recommended size is 30 words. For more information consult <a href="../../LineeGuida/#LGDescr" target="_blank">description's guidelines</a></span>
     </div>
@@ -336,15 +337,15 @@ if(isset($_GET["preview"])){
 	<!-- Deep description --> 
     <h2 id="editDeep">Descrizione di approfondimento</h2>
     <!-- Italian -->
-	<div id="formDesc_ita" class="form-group col-xs-12">
-	<label for='desc_ita'>in italiano</label>
-	<textarea name="desc_ita" class="form-control longTextControl" rows="10" id="desc_ita"><?php if($mess=="errore"){echo $_SESSION['desc_ita'];}else{ echo $desc_ita;} ?></textarea>
+	<div id="formItaDescription" class="form-group col-xs-12">
+	<label for='itaDescription'>in italiano</label>
+	<textarea name="itaDescription" class="form-control longTextControl" rows="10" id="itaDescription"><?php if($mess=="errore"){echo $_SESSION['itaDescription'];}else{ echo $itaDescription;} ?></textarea>
     <span id="helpDescIta" class="help-block">La dimensione massima consigliata è di 150 parole. Per maggiori informazioni consultare le <a href="../../LineeGuida/#LGDescr" target="_blank">linee guida sulla descrizione</a></span>
 	</div>
 	<!-- English -->
-	<div id="formDesc_eng" class="form-group col-xs-12 hidden">
-	<label for='desc_eng'>in English</label>
-	<textarea name="desc_eng" class="form-control longTextControl" rows="10" id="desc_eng"><?php if($mess=="errore"){echo $_SESSION['desc_eng'];}else{ echo $desc_eng;} ?></textarea>
+	<div id="formEngDescription" class="form-group col-xs-12 hidden">
+	<label for='engDescription'>in English</label>
+	<textarea name="engDescription" class="form-control longTextControl" rows="10" id="engDescription"><?php if($mess=="errore"){echo $_SESSION['engDescription'];}else{ echo $engDescription;} ?></textarea>
     <span id="helpDescEng" class="help-block">The maximum recommended size is 150 words. For more information consult <a href="../../LineeGuida/#LGDescr" target="_blank">description's guidelines</a></span>
 	</div>
 
@@ -353,8 +354,8 @@ if(isset($_GET["preview"])){
     <!-- References -->
     <h2 id="editRef">Riferimenti</h2>
     <div id="formRiferimenti" class="form-group col-xs-12">
-	<label for='riferimenti'>Riferimenti</label>
-	<textarea name="riferimenti" class="form-control textControl" rows="5" id="riferimenti"><?php if($mess=="errore"){echo $_SESSION['riferimenti'];}else{ echo $riferimenti;} ?></textarea>
+	<label for='textReferences'>Riferimenti</label>
+	<textarea name="textReferences" class="form-control textControl" rows="5" id="textReferences"><?php if($mess=="errore"){echo $_SESSION['textReferences'];}else{ echo $textReferences;} ?></textarea>
     <span id="helpRiferimenti" class="help-block">Consultare le linee guida sul <a href="../../ChicagoStyle/" target="_blank">Chicago Manual of Style</a></span>
 	<br/>
 	</div>
@@ -369,46 +370,46 @@ if(isset($_GET["preview"])){
     </div>
 	<br/>
 
-    <!-- Author -->
+    <!-- Editors -->
      <div class='col-lg-12 hidden'>
-    <label for="autore">Autori</label>
-	<input type="text" name="autore" class="form-control" id="autore" readonly value="<?php echo $autori; ?>">
+    <label for="editors">Autori</label>
+	<input type="text" name="editors" class="form-control" id="editors" readonly value="<?php echo $editors; ?>">
     </div>
 	<br/>
          
     <!-- Saved by -->
     <div class='col-lg-2 hidden'>
-    <label for="salvato">Salvato da:</label>
-	<input type="text" name="salvato" class="form-control" id="salvato" readonly value="<?php echo $id_utente; ?>">
+    <label for="saved">Salvato da:</label>
+	<input type="text" name="saved" class="form-control" id="saved" readonly value="<?php echo $userId; ?>">
     </div>
 
 	<!-- State -->
-    <?php if($redattore == 1 && $revisore == 0 && $state!="Pubblicato"){
+    <?php if($editorPermission == 1 && $reviserPermission == 0 && $state!="Pubblicato"){
         echo "<div class='col-lg-3 hidden'>";
         echo "<label for='Iapprovazione'>I approvazione</label>
-        <input type='text' name='Iapprovazione' class='form-control col-lg-2' id='Iapprovazione' readonly value='0'></div>";
+        <input type='text' name='Iapprovazione' class='form-control' id='Iapprovazione' readonly value='0'></div>";
         echo "<div class='col-lg-3 hidden'>";
         echo "<label for='IIapprovazione'>II approvazione</label>
-        <input type='text' name='IIapprovazione' class='form-control col-lg-2' id='IIapprovazione' readonly value='0'></div>";
-        echo "<div class='col-lg-4 hidden'>";
-        echo "<label for='stato'>Stato</label>
-        <input type='text' name='stato' class='form-control col-lg-2' id='stato' readonly value='Approvazione 0/2'></div>";
-        echo "<br class='stop'/>";
-    }else if($redattore == 1 && $revisore == 1 && $state!="Pubblicato"){
-        echo "<div class='col-lg-3 hidden'>";
-        echo "<label for='Iapprovazione'>I approvazione</label>
-        <input type='text' name='Iapprovazione' class='form-control id='Iapprovazione' readonly value='".$id_utente."'></div>";
-        echo "<div class='col-lg-3 hidden'>";
-        echo "<label for='IIapprovazione'>II approvazione</label><br/>
         <input type='text' name='IIapprovazione' class='form-control' id='IIapprovazione' readonly value='0'></div>";
         echo "<div class='col-lg-4 hidden'>";
-        echo "<label for='stato'>Stato</label><br/>
-        <input type='text' name='stato' class='form-control' id='stato' readonly value='Approvazione 1/2'></div>";
+        echo "<label for='state'>Stato</label>
+        <input type='text' name='state' class='form-control' id='state' readonly value='Approvazione 0/2'></div>";
+        echo "<br class='stop'/>";
+    }else if($editorPermission == 1 && $reviserPermission == 1 && $state!="Pubblicato"){
+        echo "<div class='col-lg-3 hidden'>";
+        echo "<label for='Iapprovazione'>I approvazione</label>
+        <input type='text' name='Iapprovazione' class='form-control' id='Iapprovazione' readonly value='".$userId."'></div>";
+        echo "<div class='col-lg-3 hidden'>";
+        echo "<label for='IIapprovazione'>II approvazione</label><br/>
+        <input type='text' name='IIapprovazione' class='form-control'  id='IIapprovazione' readonly value='0'></div>";
+        echo "<div class='col-lg-4 hidden'>";
+        echo "<label for='state'>Stato</label><br/>
+        <input type='text' name='state' class='form-control'  id='state' readonly value='Approvazione 1/2'></div>";
         echo "<br class='stop'/>";
     }else if($state=="Pubblicato"){
         echo "<div class='col-lg-4 hidden'>";
-        echo "<label for='stato'>Stato</label><br/>
-        <input type='text' name='stato' class='form-control' id='stato' readonly value='Pubblicato'></div>";
+        echo "<label for='state'>Stato</label><br/>
+        <input type='text' name='state' class='form-control'  id='state' readonly value='Pubblicato'></div>";
         echo "<br class='stop'/>";
      }
     ?>

@@ -39,7 +39,7 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ///////////////////////////////////////////////////////////////////////
-include("../Assets/Api/config.php");
+
 require("../../../Config/OggiSTIConfig.php");
 
 // from yyyy-mm-dd to mm-dd(yyyy)
@@ -170,7 +170,7 @@ for ($i = 0; $i <= 365; $i++) {
 
 $arrayDate=array();
 
-$sql = "SELECT DISTINCT DAY(data_evento) as giorno, MONTH(data_evento) as mese FROM eventi";
+$sql = "SELECT DISTINCT DAY(Date) as giorno, MONTH(Date) as mese FROM publishedEvents";
 $result = mysqli_query($conn,$sql);
 while ($row = mysqli_fetch_row($result)) {
     array_push($arrayDate, calcolaOrdinaleGiorno($row[0], $row[1]));
@@ -189,58 +189,6 @@ for ($i = 0; $i <= 365; $i++) {
 }
 }
 
-    $stampaDate="";
-    $stampaVb="0";
-
-    $vb = 0;
-    $data = 0;
-    $max3=0;
-    $arrayNuoveDate = array();
-    $date_eventi = "";
-    $date_eventi = isset($_POST["dateEventi"]) ? $_POST['dateEventi'] : '';
-    if($date_eventi!="") {
-        $date_divise = explode(",", $date_eventi);
-        $max3 = sizeof($date_divise);
-        for ($h = 0; $h < $max3; $h++) {
-            list ($giorno, $mese, $anno) = split('/', $date_divise[$h]);
-            array_push($arrayNuoveDate, calcolaOrdinaleGiorno($giorno, $mese));
-        }
-        sort($arrayNuoveDate);
-        $max2 = sizeof($arrayNuoveDate);
-        for ($k = 0; $k < $max2; $k++) {
-            $data = $arrayNuoveDate[$k];
-            $stampaDate=$stampaDate."<p class=\"oggiSTI_riepilogo\"><strong>". calcolaGiornoDaOrdinale($data) . "</strong><br/>";
-            $punteggio = 0;
-            $punteggioInf = 0;
-            $punteggioSup = 0;
-            if ($giorniAnno[$data] == 1||$giorniAnno[$data] == 2) {
-                $punteggio = 0;
-            }
-            if ($giorniAnno[$data] == 0) {
-                $punteggioInf = cercaInferiore($giorniAnno, $data);
-                //echo "punteggio Inf: ". $punteggioInf . "<br/>";
-                $punteggioSup = cercaSuperiore($giorniAnno, $data);
-                //echo "punteggio Sup: ". $punteggioSup . "<br/>";
-                if ($punteggioInf < $punteggioSup) {
-                    $punteggio = $punteggioInf;
-                }
-                if ($punteggioInf >= $punteggioSup) {
-                    $punteggio = $punteggioSup;
-                }
-                $giorniAnno[$data] = 2;
-            }
-            $stampaDate=$stampaDate."d<sub>i</sub> = ". $punteggio . " <br/>";
-            $stampaDate=$stampaDate."v<sub>bi</sub> = ". (2 + (0.2 * $punteggio)) . "</p>";
-            $vb = $vb + (2 + (0.2 * $punteggio));
-            $stampaVb=$vb;
-            if ($vb > 28) {
-                $vb = 28;
-            }
-
-            array_push($arrayDate, $data);
-//echo "Punteggio totale: ". $vb. "<br/>";
-        }
-    }
 
 ?>
 
@@ -409,14 +357,14 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
             <h2>Lista eventi pubblicati</h2> 
             <?php
             
-            $sql="SELECT id_evento, data_evento, titolo_ita, fb FROM eventi ORDER BY MONTH(data_evento),DAY(data_evento)";
+            $sql="SELECT Id, Date, ItaTitle, Fb FROM publishedEvents ORDER BY MONTH(Date),DAY(Date)";
             $result = mysqli_query($conn,$sql);
             while ($row = mysqli_fetch_assoc($result)) {
-                $spaceString = str_replace( '<', ' <', $row["titolo_ita"] );
+                $spaceString = str_replace( '<', ' <', $row["ItaTitle"] );
                 $doubleSpace = strip_tags( $spaceString );
                 $singleSpace = str_replace( '  ', ' ', $doubleSpace );
-                echo formatDatemmddyyyy($row["data_evento"])." <a href='../?id=".$row["id_evento"]."'>".$singleSpace."</a>";
-                if($row["fb"]==1){
+                echo formatDatemmddyyyy($row["Date"])." <a href='../?id=".$row["Id"]."'>".$singleSpace."</a>";
+                if($row["Fb"]==1){
                     echo ' <img class="fbIcon" src="../Assets/Img/iconFacebook.png" alt="FB Icon">';
                 }
                 echo "<br/>";

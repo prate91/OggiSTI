@@ -66,16 +66,16 @@ var numberRedacted = "";
 var url = "../Api/countRedactedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
-        numberRedacted = item.numeroEventi;
+        numberRedacted = item.eventsNumber;
     });
     $("#redactedEvents").html(numberRedacted);
 });
 
-var numberPublicated = "";
+var numberPublished = "";
 var url = "../Api/countPublishedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
-        numberPublicated = item.numeroEventi;
+        numberPublished = item.eventsNumber;
     });
-    $("#publishedEvents").html(numberPublicated);
+    $("#publishedEvents").html(numberPublished);
 });

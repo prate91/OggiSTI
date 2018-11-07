@@ -68,10 +68,15 @@ function cleanHTML($string)
 function loadBriefName($idUser)
 {
 	require("../../../../Config/EPICACConfig.php");
-	$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
-	$userDataQueryResult = mysqli_query($connEpicac, $userDataQuery);
-	$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
-	return $userDataRow["Brief"];
+	if($idUser==0){
+		return 0;
+	}
+	else{
+		$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
+		$userDataQueryResult = mysqli_query($connEpicac, $userDataQuery);
+		$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
+		return $userDataRow["Brief"];
+	}
 }
 
 /**
@@ -86,10 +91,15 @@ function loadBriefName($idUser)
   function loadCompletefName($idUser)
   {
 	require("../../../../Config/EPICACConfig.php");
-	$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
-	$userDataQueryResult = mysqli_query($connEpicac, $userDataQuery);
-	$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
-	return $userDataRow["Name"] . " " . $userDataRow["Surname"];
+	if($idUser==0){
+		return 0;
+	}
+	else{
+		$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
+		$userDataQueryResult = mysqli_query($connEpicac, $userDataQuery);
+		$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
+		return $userDataRow["Name"] . " " . $userDataRow["Surname"];
+	}
   }
 
 /**

@@ -386,22 +386,22 @@ if(isset($_GET["preview"])){
 	<!-- State -->
     <?php if($editorPermission == 1 && $reviserPermission == 0 && $state!="Pubblicato"){
         echo "<div class='col-lg-3 hidden'>";
-        echo "<label for='Iapprovazione'>I approvazione</label>
-        <input type='text' name='Iapprovazione' class='form-control' id='Iapprovazione' readonly value='0'></div>";
+        echo "<label for='IApprovation'>I approvazione</label>
+        <input type='text' name='IApprovation' class='form-control' id='IApprovation' readonly value='0'></div>";
         echo "<div class='col-lg-3 hidden'>";
-        echo "<label for='IIapprovazione'>II approvazione</label>
-        <input type='text' name='IIapprovazione' class='form-control' id='IIapprovazione' readonly value='0'></div>";
+        echo "<label for='IIApprovation'>II approvazione</label>
+        <input type='text' name='IIApprovation' class='form-control' id='IIApprovation' readonly value='0'></div>";
         echo "<div class='col-lg-4 hidden'>";
         echo "<label for='state'>Stato</label>
         <input type='text' name='state' class='form-control' id='state' readonly value='Approvazione 0/2'></div>";
         echo "<br class='stop'/>";
     }else if($editorPermission == 1 && $reviserPermission == 1 && $state!="Pubblicato"){
         echo "<div class='col-lg-3 hidden'>";
-        echo "<label for='Iapprovazione'>I approvazione</label>
-        <input type='text' name='Iapprovazione' class='form-control' id='Iapprovazione' readonly value='".$userId."'></div>";
+        echo "<label for='IApprovation'>I approvazione</label>
+        <input type='text' name='IApprovation' class='form-control' id='IApprovation' readonly value='".$userId."'></div>";
         echo "<div class='col-lg-3 hidden'>";
-        echo "<label for='IIapprovazione'>II approvazione</label><br/>
-        <input type='text' name='IIapprovazione' class='form-control'  id='IIapprovazione' readonly value='0'></div>";
+        echo "<label for='IIApprovation'>II approvazione</label><br/>
+        <input type='text' name='IIApprovation' class='form-control'  id='IIApprovation' readonly value='0'></div>";
         echo "<div class='col-lg-4 hidden'>";
         echo "<label for='state'>Stato</label><br/>
         <input type='text' name='state' class='form-control'  id='state' readonly value='Approvazione 1/2'></div>";
@@ -416,17 +416,17 @@ if(isset($_GET["preview"])){
     <br/>
 
     <!-- Buttons -->
+    <div class="btn-group pull-right">
     <?php 
     if ($mess=="modificaVeloce"){
-        echo '<input type="submit" name="salvaChiudi" id="salvaChiudi" class="btn btn-success" value="Salva e chiudi">';
+        echo '<button type="submit" name="salvaChiudi" id="salvaChiudi" class="btn btn-success">Salva e chiudi</button>';
     } else{
-        echo '<div class="pull-right">
-    <input type="submit" name="salva" id="salva" class="btn btn-success" value="Salva">
+    echo '<button type="submit" name="salva" id="salva" class="btn btn-success">Salva</button>
     <button type="submit" name="preview" id="preview" class="btn btn-warning">Preview</button>
-	<button type="button" id="applica" class="btn btn-info" data-toggle="modal" data-target="#modalApprovazione">Invia in approvazione</button>
-    </div>';
+	<button type="button" id="applica" class="btn btn-info" data-toggle="modal" data-target="#modalApprovazione">Invia in approvazione</button>';
     }
     ?>
+    </div>
 
     <!-- Approvation modal -->
     <div id="modalApprovazione" class="modal fade">

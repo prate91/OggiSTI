@@ -148,7 +148,7 @@ $(document).ready(function () {
     // event click that open edit page
     $("#modificaEvento").click(function () {
         var eventId = $("#idEvento").text();
-        var indirizzo = "OggiSTI_edit.php?eventId=" + eventId + "&messaggio=modifica";
+        var indirizzo = "OggiSTI_edit.php?eventId=" + eventId + "&message=modifica";
         window.open(indirizzo, "_self", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
         //location.assign(indirizzo);
         //location.href = "modifica.php?eventId="+eventId+"";
@@ -158,7 +158,7 @@ $(document).ready(function () {
     $("#modificaVeloce").click(function () {
         var eventId = $("#idEvento").text();
         var stateId = $("#idStato").text();
-        var indirizzo = "OggiSTI_edit.php?eventId=" + eventId + "&messaggio=modificaVeloce&stateId=" + stateId + "";
+        var indirizzo = "OggiSTI_edit.php?eventId=" + eventId + "&message=modificaVeloce&stateId=" + stateId + "";
         window.open(indirizzo, "_self", "toolbar=yes,scrollbars=yes,resizable=yes,width=900,height=1000");
         //location.assign(indirizzo);
         //location.href = "modifica.php?eventId="+eventId+"";
@@ -220,10 +220,10 @@ $(document).ready(function () {
 
     $("#applica").click(function () {
         tinyMCE.triggerSave();
-        var data = $('[name="date"]').val();
-        var titolo_ita = $('[name="title_ita"]').val();
-        var abstr_ita = $("#abstr_ita").val();
-        var desc_ita = $('[name="desc_ita"]').val();
+        var data = $('[name="eventDate"]').val();
+        var titolo_ita = $('[name="itaTitle"]').val();
+        var abstr_ita = $("#itaAbstract").val();
+        var desc_ita = $('[name="itaDescription"]').val();
         var campi = "";
         if (!checkDate(data)) {
             campi = campi + "<strong>Data</strong><br/>";

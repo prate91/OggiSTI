@@ -228,7 +228,7 @@ include 'OggiSTI_controlLogged.php';
         echo '<span class="help-block" > Inserisci un comment </span>';
     }?>
     <?php
-        echo '<div id="bottoniCommento" class="">';
+        echo '<div id="bottoniCommento" class="btn-group">';
 
         // Edit event button, only if isn't saved or saved by user that has editing permission
         // and the state is "In editing"

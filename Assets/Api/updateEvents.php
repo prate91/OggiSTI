@@ -248,10 +248,10 @@ if(isset($_POST['salvaChiudi'])) {
   // è state premuto il secondo pulsante
 
   if($state=="Pubblicato"){
-    $toinsert =  "UPDATE eventi SET eventi.eventDate = '$eventDateCorr', eventi.itaTitle ='$itaTitle', eventi.engTitle = '$engTitle', eventi.image = '$imageLink', eventi.fonteimage = '$imageCaption', eventi.itaAbstract = '$itaAbstract', eventi.engAbstract = '$engAbstract', eventi.itaDescription = '$itaDescription', eventi.engDescription = '$engDescription', eventi.textReferences = '$textReferences', eventi.keywords = '$keywords' WHERE eventi.Id = '$eventId'";
+    $toinsert =  "UPDATE publishedEvents SET publishedEvents.Date = '$eventDateCorr', publishedEvents.ItaTitle ='$itaTitle', publishedEvents.EngTitle = '$engTitle', publishedEvents.Image = '$imageLink', publishedEvents.ImageCaption = '$imageCaption', publishedEvents.ItaAbstract = '$itaAbstract', publishedEvents.EngAbstract = '$engAbstract', publishedEvents.ItaDescription = '$itaDescription', publishedEvents.EngDescription = '$engDescription', publishedEvents.TextReferences = '$textReferences', publishedEvents.Keywords = '$keywords' WHERE publishedEvents.Id = '$eventId'";
   }else{
     //inserting data order
-    $toinsert =  "UPDATE editingEvents SET editingEvents.eventDate = '$eventDateCorr', editingEvents.itaTitle ='$itaTitle', editingEvents.engTitle = '$engTitle', editingEvents.image = '$imageLink', editingEvents.fonteimage = '$imageCaption', editingEvents.itaAbstract = '$itaAbstract', editingEvents.engAbstract = '$engAbstract', editingEvents.itaDescription = '$itaDescription', editingEvents.engDescription = '$engDescription', editingEvents.textReferences = '$textReferences', editingEvents.keywords = '$keywords' WHERE editingEvents.eventId = '$eventId'";
+    $toinsert =  "UPDATE editingEvents SET editingEvents.Date = '$eventDateCorr', editingEvents.ItaTitle ='$itaTitle', editingEvents.EngTitle = '$engTitle', editingEvents.Image = '$imageLink', editingEvents.ImageCaption = '$imageCaption', editingEvents.ItaAbstract = '$itaAbstract', editingEvents.EngAbstract = '$engAbstract', editingEvents.ItaDescription = '$itaDescription', editingEvents.EngDescription = '$engDescription', editingEvents.TextReferences = '$textReferences', editingEvents.Keywords = '$keywords' WHERE editingEvents.Id = '$eventId'";
   }
 
 

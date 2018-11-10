@@ -404,10 +404,6 @@ $(document).ready(function () {
         }
     });
 
-
-
-
-
 });
 
 

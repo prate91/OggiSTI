@@ -92,7 +92,7 @@ $(document).ready(function () {
                     "<td><a href='../../OggiSTI_preview.php?eventId=" + item.Id + "&stateId=" + item.State + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
                     "<td>" + item.State + " " + fbIcon + "<br/>" + item.Views + "</td>" +
                     "<td>" + item.Editors + "</td>" +
-                    "<td><button type='button' id='" + item.State + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button>";
+                    "<td><button type='button' id='" + item.State + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>";
             } else if (state == "Pubblicato") {
                 fbIcon = "";
                 if (item.fb == 1) {

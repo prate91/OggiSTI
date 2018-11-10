@@ -58,7 +58,7 @@ include 'OggiSTI_manageMessagesTables.php';
 <script src='../JS/datepicker-it.js'></script>
 <script src='../../../Assets/Libs/Bootstrap/JS/bootstrap.js'></script>
 <script src="https://www.w3schools.com/lib/w3.js"></script>
-<script src="../../../Assets/Libs/DataTables/datatables.min.js"></script>
+<script src="../../../Assets/Libs/DataTables/datatables.js"></script>
 
 <!-- Load HMR CSS styles & fonts -->
 <link rel="stylesheet" type="text/css" href="../../../HMR_Style.css">

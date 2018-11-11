@@ -8,8 +8,8 @@
 	{
 		$lowerDate = $_GET['lowerDate'];
         $upperDate = $_GET['upperDate'];
-		$query = "SELECT * FROM publishedEvents WHERE DATE_FORMAT(Date, '%m-%d') BETWEEN DATE_FORMAT('$lowerDate', '%m-%d') AND DATE_FORMAT('$upperDate', '%m-%d') ";
-       // SELECT * FROM publishedEvents WHERE DATE_FORMAT(Date, '%m-%d') BETWEEN '05-05' AND '05-12' 
+		$query = "SELECT * FROM published_events WHERE DATE_FORMAT(Date, '%m-%d') BETWEEN DATE_FORMAT('$lowerDate', '%m-%d') AND DATE_FORMAT('$upperDate', '%m-%d') ";
+       // SELECT * FROM published_events WHERE DATE_FORMAT(Date, '%m-%d') BETWEEN '05-05' AND '05-12' 
 		echo loadDataTables($query, $tableFieldsAllPublicated, "yes");
 	}
 	else

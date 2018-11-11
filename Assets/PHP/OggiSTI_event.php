@@ -52,9 +52,9 @@ include 'OggiSTI_controlLogged.php';
         $eventId = $_GET["eventId"];
         $stateId = $_GET["stateId"];
         if($stateId=="Pubblicato"){
-            $sql = "SELECT * FROM publishedEvents WHERE Id = '$eventId'";
+            $sql = "SELECT * FROM published_events WHERE Id = '$eventId'";
         } else {
-            $sql = "SELECT * FROM editingEvents WHERE Id = '$eventId'";
+            $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
         }
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);

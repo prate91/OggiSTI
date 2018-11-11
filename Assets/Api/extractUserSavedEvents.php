@@ -49,7 +49,7 @@ $tableFields = array(
 /**
  * Query to extract user saved events 
  */
-$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editingEvents WHERE Saved=$userId";
+$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE Saved=$userId";
 echo loadDataTables($sql, $tableFields, "no");
 		
 

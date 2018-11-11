@@ -42,30 +42,30 @@ require("../../../../Config/OggiSTIConfig.php");
 /**
  * This query select centenary events and its multiples
  */
-$query100="SELECT Id FROM todayEvents WHERE (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%100 = 0";
+$query100="SELECT Id FROM today_events WHERE (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%100 = 0";
 
 /**
  * This query select fiftieth anniversary events and its multiples,
  * but exlude centenary events and its multiples
  */
-$query50="SELECT Id FROM todayEvents WHERE (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%50 = 0 AND (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%100 != 0";
+$query50="SELECT Id FROM today_events WHERE (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%50 = 0 AND (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%100 != 0";
 
 /**
  * This query select twenty-five years anniversary events and its multiples,
  * but exlude fiftieth anniversary events, centenary events and its multiples
  */
-$query25="SELECT Id FROM todayEvents WHERE (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%25 = 0 AND (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%50 != 0";
+$query25="SELECT Id FROM today_events WHERE (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%25 = 0 AND (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%50 != 0";
 
 /**
  * This query select ten years anniversary events and its multiples,
  * but exlude fiftieth anniversary events, centenary events and its multiples
  */
-$query10="SELECT Id FROM todayEvents WHERE (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%10 = 0 AND (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%50 != 0";
+$query10="SELECT Id FROM today_events WHERE (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%10 = 0 AND (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(Date, '%Y'))%50 != 0";
 
 /**
  * This query select all today events
  */
-$queryBasic="SELECT Id FROM todayEvents";
+$queryBasic="SELECT Id FROM today_events";
 
 /**
  * Inizialize an empty array
@@ -177,9 +177,9 @@ foreach($eventsArray as $id => $points) {
 
 
 /**
- * Insert into table todayEvent the best score event
+ * Insert into table today_event the best score event
  */
-$toinsert="INSERT INTO todayEvent (Id) VALUES ('$todayId')";
+$toinsert="INSERT INTO today_event (Id) VALUES ('$todayId')";
 $result = mysqli_query($conn, $toinsert);
     } else {
     echo "0 results";

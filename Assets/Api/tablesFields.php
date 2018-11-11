@@ -1,6 +1,6 @@
 <?php
 
-// Table for Select * in publishedEvents
+// Table for Select * in published_events
 $tableFieldsAllPublicated = array(
 	'Id',
 	'Date',
@@ -24,7 +24,7 @@ $tableFieldsAllPublicated = array(
     'Fb'
 );
 
-// Table for Select * in editingEvents
+// Table for Select * in editing_events
 $tableFieldsAllEditing = array(
 	'Id',
 	'Date',

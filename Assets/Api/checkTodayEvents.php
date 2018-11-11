@@ -49,7 +49,7 @@ $ok=0;
  * Execute the query,
  * if there is at least 1 row ok is setted
  */
-$query = "SELECT Id FROM todayEvents";
+$query = "SELECT Id FROM today_events";
 $result = mysqli_query($conn,$query);
 if (mysqli_num_rows($result) > 0) {
     $ok = 1;

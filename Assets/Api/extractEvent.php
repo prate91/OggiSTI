@@ -49,12 +49,12 @@ if(isset($_GET['eventId']))
 		$sql = "";
 		if($stateId=="Pubblicato")
 		{
-			$sql = "SELECT * FROM publishedEvents WHERE Id='$eventId'";
+			$sql = "SELECT * FROM published_events WHERE Id='$eventId'";
 			echo loadDataTables($sql, $tableFieldsAllPublicated, "yes");
 		}
 		else
 		{
-			$sql = "SELECT * FROM editingEvents WHERE Id = '$eventId'";
+			$sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
 			echo loadDataTables($sql, $tableFieldsAllEditing, "yes");
 		}
 	}

@@ -44,7 +44,7 @@ require("functions.php");
 if(isset($_GET['eventDate']))
 {
 	$eventDate = $_GET['eventDate'];
-	$query = "SELECT * FROM publishedEvents WHERE DAY(Date)=DAY('$eventDate') AND MONTH(Date)=MONTH('$eventDate') ORDER BY Views, DATE_FORMAT(Date, '%Y')";
+	$query = "SELECT * FROM published_events WHERE DAY(Date)=DAY('$eventDate') AND MONTH(Date)=MONTH('$eventDate') ORDER BY Views, DATE_FORMAT(Date, '%Y')";
 	echo loadDataTables($query, $tableFieldsAllPublicated, "yes");
 }
 else

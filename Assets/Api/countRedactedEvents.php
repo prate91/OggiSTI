@@ -45,7 +45,7 @@ $tableFields = array(
 /**
  * This query counts how many events have been redacted by the authenticated user
  */
-$sql = "SELECT COUNT(Id) as eventsNumber FROM (SELECT Id, Editors FROM publishedEvents WHERE Editors LIKE '% $userId%' UNION SELECT Id, Editors FROM publishedEvents WHERE Editors LIKE '$userId' UNION SELECT Id, Editors FROM editingEvents WHERE Editors LIKE '% $userId%' UNION SELECT Id, Editors FROM editingEvents WHERE Editors LIKE '$userId') AS t";
+$sql = "SELECT COUNT(Id) as eventsNumber FROM (SELECT Id, Editors FROM published_events WHERE Editors LIKE '% $userId%' UNION SELECT Id, Editors FROM published_events WHERE Editors LIKE '$userId' UNION SELECT Id, Editors FROM editing_events WHERE Editors LIKE '% $userId%' UNION SELECT Id, Editors FROM editing_events WHERE Editors LIKE '$userId') AS t";
 echo loadDataTables($sql, $tableFields, "no");
 		
 

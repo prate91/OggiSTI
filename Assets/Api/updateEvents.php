@@ -192,7 +192,7 @@ if(isset($_POST['invia'])) {
    
 
 //inserting data order
-$toinsert =  "UPDATE editingEvents SET editingEvents.Date = '$eventDateCorr', editingEvents.ItaTitle ='$itaTitle', editingEvents.EngTitle = '$engTitle', editingEvents.Image = '$imageLink', editingEvents.ImageCaption = '$imageCaption', editingEvents.ItaAbstract = '$itaAbstract', editingEvents.EngAbstract = '$engAbstract', editingEvents.ItaDescription = '$itaDescription', editingEvents.EngDescription = '$engDescription', editingEvents.TextReferences = '$textReferences', editingEvents.Keywords = '$keywords', editingEvents.Editors = '$editors', editingEvents.Reviser_1 = '$reviser1', editingEvents.Reviser_2 = '$reviser2', editingEvents.State = '$state', editingEvents.Saved = '' WHERE editingEvents.Id = '$eventId'";
+$toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = '$state', editing_events.Saved = '' WHERE editing_events.Id = '$eventId'";
 
 
 //declare in the order variable
@@ -220,7 +220,7 @@ if(isset($_POST['salva'])) {
 
 
 //inserting data order
-$toinsert =  "UPDATE editingEvents SET editingEvents.Date = '$eventDateCorr', editingEvents.ItaTitle ='$itaTitle', editingEvents.EngTitle = '$engTitle', editingEvents.Image = '$imageLink', editingEvents.ImageCaption = '$imageCaption', editingEvents.ItaAbstract = '$itaAbstract', editingEvents.EngAbstract = '$engAbstract', editingEvents.ItaDescription = '$itaDescription', editingEvents.EngDescription = '$engDescription', editingEvents.TextReferences = '$textReferences', editingEvents.Keywords = '$keywords', editingEvents.Editors = '$editors', editingEvents.Reviser_1 = '$reviser1', editingEvents.Reviser_2 = '$reviser2', editingEvents.State = 'In redazione', editingEvents.Saved = '$saved' WHERE editingEvents.Id = '$eventId'";
+$toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = 'In redazione', editing_events.Saved = '$saved' WHERE editing_events.Id = '$eventId'";
 
 //declare in the order variable
 $result = mysqli_query($conn, $toinsert); //order 
@@ -229,7 +229,7 @@ if($result){
    $inserito="Inserimento avvenuto correttamente";
    $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')";
    mysqli_query($conn, $sql2);
-   //$risultato = mysqli_query($conn, "SELECT MAX(eventId) FROM editingEvents");
+   //$risultato = mysqli_query($conn, "SELECT MAX(eventId) FROM editing_events");
    //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
    //$id = $riga["MAX(eventId)"];
    header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&messageImmagine=".$textMessage );
@@ -248,10 +248,10 @@ if(isset($_POST['salvaChiudi'])) {
   // è state premuto il secondo pulsante
 
   if($state=="Pubblicato"){
-    $toinsert =  "UPDATE publishedEvents SET publishedEvents.Date = '$eventDateCorr', publishedEvents.ItaTitle ='$itaTitle', publishedEvents.EngTitle = '$engTitle', publishedEvents.Image = '$imageLink', publishedEvents.ImageCaption = '$imageCaption', publishedEvents.ItaAbstract = '$itaAbstract', publishedEvents.EngAbstract = '$engAbstract', publishedEvents.ItaDescription = '$itaDescription', publishedEvents.EngDescription = '$engDescription', publishedEvents.TextReferences = '$textReferences', publishedEvents.Keywords = '$keywords' WHERE publishedEvents.Id = '$eventId'";
+    $toinsert =  "UPDATE published_events SET published_events.Date = '$eventDateCorr', published_events.ItaTitle ='$itaTitle', published_events.EngTitle = '$engTitle', published_events.Image = '$imageLink', published_events.ImageCaption = '$imageCaption', published_events.ItaAbstract = '$itaAbstract', published_events.EngAbstract = '$engAbstract', published_events.ItaDescription = '$itaDescription', published_events.EngDescription = '$engDescription', published_events.TextReferences = '$textReferences', published_events.Keywords = '$keywords' WHERE published_events.Id = '$eventId'";
   }else{
     //inserting data order
-    $toinsert =  "UPDATE editingEvents SET editingEvents.Date = '$eventDateCorr', editingEvents.ItaTitle ='$itaTitle', editingEvents.EngTitle = '$engTitle', editingEvents.Image = '$imageLink', editingEvents.ImageCaption = '$imageCaption', editingEvents.ItaAbstract = '$itaAbstract', editingEvents.EngAbstract = '$engAbstract', editingEvents.ItaDescription = '$itaDescription', editingEvents.EngDescription = '$engDescription', editingEvents.TextReferences = '$textReferences', editingEvents.Keywords = '$keywords' WHERE editingEvents.Id = '$eventId'";
+    $toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords' WHERE editing_events.Id = '$eventId'";
   }
 
 
@@ -262,7 +262,7 @@ if($result){
   $inserito="Inserimento avvenuto correttamente";
   $sql2 = "INSERT INTO editing (eventId, Editors, Type) VALUES ('$eventId', '$userId', '4')";
   mysqli_query($conn, $sql2);
-  //$risultato = mysqli_query($conn, "SELECT MAX(eventId) FROM editingEvents");
+  //$risultato = mysqli_query($conn, "SELECT MAX(eventId) FROM editing_events");
   //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
   //$id = $riga["MAX(eventId)"];
   header( "Location:../PHP/OggiSTI_event.php?eventId=$eventId&stateId=$state");
@@ -282,7 +282,7 @@ if(isset($_POST['preview'])) {
 
 
 //inserting data order
-    $toinsert =  "UPDATE editingEvents SET editingEvents.Date = '$eventDateCorr', editingEvents.ItaTitle ='$itaTitle', editingEvents.EngTitle = '$engTitle', editingEvents.Image = '$imageLink', editingEvents.ImageCaption = '$imageCaption', editingEvents.ItaAbstract = '$itaAbstract', editingEvents.EngAbstract = '$engAbstract', editingEvents.ItaDescription = '$itaDescription', editingEvents.EngDescription = '$engDescription', editingEvents.TextReferences = '$textReferences', editingEvents.Keywords = '$keywords', editingEvents.Editors = '$editors', editingEvents.Reviser_1 = '$reviser1', editingEvents.Reviser_2 = '$reviser2', editingEvents.State = 'In redazione', editingEvents.Saved = '$saved' WHERE editingEvents.Id = '$eventId'";
+    $toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = 'In redazione', editing_events.Saved = '$saved' WHERE editing_events.Id = '$eventId'";
 
 //declare in the order variable
 $result = mysqli_query($conn, $toinsert); //order 
@@ -291,7 +291,7 @@ if($result){
    $inserito="Inserimento avvenuto correttamente";
    $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')";
    mysqli_query($conn, $sql2);
-   //$risultato = mysqli_query($conn, "SELECT MAX(eventId) FROM editingEvents");
+   //$risultato = mysqli_query($conn, "SELECT MAX(eventId) FROM editing_events");
    //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
    //$id = $riga["MAX(eventId)"];
    header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&preview=ok&messageImmagine=".$textMessage );

@@ -65,12 +65,12 @@ if(isset($_GET["eventId"])){
     if(isset($_GET["stateId"])){
         $state=$_GET["stateId"];
         if($state=="Pubblicato"){
-            $sql = "SELECT * FROM publishedEvents WHERE Id = '$eventId'";
+            $sql = "SELECT * FROM published_events WHERE Id = '$eventId'";
         }else{
-            $sql = "SELECT * FROM editingEvents WHERE Id = '$eventId'";
+            $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
         }
     }else{
-        $sql = "SELECT * FROM editingEvents WHERE Id = '$eventId'";
+        $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
     }
     $result = mysqli_query($conn,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -101,9 +101,9 @@ if(isset($_GET["eventId"])){
 }else{
     // Create a new event
     $menuEvento = "Aggiungi evento";
-    $creationQuery = "INSERT INTO editingEvents (ItaTitle) VALUES ('')";
+    $creationQuery = "INSERT INTO editing_events (ItaTitle) VALUES ('')";
     mysqli_query($conn, $creationQuery);    
-    $result = mysqli_query($conn, "SELECT MAX(Id) FROM editingEvents");
+    $result = mysqli_query($conn, "SELECT MAX(Id) FROM editing_events");
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     $eventId = $row["MAX(Id)"];
     $editors=$userId;
@@ -288,7 +288,7 @@ if(isset($_GET["preview"])){
 	<!-- Image -->
     <br/>
     <h2 id="editImg" class="custom-file">Immagine</h2>
-    <img id="oggiSTI_imageEvento" src="<?php if($mess=="errore"){echo "../Img/publishedEvents/".$_SESSION['image'];}else{ echo "../Img/publishedEvents/".$image;} ?>" alt="Nessuna image precedente"/>
+    <img id="oggiSTI_imageEvento" src="<?php if($mess=="errore"){echo "../Img/eventi/".$_SESSION['image'];}else{ echo "../Img/eventi/".$image;} ?>" alt="Nessuna image precedente"/>
     <div class="col-xs-8">
     <input type="text" name="oldImage" class="form-control" id="oldImage" readonly value="<?php if($mess=="errore"){echo $_SESSION['image'];}else{ echo $image;} ?>">
 	<br/>

@@ -50,7 +50,7 @@ $err = 0;
 
 if(isset($_POST['facebookOn'])) {
   $eventId = isset($_POST["eventId"]) ? $_POST['eventId'] : '';
-  $toinsert = "UPDATE publishedEvents SET Fb = 1 WHERE Id = '$eventId'";
+  $toinsert = "UPDATE published_events SET Fb = 1 WHERE Id = '$eventId'";
   $result = mysqli_query($conn, $toinsert); //order executes
   if($result){
     $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '3')";
@@ -61,7 +61,7 @@ if(isset($_POST['facebookOn'])) {
 
 if(isset($_POST['facebookOff'])) {
   $eventId = isset($_POST["eventId"]) ? $_POST['eventId'] : '';
-  $toinsert = "UPDATE publishedEvents SET Fb = 0 WHERE Id = '$eventId'";
+  $toinsert = "UPDATE published_events SET Fb = 0 WHERE Id = '$eventId'";
   $result = mysqli_query($conn, $toinsert); //order executes
   if($result){
     $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '4')";
@@ -83,7 +83,7 @@ if(isset($_POST['redazione'])) {
   
  
 //inserting data order
-$toinsert = "UPDATE editingEvents SET State = '$state', Comment = '$comment' WHERE Id = '$eventId'";
+$toinsert = "UPDATE editing_events SET State = '$state', Comment = '$comment' WHERE Id = '$eventId'";
 
 //declare in the order variable
 $result = mysqli_query($conn, $toinsert);	//order executes
@@ -114,7 +114,7 @@ if(isset($_POST['approva'])) {
       $state = "Approvazione 1/2";
       $reviser1 = $userId;
       $comm = "Mandato in attesa della II approvazione";
-      $toinsert = "UPDATE editingEvents SET Reviser_1 = '$reviser1', Reviser_2 = '$reviser2', State = '$state',  Comment = '$comment' WHERE Id = '$eventId'";
+      $toinsert = "UPDATE editing_events SET Reviser_1 = '$reviser1', Reviser_2 = '$reviser2', State = '$state',  Comment = '$comment' WHERE Id = '$eventId'";
       $result = mysqli_query($conn, $toinsert); //order
       if($result){
          $sql2 = "INSERT INTO review (Event_Id, Reviser, Type, Comment) VALUES ('$eventId', '$userId', '1', '$comment')";
@@ -127,10 +127,10 @@ if(isset($_POST['approva'])) {
       $state = "Pubblicato";
       $reviser2 = $userId;
       $comm = "Pubblicato";
-      $toinsert = "INSERT INTO publishedEvents (Id, Reviser_1, Reviser_2, State, Comment) 
+      $toinsert = "INSERT INTO published_events (Id, Reviser_1, Reviser_2, State, Comment) 
       VALUES ('$eventId','$reviser1','$reviser2','$state','$comment') ON DUPLICATE KEY UPDATE Reviser_1='$reviser1',Reviser_2='$reviser2',State='$state',Comment='$comment'";
-      $query= "UPDATE publishedEvents pE, editingEvents eE SET pE.Date = eE.Date,  pE.ItaTitle=eE.ItaTitle, pE.EngTitle=eE.EngTitle, pE.Image=eE.Image, pE.ImageCaption=eE.ImageCaption, pE.ItaAbstract=eE.ItaAbstract, pE.EngAbstract=eE.EngAbstract, pE.ItaDescription=eE.ItaDescription, pE.EngDescription=eE.EngDescription, pE.TextReferences=eE.TextReferences, pE.Keywords=eE.Keywords, pE.Editors=eE.Editors WHERE pE.Id = eE.Id AND eE.Id = '$eventId'";
-      $query2="DELETE FROM editingEvents WHERE Id='$eventId'";
+      $query= "UPDATE published_events pE, editing_events eE SET pE.Date = eE.Date,  pE.ItaTitle=eE.ItaTitle, pE.EngTitle=eE.EngTitle, pE.Image=eE.Image, pE.ImageCaption=eE.ImageCaption, pE.ItaAbstract=eE.ItaAbstract, pE.EngAbstract=eE.EngAbstract, pE.ItaDescription=eE.ItaDescription, pE.EngDescription=eE.EngDescription, pE.TextReferences=eE.TextReferences, pE.Keywords=eE.Keywords, pE.Editors=eE.Editors WHERE pE.Id = eE.Id AND eE.Id = '$eventId'";
+      $query2="DELETE FROM editing_events WHERE Id='$eventId'";
       $result = mysqli_query($conn, $toinsert); //order
       mysqli_query($conn, $query);
       mysqli_query($conn, $query2);
@@ -173,8 +173,8 @@ if(isset($_POST['redazionePubblicato'])) {
   $comment = isset($_POST["comment"]) ? $_POST['comment'] : '';
   $comment = mysqli_real_escape_string($conn, $comment);
  
-$toinsert = "INSERT INTO editingEvents (Id, State, Comment) VALUES ('$eventId','$state','$comment')";
-$query= "UPDATE editingEvents pE, publishedEvents eE SET pE.Date = eE.Date,  pE.ItaTitle=eE.ItaTitle, pE.EngTitle=eE.EngTitle, pE.Image=eE.Image, pE.ImageCaption=eE.ImageCaption, pE.ItaAbstract=eE.ItaAbstract, pE.EngAbstract=eE.EngAbstract, pE.ItaDescription=eE.ItaDescription, pE.EngDescription=eE.EngDescription, pE.TextReferences=eE.TextReferences, pE.Keywords=eE.Keywords, pE.Editors=eE.Editors, pE.Reviser_1='in attesa', pE.Reviser_2='in attesa' WHERE pE.Id = eE.Id AND eE.Id = '$eventId'";
+$toinsert = "INSERT INTO editing_events (Id, State, Comment) VALUES ('$eventId','$state','$comment')";
+$query= "UPDATE editing_events pE, published_events eE SET pE.Date = eE.Date,  pE.ItaTitle=eE.ItaTitle, pE.EngTitle=eE.EngTitle, pE.Image=eE.Image, pE.ImageCaption=eE.ImageCaption, pE.ItaAbstract=eE.ItaAbstract, pE.EngAbstract=eE.EngAbstract, pE.ItaDescription=eE.ItaDescription, pE.EngDescription=eE.EngDescription, pE.TextReferences=eE.TextReferences, pE.Keywords=eE.Keywords, pE.Editors=eE.Editors, pE.Reviser_1='in attesa', pE.Reviser_2='in attesa' WHERE pE.Id = eE.Id AND eE.Id = '$eventId'";
 
 //declare in the order variable
 $result = mysqli_query($conn, $toinsert);	//order executes

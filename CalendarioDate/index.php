@@ -170,7 +170,7 @@ for ($i = 0; $i <= 365; $i++) {
 
 $arrayDate=array();
 
-$sql = "SELECT DISTINCT DAY(Date) as giorno, MONTH(Date) as mese FROM publishedEvents";
+$sql = "SELECT DISTINCT DAY(Date) as giorno, MONTH(Date) as mese FROM published_events";
 $result = mysqli_query($conn,$sql);
 while ($row = mysqli_fetch_row($result)) {
     array_push($arrayDate, calcolaOrdinaleGiorno($row[0], $row[1]));
@@ -357,7 +357,7 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
             <h2>Lista eventi pubblicati</h2> 
             <?php
             
-            $sql="SELECT Id, Date, ItaTitle, Fb FROM publishedEvents ORDER BY MONTH(Date),DAY(Date)";
+            $sql="SELECT Id, Date, ItaTitle, Fb FROM published_events ORDER BY MONTH(Date),DAY(Date)";
             $result = mysqli_query($conn,$sql);
             while ($row = mysqli_fetch_assoc($result)) {
                 $spaceString = str_replace( '<', ' <', $row["ItaTitle"] );

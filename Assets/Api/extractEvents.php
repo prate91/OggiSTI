@@ -76,23 +76,23 @@ if(isset($_GET['state']))
 	switch($state)
 	{
 		case 'Salvato':
-			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editingEvents WHERE Saved=$userId";
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE Saved=$userId";
 			echo loadDataTables($sql, $tableFields, "no");
 			break;
 		case 'Redazione':
-			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editingEvents WHERE State='In redazione'";
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE State='In redazione'";
 			echo loadDataTables($sql, $tableFields, "no");
 			break;
 		case 'Approvazione':
-			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editingEvents WHERE State='Approvazione 0/2' OR State='Approvazione 1/2'";
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE State='Approvazione 0/2' OR State='Approvazione 1/2'";
 			echo loadDataTables($sql, $tableFields, "no");
 			break;
 		case 'Pubblicato':
-			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Fb FROM publishedEvents";
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Fb FROM published_events";
 			echo loadDataTables($sql, $publicatedTableFields, "no");
 			break;
 		case 'Tutti':
-			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Views, Fb FROM publishedEvents UNION SELECT Id, ItaTitle, Date, Editors, State, Views, Comment FROM editingEvents";
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Views, Fb FROM published_events UNION SELECT Id, ItaTitle, Date, Editors, State, Views, Comment FROM editing_events";
 			echo loadDataTables($sql, $allTableFiels, "no");
 			break;
 		default:

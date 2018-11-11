@@ -11,7 +11,7 @@
 	{
 		$eventId = $_GET['eventId'];
         
-		$query = "UPDATE publishedEvents SET Views = Views + 1 WHERE Id='$eventId'";
+		$query = "UPDATE published_events SET Views = Views + 1 WHERE Id='$eventId'";
         mysqli_query($conn, $query);
 	}
 	else

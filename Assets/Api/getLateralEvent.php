@@ -5,7 +5,7 @@
 	if(isset($_GET['eventId']))
 	{
 		$eventId = $_GET['eventId'];
-		$query = "SELECT * FROM publishedEvents WHERE Id='$eventId'";
+		$query = "SELECT * FROM published_events WHERE Id='$eventId'";
 		echo loadDataTables($query, $tableFieldsAllPublicated, "yes");
 	}
 	else

@@ -41,7 +41,7 @@
 
 
 // include PHP files
-require("../../../../Config/OggiSTIConfig.php");
+require("../../../../Config/OggiSTI_config_adm.php");
 include 'OggiSTI_sessionSet.php';
 include 'OggiSTI_controlLogged.php';
     

@@ -37,8 +37,8 @@
 // ////////////////////////////////////////////////////////////////////////
 
 // include PHP files
-require("../../../../Config/UsersConfig.php");
-require("../../../../Config/OggiSTIConfig.php");
+require("../../../../Config/Users_config_adm.php");
+require("../../../../Config/OggiSTI_config_adm.php");
 include("../Api/functions.php");
 include 'OggiSTI_sessionSet.php';
 include 'OggiSTI_controlLogged.php';
@@ -56,7 +56,7 @@ include 'OggiSTI_controlLogged.php';
         } else {
             $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
         }
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($OggiSTI_conn_adm, $sql);
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $oldDate = $row["Date"];
         $date = date('d-m-Y', strtotime($oldDate));

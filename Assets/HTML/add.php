@@ -22,7 +22,7 @@
             $menuEvento = "Modifica evento";
             $id_evento = $_GET["id_evento"];
             $sql = "SELECT * FROM eventiappr WHERE id_evento = '$id_evento'";
-            $result = mysqli_query($conn,$sql);
+            $result = mysqli_query($OggiSTI_conn_adm,$sql);
             $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
             $oldDate = $row["data_evento"];
             $date = date('d-m-Y', strtotime($oldDate));
@@ -48,8 +48,8 @@
         }else{
              $menuEvento = "Aggiungi evento";
              $sql = "INSERT INTO eventiappr (titolo_ita) VALUES ('')";
-             mysqli_query($conn, $sql);    
-             $risultato = mysqli_query($conn, "SELECT MAX(id_evento) FROM eventiappr");
+             mysqli_query($OggiSTI_conn_adm, $sql);    
+             $risultato = mysqli_query($OggiSTI_conn_adm, "SELECT MAX(id_evento) FROM eventiappr");
              $riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
             $id_evento = $riga["MAX(id_evento)"];
             $autori=$nome_completo;

@@ -38,7 +38,7 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require("../../../../Config/OggiSTIConfig.php");
+require("../../../../Config/OggiSTI_config_adm.php");
 
 /**
  * Variable $ok that check if there is at least one event today
@@ -50,7 +50,7 @@ $ok=0;
  * if there is at least 1 row ok is setted
  */
 $query = "SELECT Id FROM today_events";
-$result = mysqli_query($conn,$query);
+$result = mysqli_query($OggiSTI_conn_adm,$query);
 if (mysqli_num_rows($result) > 0) {
     $ok = 1;
     echo $ok;

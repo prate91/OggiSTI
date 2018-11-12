@@ -41,7 +41,7 @@
 
 
 // include PHP files
-require("../../../../Config/OggiSTIConfig.php");
+require("../../../../Config/OggiSTI_config_adm.php");
 include 'OggiSTI_sessionSet.php';
 include 'OggiSTI_controlLogged.php';
 
@@ -72,7 +72,7 @@ if(isset($_GET["eventId"])){
     }else{
         $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
     }
-    $result = mysqli_query($conn,$sql);
+    $result = mysqli_query($OggiSTI_conn_adm,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     $oldDate = $row["Date"];
     $date = date('d-m-Y', strtotime($oldDate));
@@ -102,13 +102,13 @@ if(isset($_GET["eventId"])){
     // Create a new event
     $menuEvento = "Aggiungi evento";
     $creationQuery = "INSERT INTO editing_events (ItaTitle) VALUES ('')";
-    mysqli_query($conn, $creationQuery);    
-    $result = mysqli_query($conn, "SELECT MAX(Id) FROM editing_events");
+    mysqli_query($OggiSTI_conn_adm, $creationQuery);    
+    $result = mysqli_query($OggiSTI_conn_adm, "SELECT MAX(Id) FROM editing_events");
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     $eventId = $row["MAX(Id)"];
     $editors=$userId;
     $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '1')";
-    mysqli_query($conn, $sql2);
+    mysqli_query($OggiSTI_conn_adm, $sql2);
 }
 // Check if there is an image message
 if(isset($_GET["imageMessage"])){

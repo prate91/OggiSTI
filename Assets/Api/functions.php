@@ -67,13 +67,13 @@ function cleanHTML($string)
   */
 function loadBriefName($idUser)
 {
-	require("../../../../Config/EPICACConfig.php");
+	require("../../../../Config/EPICAC_config_rd.php");
 	if($idUser==0){
 		return 0;
 	}
 	else{
 		$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
-		$userDataQueryResult = mysqli_query($connEpicac, $userDataQuery);
+		$userDataQueryResult = mysqli_query($EPICAC_conn_rd, $userDataQuery);
 		$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
 		return $userDataRow["Brief"];
 	}
@@ -90,13 +90,13 @@ function loadBriefName($idUser)
   */
   function loadCompletefName($idUser)
   {
-	require("../../../../Config/EPICACConfig.php");
+	require("../../../../Config/EPICAC_config_rd.php");
 	if($idUser==0){
 		return 0;
 	}
 	else{
 		$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
-		$userDataQueryResult = mysqli_query($connEpicac, $userDataQuery);
+		$userDataQueryResult = mysqli_query($EPICAC_conn_rd, $userDataQuery);
 		$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
 		return $userDataRow["Name"] . " " . $userDataRow["Surname"];
 	}
@@ -113,9 +113,9 @@ function loadBriefName($idUser)
   */
 function loadPeopleId($idUser)
 {
-	require("../../../../Config/UsersConfig.php");
+	require("../../../../Config/Users_config_adm.php");
 	$userQuery = "SELECT * FROM admin WHERE AuthId=$idUser";
-	$userQueryResult = mysqli_query($connUtenti, $userQuery);
+	$userQueryResult = mysqli_query($users_conn_adm, $userQuery);
 	$userRow = mysqli_fetch_array($userQueryResult,MYSQLI_ASSOC);
 	return $userRow["IdPp_Id"];
 }
@@ -134,9 +134,9 @@ function loadPeopleId($idUser)
 function loadEditingChronology($eventId)
 {
 	$editingsList = "";
-	require("../../../../Config/OggiSTIConfig.php");
+	require("../../../../Config/OggiSTI_config_adm.php");
 	$queryEditing = "SELECT * FROM editing WHERE Event_Id='$eventId'";
-	$resultEditing = mysqli_query($conn, $queryEditing);
+	$resultEditing = mysqli_query($OggiSTI_conn_adm, $queryEditing);
 	while ($rowEditing = mysqli_fetch_assoc($resultEditing)) {
 		switch ($rowEditing["Type"]) {
 			case 1:
@@ -168,9 +168,9 @@ function loadEditingChronology($eventId)
 function loadReviewChronology($eventId)
 {
 	$reviewsList = "";
-	require("../../../../Config/OggiSTIConfig.php");
+	require("../../../../Config/OggiSTI_config_adm.php");
 	$queryReview = "SELECT * FROM review WHERE Event_Id='$eventId'";
-	$resurlReview = mysqli_query($conn, $queryReview);
+	$resurlReview = mysqli_query($OggiSTI_conn_adm, $queryReview);
 	while ($rowReview = mysqli_fetch_assoc($resurlReview)) {
 		switch ($rowReview["Type"]) {
 			case 1:
@@ -205,10 +205,10 @@ function loadReviewChronology($eventId)
 function loadDataTables($query, $fields, $formatting)
 {
 	// require("config.php");
-	require("../../../../Config/OggiSTIConfig.php");
+	require("../../../../Config/OggiSTI_config_adm.php");
 	$result = array();
 	$i = 0;
-	$queryResult = mysqli_query($conn, $query);
+	$queryResult = mysqli_query($OggiSTI_conn_adm, $query);
 	
 	if($queryResult != false && mysqli_num_rows($queryResult) > 0)
 	{

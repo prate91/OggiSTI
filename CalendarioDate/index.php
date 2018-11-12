@@ -40,7 +40,7 @@
 //
 // ///////////////////////////////////////////////////////////////////////
 
-require("../../../Config/OggiSTIConfig.php");
+require("../../../Config/OggiSTI_config_adm.php");
 
 // from yyyy-mm-dd to mm-dd(yyyy)
 function formatDatemmddyyyy($dateStr){
@@ -171,7 +171,7 @@ for ($i = 0; $i <= 365; $i++) {
 $arrayDate=array();
 
 $sql = "SELECT DISTINCT DAY(Date) as giorno, MONTH(Date) as mese FROM published_events";
-$result = mysqli_query($conn,$sql);
+$result = mysqli_query($OggiSTI_conn_adm,$sql);
 while ($row = mysqli_fetch_row($result)) {
     array_push($arrayDate, calcolaOrdinaleGiorno($row[0], $row[1]));
 	//echo 'Giorno: '. $row[0] ." - Mese: ". $row[1]. "<br/>";
@@ -358,7 +358,7 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
             <?php
             
             $sql="SELECT Id, Date, ItaTitle, Fb FROM published_events ORDER BY MONTH(Date),DAY(Date)";
-            $result = mysqli_query($conn,$sql);
+            $result = mysqli_query($OggiSTI_conn_adm,$sql);
             while ($row = mysqli_fetch_assoc($result)) {
                 $spaceString = str_replace( '<', ' <', $row["ItaTitle"] );
                 $doubleSpace = strip_tags( $spaceString );

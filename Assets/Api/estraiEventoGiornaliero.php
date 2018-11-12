@@ -35,7 +35,7 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ////////////////////////////////////////////////////////////////////////
-require("../../../../Config/OggiSTIConfig.php");
+require("../../../../Config/OggiSTI_config_adm.php");
 
 
 $query100="SELECT id_evento FROM eventioggi WHERE (DATE_FORMAT(CURDATE(), '%Y')-DATE_FORMAT(data_evento, '%Y'))%100 = 0";
@@ -46,7 +46,7 @@ $queryUsato="SELECT id_evento FROM eventioggi";
 
 
 $arrayEventi = array();
-$resultUsato = mysqli_query($conn,$queryUsato);
+$resultUsato = mysqli_query($OggiSTI_conn_adm,$queryUsato);
 if (mysqli_num_rows($resultUsato) > 0) {
 $pt = mysqli_num_rows($resultUsato);
 // output data of each row
@@ -59,7 +59,7 @@ while($rowUsato = mysqli_fetch_assoc($resultUsato)) {
 //echo "<br/>";
 
 
-$result100 = mysqli_query($conn,$query100);
+$result100 = mysqli_query($OggiSTI_conn_adm,$query100);
 if (mysqli_num_rows($result100) > 0) {
     while($row100 = mysqli_fetch_assoc($result100)) {
             $arrayEventi[$row100["id_evento"]] += 200;
@@ -69,7 +69,7 @@ if (mysqli_num_rows($result100) > 0) {
 //print_r($arrayEventi);
 //echo "<br/>";
 
-$result50 = mysqli_query($conn,$query50);
+$result50 = mysqli_query($OggiSTI_conn_adm,$query50);
 if (mysqli_num_rows($result50) > 0) {
     while($row50 = mysqli_fetch_assoc($result50)) {
             $arrayEventi[$row50["id_evento"]] += 100;
@@ -81,7 +81,7 @@ if (mysqli_num_rows($result50) > 0) {
 // echo "<br/>";
 
 
-$result25 = mysqli_query($conn,$query25);
+$result25 = mysqli_query($OggiSTI_conn_adm,$query25);
     if (mysqli_num_rows($result25) > 0) {
     while($row25 = mysqli_fetch_assoc($result25)) {
             $arrayEventi[$row25["id_evento"]] += 50;
@@ -93,8 +93,8 @@ $result25 = mysqli_query($conn,$query25);
 //echo "<br/>";
 
 
-$result10 = mysqli_query($conn,$query10);
-$result10 = mysqli_query($conn,$query10);
+$result10 = mysqli_query($OggiSTI_conn_adm,$query10);
+$result10 = mysqli_query($OggiSTI_conn_adm,$query10);
     if (mysqli_num_rows($result10) > 0) {
     while($row10 = mysqli_fetch_assoc($result10)) {
             $arrayEventi[$row10["id_evento"]] += 25;
@@ -115,7 +115,7 @@ foreach($arrayEventi as $id => $points) {
 //echo "Id scelto: ". $id_evento_oggi . " Punti: ".$point;
 
 $toinsert="INSERT INTO eventooggi (id_evento) VALUES ('$id_evento_oggi')";
-$result = mysqli_query($conn, $toinsert);
+$result = mysqli_query($OggiSTI_conn_adm, $toinsert);
     } else {
     echo "0 results";
 }

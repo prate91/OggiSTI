@@ -37,7 +37,7 @@
 // ////////////////////////////////////////////////////////////////////////
 
 
-require("../../../../Config/OggiSTIConfig.php");
+require("../../../../Config/OggiSTI_config_adm.php");
 
 /**
  * This query select centenary events and its multiples
@@ -79,7 +79,7 @@ $eventsArray = array();
  * in eventsArray with the corrisponding score. 
  * "event1"=>"5", "event2"=>"4", "event3"=>"3", "event4"=>"2", "event5"=>"1"
  */
-$resultBasic = mysqli_query($conn,$queryBasic);
+$resultBasic = mysqli_query($OggiSTI_conn_adm,$queryBasic);
 if (mysqli_num_rows($resultBasic) > 0) {
 $pt = mysqli_num_rows($resultBasic);
 while($rowBasic = mysqli_fetch_assoc($resultBasic)) {
@@ -95,7 +95,7 @@ while($rowBasic = mysqli_fetch_assoc($resultBasic)) {
  * if event3 is centenary id assign 200 extra-points
  * "event1"=>"5", "event2"=>"4", "event3"=>"203", "event4"=>"2", "event5"=>"1"
  */
-$result100 = mysqli_query($conn,$query100);
+$result100 = mysqli_query($OggiSTI_conn_adm,$query100);
 if (mysqli_num_rows($result100) > 0) {
     while($row100 = mysqli_fetch_assoc($result100)) {
             $eventsArray[$row100["Id"]] += 200;
@@ -112,7 +112,7 @@ if (mysqli_num_rows($result100) > 0) {
  * if event2 is fitieth anniversary event the algorithm assign it 100 extra-points 
  * "event1"=>"5", "event2"=>"104", "event3"=>"203", "event4"=>"2", "event5"=>"1"
  */
-$result50 = mysqli_query($conn,$query50);
+$result50 = mysqli_query($OggiSTI_conn_adm,$query50);
 if (mysqli_num_rows($result50) > 0) {
     while($row50 = mysqli_fetch_assoc($result50)) {
             $eventsArray[$row50["Id"]] += 100;
@@ -132,7 +132,7 @@ if (mysqli_num_rows($result50) > 0) {
  * if event4 is  twenty five years anniversary event the algorithm assign it 50 extra-points 
  * "event1"=>"5", "event2"=>"104", "event3"=>"203", "event4"=>"52", "event5"=>"1"
  */
-$result25 = mysqli_query($conn,$query25);
+$result25 = mysqli_query($OggiSTI_conn_adm,$query25);
     if (mysqli_num_rows($result25) > 0) {
     while($row25 = mysqli_fetch_assoc($result25)) {
             $eventsArray[$row25["Id"]] += 50;
@@ -154,8 +154,8 @@ $result25 = mysqli_query($conn,$query25);
  * if event1 is ten years anniversary event the algorithm assign it 25 extra-points 
  * "event1"=>"30", "event2"=>"104", "event3"=>"203", "event4"=>"52", "event5"=>"1"
  */
-$result10 = mysqli_query($conn,$query10);
-$result10 = mysqli_query($conn,$query10);
+$result10 = mysqli_query($OggiSTI_conn_adm,$query10);
+$result10 = mysqli_query($OggiSTI_conn_adm,$query10);
 if (mysqli_num_rows($result10) > 0) {
     while($row10 = mysqli_fetch_assoc($result10)) {
             $eventsArray[$row10["Id"]] += 25;
@@ -180,7 +180,7 @@ foreach($eventsArray as $id => $points) {
  * Insert into table today_event the best score event
  */
 $toinsert="INSERT INTO today_event (Id) VALUES ('$todayId')";
-$result = mysqli_query($conn, $toinsert);
+$result = mysqli_query($OggiSTI_conn_adm, $toinsert);
     } else {
     echo "0 results";
 }

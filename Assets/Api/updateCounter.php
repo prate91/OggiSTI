@@ -1,6 +1,6 @@
 <?php
 	
-	require("../../../../Config/OggiSTIConfig.php");
+	require("../../../../Config/OggiSTI_config_adm.php");
 
 	//header('Content-Type : application/json');
 	
@@ -9,7 +9,7 @@
 		$eventId = $_GET['eventId'];
         
 		$query = "UPDATE published_events SET Views = Views + 1 WHERE Id='$eventId'";
-        mysqli_query($conn, $query);
+        mysqli_query($OggiSTI_conn_adm, $query);
 	}
 	else
 	{

@@ -38,6 +38,7 @@
 // ////////////////////////////////////////////////////////////////////////
 
 require("functions.php");
+include '../PHP/OggiSTI_sessionSet.php';
 
 $tableFields = array(
 		'Id',

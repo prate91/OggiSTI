@@ -1,10 +1,7 @@
 <?php
 	
 	require("../../../../Config/OggiSTIConfig.php");
-	session_start();
-    if(!isset($_SESSION['UserLogin'])) {
-        header('Location: no_login.php?error=inv_access');
-    }
+
 	//header('Content-Type : application/json');
 	
 	if(isset($_GET['eventId']))

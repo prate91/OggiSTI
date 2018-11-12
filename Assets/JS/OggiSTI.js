@@ -87,31 +87,37 @@ $(document).ready(function () {
                 if (item.fb == 1) {
                     fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
                 }
-                var riga = "<tr class='item'><td>" + item.Id + "</td>" +
-                    "<td class=''>" + formatDatemmddyyyy(item.Date) + "</td>" +
+                var riga = "<tr class='item'>" +
+                    "<td>" + item.Id + "</td>" +
+                    "<td>" + formatDatemmddyyyy(item.Date) + "</td>" +
                     "<td><a href='../../OggiSTI_preview.php?eventId=" + item.Id + "&stateId=" + item.State + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
-                    "<td>" + item.State + " " + fbIcon + "<br/>" + item.Views + "</td>" +
+                    "<td>" + item.State + " " + fbIcon + " " + item.Views + "</td>" +
                     "<td>" + item.Editors + "</td>" +
-                    "<td><button type='button' id='" + item.State + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td></tr>";
+                    "<td><button type='button' id='" + item.State + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>" +
+                    "</tr>";
             } else if (state == "Pubblicato") {
                 fbIcon = "";
                 if (item.fb == 1) {
                     fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
                 }
-                var riga = "<tr class='item'><td>" + item.Id + "</td>" +
-                    "<td class=''>" + formatDatemmddyyyy(item.Date) + "</td>" +
+                var riga = "<tr class='item'>" +
+                    "<td>" + item.Id + "</td>" +
+                    "<td>" + formatDatemmddyyyy(item.Date) + "</td>" +
                     "<td><a href='../../?id=" + item.Id + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
                     "<td>" + item.State + " " + fbIcon + "</td>" +
                     "<td>" + item.Editors + "</td>" +
-                    "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td></tr>";
+                    "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>" +
+                    "</tr>";
             } else {
                 // all the others tables
-                var riga = "<tr class='item'><td>" + item.Id + "</td>" +
-                    "<td class=''>" + formatDatemmddyyyy(item.Date) + "</td>" +
+                var riga = "<tr class='item'>" +
+                    "<td>" + item.Id + "</td>" +
+                    "<td>" + formatDatemmddyyyy(item.Date) + "</td>" +
                     "<td><a href='../../OggiSTI_preview.php?eventId=" + item.Id + "&stateId=" + item.State + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
                     "<td>" + item.State + "</td>" +
                     "<td>" + item.Editors + "</td>" +
-                    "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td></tr>";
+                    "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>" +
+                    "</tr>";
             }
             // built the table 
             intestazione_tabella += riga;

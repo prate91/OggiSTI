@@ -126,7 +126,7 @@ $(document).ready(function () {
         });
         // set 25 events per table
         $('#eventList').DataTable({
-            //   "pageLength": 25
+            "pageLength": 25
         });
     });
 

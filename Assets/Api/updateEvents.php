@@ -192,7 +192,7 @@ if(isset($_POST['invia'])) {
    
 
 //inserting data order
-$toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = '$state', editing_events.Saved = '' WHERE editing_events.Id = '$eventId'";
+$toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = '$state' WHERE editing_events.Id = '$eventId'";
 
 
 //declare in the order variable

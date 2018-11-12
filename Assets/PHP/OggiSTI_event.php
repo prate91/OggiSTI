@@ -203,6 +203,7 @@ include 'OggiSTI_controlLogged.php';
         <tr><td>Usato:</td><td><?php echo $views; ?> volta/e</td></tr>
         <tr><td>Facebook:</td><td>
         <?php 
+            echo '<form id = "formCommento" method = "post" action = "../Api/updateReview.php" class="form-horizontal">';
             if($fb==0){ 
                 echo '<button class="btn btn-danger" disabled> Non pubblicabile </button>';
                 if($state=="Pubblicato"){
@@ -218,7 +219,7 @@ include 'OggiSTI_controlLogged.php';
         <tr class='rigaCommento'><td>Commento:</td><td><?php echo $comment; ?></td></tr>
     </table>
     <?php if(($state=="Approvazione 0/2"||$state=="Approvazione 1/2"||$state=="Pubblicato")&&($reviserPermission==1)) {
-        echo '<form id = "formCommento" method = "post" action = "../Api/updateReview.php" class="form-horizontal">';
+       
         echo '<div id = "spazioCommento" class="form-group">';
         echo "<input type = 'hidden' class='hidden_eventId' name = 'eventId' value = '$eventId' />";
         echo "<input type = 'hidden' id = 'hidden_reviser1' name = 'reviser1' value = '$reviser1' />";

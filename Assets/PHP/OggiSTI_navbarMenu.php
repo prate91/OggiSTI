@@ -50,8 +50,8 @@
         <ul class="dropdown-menu">
           <li><a href="OggiSTI_savedEvents.php">Salvati</a></li>
           <li><a href="OggiSTI_redactionEvents.php">In redazione</a></li>
-          <li><a href="OggiSTI_reviewedEvents.php">In approvazione</a></li>
-          <li><a href="OggiSTI_publishedEvents.php">Pubblicati</a></li>
+		  <li><a href="OggiSTI_reviewedEvents.php">In approvazione</a></li>
+		  <li><a href="OggiSTI_publishedEvents.php">Pubblicati</a></li>
         </ul>
       </li>
 		<li><a href="OggiSTI_edit.php">Aggiungi evento</a></li>

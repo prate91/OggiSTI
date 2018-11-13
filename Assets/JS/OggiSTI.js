@@ -84,7 +84,7 @@ $(document).ready(function () {
             if (state == "Tutti") {
                 // tables composed by all events
                 fbIcon = "";
-                if (item.fb == 1) {
+                if (item.Fb == 1) {
                     fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
                 }
                 var riga = "<tr class='item'>" +
@@ -97,7 +97,7 @@ $(document).ready(function () {
                     "</tr>";
             } else if (state == "Pubblicato") {
                 fbIcon = "";
-                if (item.fb == 1) {
+                if (item.Fb == 1) {
                     fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
                 }
                 var riga = "<tr class='item'>" +

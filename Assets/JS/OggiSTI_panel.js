@@ -42,9 +42,15 @@ var countNotSaved = 0;
 var url = "../Api/extractUserSavedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
-        countSaved++;
-        var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + item.Date + ' ' + item.ItaTitle + '</a>';
-        savedList += row;
+        if (index == "status") {
+            savedList = "Nessun evento salvato";
+        } else if (index == "details") {
+            savedList = "Nessun evento salvato";
+        } else {
+            countSaved++;
+            var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + item.Date + ' ' + item.ItaTitle + '</a>';
+            savedList += row;
+        }
     });
     $("#listSavedEvents").html(savedList);
     $("#savedCount").html(countSaved);
@@ -53,9 +59,15 @@ $.getJSON(url, function (result) {
 var url = "../Api/extractNotSavedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
-        countNotSaved++;
-        var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + item.Date + ' ' + item.ItaTitle + '</a>';
-        notSavedList += row;
+        if (index == "status") {
+            savedList = "Nessun evento disponibile";
+        } else if (index == "details") {
+            savedList = "Nessun evento disponibile";
+        } else {
+            countNotSaved++;
+            var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + item.Date + ' ' + item.ItaTitle + '</a>';
+            notSavedList += row;
+        }
     });
     $("#listNotSavedEvents").html(notSavedList);
     $("#notSavedCount").html(countNotSaved);

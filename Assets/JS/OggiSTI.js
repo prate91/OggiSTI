@@ -109,15 +109,21 @@ $(document).ready(function () {
                     "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>" +
                     "</tr>";
             } else {
-                // all the others tables
-                var riga = "<tr class='item'>" +
-                    "<td>" + item.Id + "</td>" +
-                    "<td>" + formatDatemmddyyyy(item.Date) + "</td>" +
-                    "<td><a href='../../OggiSTI_preview.php?eventId=" + item.Id + "&stateId=" + item.State + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
-                    "<td>" + item.State + "</td>" +
-                    "<td>" + item.Editors + "</td>" +
-                    "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>" +
-                    "</tr>";
+                if (index == "status") {
+                    riga = "";
+                } else if (index == "details") {
+                    riga = "";
+                } else {
+                    // all the others tables
+                    var riga = "<tr class='item'>" +
+                        "<td>" + item.Id + "</td>" +
+                        "<td>" + formatDatemmddyyyy(item.Date) + "</td>" +
+                        "<td><a href='../../OggiSTI_preview.php?eventId=" + item.Id + "&stateId=" + item.State + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
+                        "<td>" + item.State + "</td>" +
+                        "<td>" + item.Editors + "</td>" +
+                        "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>" +
+                        "</tr>";
+                }
             }
             // built the table 
             intestazione_tabella += riga;

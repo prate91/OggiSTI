@@ -111,7 +111,7 @@ include 'OggiSTI_manageMessagesTables.php';
     ?>
     <?php echo $notizia; ?>
     <!-- Tabella tutti gli eventi -->
-    <h1 class="titoloTabelleEventi">Eventi Pubblicati</h1>
+    <h1 class="titoloTabelleEventi">Tutti gli eventi</h1>
 	<?php
         $content = file_get_contents('../HTML/OggiSTI_mainTable.html');
         echo $content;

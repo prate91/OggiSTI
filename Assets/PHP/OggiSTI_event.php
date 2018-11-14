@@ -261,7 +261,7 @@ include 'OggiSTI_controlLogged.php';
     echo "<p>Admin buttons</p>";
     echo '<div class="btn-group">';
         if($administratorPermission==1){
-            echo '<button type="button" id="updateEventState" class="btn btn-danger" data-toggle="modal" data-target="#updateStateModal">Aggiorna state</button>';
+            echo '<button type="button" id="updateEventState" class="btn btn-danger" data-toggle="modal" data-target="#updateStateModal">Aggiorna stato</button>';
         }
     echo "</div>";
     
@@ -286,20 +286,21 @@ include 'OggiSTI_controlLogged.php';
     <div class="modal-content">
     <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h4 class="modal-title">Cambia lo state dell'evento</h4>
+    <h4 class="modal-title">Cambia lo stato dell'evento</h4>
     </div>
     <div class="modal-body">
     <div class="form-group">
-        <label for="sel1">Elimina evento dai pubblicati e:</label>
+        <label for="sel1">Modifica evento</label>
         <select class="form-control" id="sel1">
             <?php
             if(isset($_GET["stateId"])) {
                 $stateId=$_GET["stateId"];
                 if($stateId=="Pubblicato"){
-                    echo "<option>mettilo dormiente</option>";
-                    echo "<option>mettilo in redazione</option>";
+                    echo "<option value='makeSleepyPublished'>Sposta tra i dormienti</option>";
+                    echo "<option value='makeEditingPublished'>Rendi disponibile</option>";
                 }else{
-                    echo "<option>Sposta l'evento in uno state dormiente</option>";
+                    echo "<option value='makeSleepy'>Sposta tra i dormienti</option>";
+                    echo "<option value='makeEditing'>Rendi disponibile</option>";
                 }
             }
             ?>

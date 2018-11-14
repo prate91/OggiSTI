@@ -54,7 +54,7 @@ if($editorPermission==0&&$reviserPermission==0) {
 $editors="";
 $message = $mess = $errore = $class = $imageMessage = "";
 $prev="";
-$eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $editors = $itaDescription = $engDescription = $textReferences = $keywords = $imageCaption = $comment = $state = "";
+$eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $editors = $itaDescription = $engDescription = $textReferences = $keywords = $imageCaption = $comment = $state = $saved = "";
 
 
 // Control if is an update or a creation 
@@ -90,6 +90,10 @@ if(isset($_GET["eventId"])){
     $editors = $row["Editors"];
     $comment = $row["Comment"];
     $state = $row["State"];
+    $saved = $row["Saved"];
+    if($saved!=0&&$saved!=$userId){
+         header("location: OggiSTI_no_permission.php");
+    }
     if($state=="In redazione"){
         $editorsMatch="/".$userId."/i";
         if (preg_match($editorsMatch, $editors)) {

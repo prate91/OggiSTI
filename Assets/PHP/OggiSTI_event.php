@@ -206,12 +206,12 @@ include 'OggiSTI_controlLogged.php';
             echo '<form id = "formCommento" method = "post" action = "../Api/updateReview.php" class="form-horizontal">';
             if($fb==0){ 
                 echo '<button class="btn btn-danger" disabled> Non pubblicabile </button>';
-                if($state=="Pubblicato"){
+                if($state=="Pubblicato" && $reviserPermission==1){
                     echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle"> ON </button>';
                 }
             }else{
                 echo '<button class="btn btn-success" disabled> Pubblicabile </button>';
-                if($state=="Pubblicato"){
+                if($state=="Pubblicato" && $reviserPermission==1){
                     echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle"> OFF </button>';
                 }
             } 
@@ -230,7 +230,7 @@ include 'OggiSTI_controlLogged.php';
     }?>
     <?php
         echo '<div id="bottoniCommento" class="btn-group">';
-        
+
         // Edit event button, only if isn't saved or saved by user that has editing permission
         // and the state is "In editing"
         if((($state=="In redazione")&&($editorPermission==1)&&(($saved==$userId)||($saved==0)))) {
@@ -255,21 +255,26 @@ include 'OggiSTI_controlLogged.php';
         echo '<button type = "submit" name = "redazionePubblicato" id = "redazionePubblicato" class="btn btn-default" > Manda in redazione </button>';
         }
 
+    echo "</div>";
+        
+    
+    echo "<p>Admin buttons</p>";
+    echo '<div class="btn-group">';
         if($administratorPermission==1){
             echo '<button type="button" id="updateEventState" class="btn btn-danger" data-toggle="modal" data-target="#updateStateModal">Aggiorna state</button>';
         }
     echo "</div>";
-        
+    
     echo "</form>";
         ?>
 
     <h2>Cronologia delle modifiche</h2>
-    <ul>
+    <ul class="fixed-panel">
     <?php echo loadEditingChronology($eventId); ?>
     </ul>
 
     <h2>Cronologia delle revisioni</h2>
-    <ul>
+    <ul class="fixed-panel"> 
     <?php echo loadReviewChronology($eventId); ?>
     </ul>
 

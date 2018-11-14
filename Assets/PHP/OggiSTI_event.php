@@ -230,10 +230,10 @@ include 'OggiSTI_controlLogged.php';
     }?>
     <?php
         echo '<div id="bottoniCommento" class="btn-group">';
-
+        
         // Edit event button, only if isn't saved or saved by user that has editing permission
         // and the state is "In editing"
-        if((($state=="In redazione")&&($editorPermission==1)&&(($saved==$idUser)||($saved==0)))) {
+        if((($state=="In redazione")&&($editorPermission==1)&&(($saved==$userId)||($saved==0)))) {
             echo '<button type = "button" id = "modificaEvento" class="btn btn-warning" > Modifica Evento </button>';
         }
 

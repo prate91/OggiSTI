@@ -52,6 +52,11 @@
           <li><a href="OggiSTI_redactionEvents.php">In redazione</a></li>
 		  <li><a href="OggiSTI_reviewedEvents.php">In approvazione</a></li>
 		  <li><a href="OggiSTI_publishedEvents.php">Pubblicati</a></li>
+		  <?php 
+		  if($administratorPermission==1){
+			  echo '<li><a href="OggiSTI_allEvents.php">Tutti gli eventi</a></li>';
+		  }
+		  ?>
         </ul>
       </li>
 		<li><a href="OggiSTI_edit.php">Aggiungi evento</a></li>

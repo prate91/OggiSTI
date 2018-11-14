@@ -114,6 +114,10 @@
     box-shadow: 0 0px 0px rgba(0, 0, 0, .05);  
 }
 
+.fixed-panel {
+  max-height: 225px;
+  overflow-y: scroll;
+}
 
 .btn-circle {
     width: 30px;

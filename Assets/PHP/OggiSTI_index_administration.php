@@ -134,7 +134,7 @@ include 'OggiSTI_controlLogged.php';
         </h4>
       </div>
       <div id="collapse2" class="panel-collapse collapse">
-        <div id="listNotSavedEvents" class="panel-body">
+        <div id="listNotSavedEvents" class="panel-body fixed-panel">
         </div>
       </div>
     </div>
@@ -164,20 +164,6 @@ include 'OggiSTI_controlLogged.php';
   </div>
 <br class="stop"/>
     
-    <h2>Eventi</h2>
-        <ul class="list-group">
-            <?php if($editorPermission==1){ echo '<li class="list-group-item"><a href="OggiSTI_savedEvents.php">I tuoi eventi salvati</a></li>';} ?>
-            <?php if($editorPermission==1){ echo '<li class="list-group-item"><a href="OggiSTI_redactionEvents.php">In redazione</a></li>';} ?>
-            <li class="list-group-item"><a href="OggiSTI_reviewedEvents.php">In attesa di approvazione</a></li>
-            <li class="list-group-item"><a href="OggiSTI_publishedEvents.php">Lista eventi Pubblicati</a></li>
-            <?php if($editorPermission==1){ echo '<li class="list-group-item"><a href="OggiSTI_edit.php">Inserisci un nuovo evento</a></li>';} ?>
-        </ul>
-        <?php if($administratorPermission==1){
-            echo '<h2>Amministrazione</h2>';
-            echo '<ul class="list-group">';
-            echo "<li class='list-group-item'><a href='OggiSTI_allEvents.php'>Gestione Eventi</a></li>";
-            echo '</ul>';
-        }?>
 </div>
 </div>
 

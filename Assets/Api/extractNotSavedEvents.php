@@ -49,7 +49,7 @@ $tableFields = array(
 /**
  * Query to extract not saved events with state 'In redazione' (In editing)
  */
-$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE State='In redazione' AND Saved=0 ";
+$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE State='In redazione' AND Saved=0 ORDER BY MONTH(Date), DAY(Date) ";
 echo loadDataTables($sql, $tableFields, "no");
 		
 

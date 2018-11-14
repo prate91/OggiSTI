@@ -48,7 +48,7 @@ $.getJSON(url, function (result) {
             savedList = "Nessun evento salvato";
         } else {
             countSaved++;
-            var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + item.Date + ' ' + item.ItaTitle + '</a>';
+            var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + formatDatemmddyyyy(item.Date) + ' ' + item.ItaTitle + '</a>';
             savedList += row;
         }
     });
@@ -65,7 +65,7 @@ $.getJSON(url, function (result) {
             savedList = "Nessun evento disponibile";
         } else {
             countNotSaved++;
-            var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + item.Date + ' ' + item.ItaTitle + '</a>';
+            var row = '<a href="OggiSTI_event.php?eventId=' + item.Id + '&stateId=Redazione" class="list-group-item" target="_blank">' + formatDatemmddyyyy(item.Date) + ' ' + item.ItaTitle + '</a>';
             notSavedList += row;
         }
     });

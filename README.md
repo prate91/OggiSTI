@@ -1,4 +1,7 @@
 # OggiSTI
+[![license](https://img.shields.io/badge/license-CC%20BY%20ND%204.0-blue.svg)](LICENSE.md)
+[![version](https://img.shields.io/badge/version-3.0-d81a68.svg)](https://www.progettohmr.it/OggiSTI/)
+![PHP version from PHP-Eye](https://img.shields.io/badge/php%20tested-5.6-brightgreen.svg)
 
 [OggiSTI](https://www.progettohmr.it/OggiSTI) - Accadde oggi nella storia dell'informatica è un sottoprogetto di [Hakerando la Macchina Ridotta](https://www.progettohmr.it).
 

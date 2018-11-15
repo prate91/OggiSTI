@@ -114,12 +114,16 @@ $(document).ready(function () {
                 } else if (index == "details") {
                     riga = "";
                 } else {
+                    var savedState = "Disponibile";
+                    if (item.Saved != 0) {
+                        savedState = "Salvato";
+                    }
                     // all the others tables
                     var riga = "<tr class='item'>" +
                         "<td>" + item.Id + "</td>" +
                         "<td>" + formatDatemmddyyyy(item.Date) + "</td>" +
                         "<td><a href='../../OggiSTI_preview.php?eventId=" + item.Id + "&stateId=" + item.State + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
-                        "<td>" + item.State + "</td>" +
+                        "<td>" + item.State + "-" + savedState + "</td>" +
                         "<td>" + item.Editors + "</td>" +
                         "<td><button type='button' id='" + state + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>" +
                         "</tr>";

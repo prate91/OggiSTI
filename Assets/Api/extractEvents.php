@@ -45,7 +45,8 @@ $tableFields = array(
 		'ItaTitle',
 		'Date',
         'Editors',
-		'State'
+		'State',
+		'Saved'
 );
 
 $publicatedTableFields = array(
@@ -77,15 +78,15 @@ if(isset($_GET['state']))
 	switch($state)
 	{
 		case 'Salvato':
-			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE Saved=$userId";
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Saved FROM editing_events WHERE Saved=$userId";
 			echo loadDataTables($sql, $tableFields, "no");
 			break;
 		case 'Redazione':
-			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE State='In redazione'";
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Saved FROM editing_events WHERE State='In redazione'";
 			echo loadDataTables($sql, $tableFields, "no");
 			break;
 		case 'Approvazione':
-			$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE State='Approvazione 0/2' OR State='Approvazione 1/2'";
+			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Saved FROM editing_events WHERE State='Approvazione 0/2' OR State='Approvazione 1/2'";
 			echo loadDataTables($sql, $tableFields, "no");
 			break;
 		case 'Pubblicato':

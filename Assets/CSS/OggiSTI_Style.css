@@ -419,6 +419,24 @@
     
 }
 
+.publishedRow{
+    background-color: #5cb85c;
+    color: white;
+}
+
+.sleepyRow{
+    background-color: #d9534f;
+    color: white;
+}
+.reviewRow{
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.editingRow{
+    background-color: #5bc0de;
+    color: white;
+}
 #titoloPannelloControllo{
     text-align: center;
     font-size:36px;

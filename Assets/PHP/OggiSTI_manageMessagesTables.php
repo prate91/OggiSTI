@@ -62,5 +62,10 @@ if(isset($_GET["message"])){
     <button type="button" class="close" data-dismiss="alert">x</button>
     <p>Evento eliminato</p></div>';
     }
+    if($mess=="successState"){
+       $notizia='<div class="alert alert-success" id="alertEvento">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <p>Cambiamento di stato effettuato con successo</p></div>';
+    }
 }
 ?>

@@ -48,6 +48,7 @@ var intestazione_tabella_approvazione = "";
 var intestazione_tabella_utenti = "";
 var intestazione_tabella_temp = "";
 var fbIcon = "";
+var rowColor = "";
 //var intestazione = "";
 
 
@@ -87,11 +88,21 @@ $(document).ready(function () {
                 if (item.Fb == 1) {
                     fbIcon = '<img src="../Img/iconFacebook.png" class="fbIcon" alt="FB Icon">'
                 }
+                rowColor = "";
+                if (item.State == "Pubblicato") {
+                    rowColor = 'publishedRow';
+                } else if (item.State == "Sleepy") {
+                    rowColor = 'sleepyRow';
+                } else if (item.State == "In redazione") {
+                    rowColor = 'editingRow';
+                } else {
+                    rowColor = 'reviewRow';
+                }
                 var riga = "<tr class='item'>" +
                     "<td>" + item.Id + "</td>" +
                     "<td>" + formatDatemmddyyyy(item.Date) + "</td>" +
                     "<td><a href='../../OggiSTI_preview.php?eventId=" + item.Id + "&stateId=" + item.State + "' target='_blank'>" + item.ItaTitle + "</a></td>" +
-                    "<td>" + item.State + " " + fbIcon + " (" + item.Views + ")</td>" +
+                    "<td class='" + rowColor + "'>" + item.State + " " + fbIcon + " (" + item.Views + ")</td>" +
                     "<td>" + item.Editors + "</td>" +
                     "<td><button type='button' id='" + item.State + "-" + item.Id + "' class='btn btn-default btnEvento glyphicon glyphicon glyphicon-edit'> </button></td>" +
                     "</tr>";

@@ -185,6 +185,12 @@ function loadReviewChronology($eventId)
 			case 4:
 				$type="non pubblicabile su Facebook";
 				break;
+			case 5:
+				$type="reso dormiente";
+				break;
+			case 6:
+				$type="reso disponibile";
+				break;
 		}
 	$reviewsList = $reviewsList . "<li>" . $rowReview["ReviewDate"] . " - " . loadBriefName(loadPeopleId($rowReview["Reviser"])) . " - ".  $type ."</li>";
 		}

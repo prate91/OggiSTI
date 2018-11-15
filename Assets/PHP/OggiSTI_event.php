@@ -289,9 +289,11 @@ include 'OggiSTI_controlLogged.php';
     <h4 class="modal-title">Cambia lo stato dell'evento</h4>
     </div>
     <div class="modal-body">
+    <form id="updateStateForm" method="post" action="../Api/updateState.php">
     <div class="form-group">
-        <label for="sel1">Modifica evento</label>
-        <select class="form-control" id="sel1">
+        <input type="text" class="form-control hidden" name="eventId" value="<?php echo $eventId; ?>" readonly>
+        <label for="selectCommand">Modifica evento</label>
+        <select class="form-control" name="selectCommand">
             <?php
             if(isset($_GET["stateId"])) {
                 $stateId=$_GET["stateId"];
@@ -310,6 +312,7 @@ include 'OggiSTI_controlLogged.php';
     <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
     <input type="submit" name="updateState" id="updateState" class="btn btn-warning" value="Effettua la modifica">
+    </form>
     </div>
     </div>
     </div>

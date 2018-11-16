@@ -114,9 +114,7 @@ documenti documents cignoni giovanni pratelli nicolò oggi almanacco oggisti" />
 <div id="HMR_Menu" class="HMR_Menu" >
 	<script> creaMenu(1, 5) </script>
 </div>
-	
-	
-<span class="stop"></span>
+
 	
 <!-- Actual page content starts here ///////////////////////////////////////-->
 <div class="oggiSTI_content">

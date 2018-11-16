@@ -130,6 +130,7 @@
   }
 
 
+
 /* ***************** **
 ** 4. Almanac page   **
 ** ***************** */
@@ -140,9 +141,9 @@
 
 
 .oggiSTI_content{
+    clear: both;
    width: 864px; /*60%*/
     margin: 0px auto;   
-    /*background-color: #F9F9F9;*/
     overflow:auto;
 }
 

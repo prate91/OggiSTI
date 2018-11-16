@@ -62,7 +62,14 @@
 		<li><a href="OggiSTI_edit.php">Aggiungi evento</a></li>
 	</ul>
 	<form class="navbar-form navbar-right" role="search">
-		<div class="text-right iconaUser"><a href="../../../Administration/Assets/PHP/welcome.php"><span class="glyphicon glyphicon-user"></span> <?php echo $editor; ?></a></div>
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-user"></span> <?php echo $completeName; ?> <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="../../../Administration/Assets/PHP/welcome.php"><span class="glyphicon glyphicon-home"></span> Homepage admin</a>
+                <li><a href="../../../Administration/Assets/PHP/logout.php"><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
+            </ul>
+        </div>
 		</form>
 	</div>
 </nav>

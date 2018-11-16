@@ -66,7 +66,8 @@
             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
             <span class="glyphicon glyphicon-user"></span> <?php echo $completeName; ?> <span class="caret"></span></button>
             <ul class="dropdown-menu">
-                <li><a href="../../../Administration/Assets/PHP/welcome.php"><span class="glyphicon glyphicon-home"></span> Homepage admin</a>
+                <li><a href="../../../Administration/Assets/PHP/welcome.php"><span class="glyphicon glyphicon-home"></span> Homepage admin</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Impostazioni</a></li>
                 <li><a href="../../../Administration/Assets/PHP/logout.php"><span class="glyphicon glyphicon-log-out"></span>  Logout</a></li>
             </ul>
         </div>

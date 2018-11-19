@@ -260,7 +260,7 @@ $result = mysqli_query($OggiSTI_conn_adm, $toinsert); //order
 if($result){
 
   $inserito="Inserimento avvenuto correttamente";
-  $sql2 = "INSERT INTO editing (eventId, Editors, Type) VALUES ('$eventId', '$userId', '4')";
+  $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '4')";
   mysqli_query($OggiSTI_conn_adm, $sql2);
   //$risultato = mysqli_query($OggiSTI_conn_adm, "SELECT MAX(eventId) FROM editing_events");
   //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);

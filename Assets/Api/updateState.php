@@ -105,10 +105,7 @@ if($controlIfExistQuery!=""){
     // If result matched, table row must be 1 row
     if($count == 1) {
         $inserito="Inserimento avvenuto correttamente";
-        $resultUpdate = mysqli_query($OggiSTI_conn_adm, $query);
-        if($resultUpdate){
-            mysqli_query($OggiSTI_conn_adm, $toDelete);
-        }
+        mysqli_query($OggiSTI_conn_adm, $toDelete);
         $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')";
         mysqli_query($OggiSTI_conn_adm, $sql2);
         header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );

@@ -182,7 +182,7 @@ function modificaInfoEvento(data_evento, titolo_ita, abstr_ita, desc_ita, riferi
     $("#oggiSTI_lineaRevisori").css("visibility", "visible");
     $("#oggiSTI_immagineEvento").attr("title", fonteimmagine);
     if (immagine == "") {
-        src = "Assets/Img/lavori.png";
+        src = "Assets/Img/HMR_2017g_GC-Working.svg";
     } else {
         var src = "Assets/Img/eventi/" + immagine;
     }

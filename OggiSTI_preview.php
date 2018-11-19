@@ -45,15 +45,15 @@ if(!isset($_SESSION['userLogin'])) {
 <title>Oggi nella storia dell'informatica - HMR</title>
 
 <!-- Load OggiSTI standard libraries -->
-<link rel='stylesheet' href='Assets/CSS/bootstrap.css'>
-<link rel='stylesheet' href='Assets/CSS/jquery-ui.css'>
-<link rel='stylesheet' href='Assets/CSS/jquery-ui.theme.css'>
-<link rel='stylesheet' href='Assets/CSS/jquery-ui.structure.css'>
+<link rel='stylesheet' href='../Assets/Libs/Bootstrap/CSS/bootstrap.css'>
+<link rel='stylesheet' href='../Assets/Libs/jQuery-UI/jquery-ui.css'>
+<link rel='stylesheet' href='../Assets/Libs/jQuery-UI/jquery-ui.theme.css'>
+<link rel='stylesheet' href='../Assets/Libs/jQuery-UI/jquery-ui.structure.css'>
 
-<script src='Assets/JS/jquery-3.2.0.min.js'></script>
-<script src='Assets/JS/jquery-ui.js'></script>
-<script src='Assets/JS/datepicker-it.js'></script>
-<script src='Assets/JS/bootstrap.js'></script>
+<script src='../Assets/Libs/jQuery/jquery-3.3.1.min.js'></script>
+<script src='../Assets/Libs/jQuery-UI/jquery-ui.js'></script>
+<script src='Assets/Libs/DatePicker/JS/datepicker-it.js'></script>
+<script src='../Assets/Libs/Bootstrap/JS/bootstrap.js'></script>
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 
 

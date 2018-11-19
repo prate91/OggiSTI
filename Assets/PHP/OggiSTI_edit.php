@@ -56,6 +56,35 @@ $message = $mess = $errore = $class = $imageMessage = "";
 $prev="";
 $eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $editors = $itaDescription = $engDescription = $textReferences = $keywords = $imageCaption = $comment = $state = $saved = "";
 
+// Check if there is an image message
+if(isset($_GET["imageMessage"])){
+    $imageMessage="<br/>".$_GET["imageMessage"];
+    }
+
+// Check if there is a message
+if(isset($_GET["message"])){
+    $mess=$_GET["message"];
+    if($mess=="salva"){
+        $message="Evento salvato correttamente".$imageMessage;
+        $class="alert alert-success";
+    }
+    if($mess=="modifica"){
+        $message="Stai modificando un evento".$imageMessage;
+        $class="alert alert-warning";
+    }
+    if($mess=="modificaVeloce"){
+        $message="Stai modificando un evento senza lasciare traccia della redazione".$imageMessage;
+        $class="alert alert-danger";
+    }
+    if($mess=="errore"){
+        $message="Evento NON salvato".$imageMessage;
+        $class="alert alert-danger";
+    }
+    
+}else{
+    $message="Hai creato un nuovo evento".$imageMessage;
+    $class="alert alert-warning";
+}
 
 // Control if is an update or a creation 
 if(isset($_GET["eventId"])){
@@ -91,7 +120,7 @@ if(isset($_GET["eventId"])){
     $comment = $row["Comment"];
     $state = $row["State"];
     $saved = $row["Saved"];
-    if($saved!=0&&$saved!=$userId){
+    if($saved!=0&&$saved!=$userId&&$mess!="modificaVeloce"){
          header("location: OggiSTI_no_permission.php");
     }
     if($state=="In redazione"){

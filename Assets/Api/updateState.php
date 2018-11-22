@@ -109,6 +109,20 @@ if($controlIfExistQuery!=""){
         $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')";
         mysqli_query($OggiSTI_conn_adm, $sql2);
         header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+    }else {
+        $result = mysqli_query($OggiSTI_conn_adm, $toinsert);	//order executes
+        if($result){
+            $inserito="Inserimento avvenuto correttamente";
+            if($query!=""){
+                $resultUpdate = mysqli_query($OggiSTI_conn_adm, $query);
+                if($resultUpdate){
+                    mysqli_query($OggiSTI_conn_adm, $toDelete);
+                }
+            }
+            $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')";
+            mysqli_query($OggiSTI_conn_adm, $sql2);
+            header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+        }
     }
 }else{
     $result = mysqli_query($OggiSTI_conn_adm, $toinsert);	//order executes

@@ -1,15 +1,16 @@
 <?php
 	
-	require("../../../../Config/OggiSTI_config_adm.php");
+	require_once __DIR__.'/../Config/databasesConfiguration.php';
 
-	//header('Content-Type : application/json');
+
+	$OggiSTI_db = OggiSTIDBConnect();
 	
 	if(isset($_GET['eventId']))
 	{
 		$eventId = $_GET['eventId'];
         
 		$query = "UPDATE published_events SET Views = Views + 1 WHERE Id='$eventId'";
-        mysqli_query($OggiSTI_conn_adm, $query);
+		$OggiSTI_db->update($query);
 	}
 	else
 	{

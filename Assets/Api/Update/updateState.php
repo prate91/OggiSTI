@@ -35,10 +35,12 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-//require("config.php");
-require("../../../../Config/OggiSTI_config_adm.php");
+require_once __DIR__.'/Config/databasesConfiguration.php';
 include '../PHP/OggiSTI_sessionSet.php';
 include '../PHP/OggiSTI_controlLogged.php';
+
+
+$OggiSTI_db = OggiSTIDBConnect();
 
 // define variables and set to empty values
 $eventId = $command = $comment = $inserito =  $comm = $query = $controlIfExistQuery = "";
@@ -59,7 +61,6 @@ if(isset($_POST['updateState'])) {
         */
         case 'makeSleepy':
             $toinsert = "UPDATE editing_events SET State = 'Sleepy' WHERE Id = '$eventId'";
-            echo "i equals 0";
             $typeReview = 5; // Make sleepy events
             break;
         /**
@@ -100,45 +101,46 @@ if(isset($_POST['updateState'])) {
     }
 
 if($controlIfExistQuery!=""){
-    $resultControl = mysqli_query($OggiSTI_conn_adm, $controlIfExistQuery);
-    $count = mysqli_num_rows($resultControl);
+    $resultControl =  $OggiSTI_db->select($controlIfExistQuery);
+    $count = $resultControl['count']; 
     // If result matched, table row must be 1 row
     if($count == 1) {
-        $inserito="Inserimento avvenuto correttamente";
-        mysqli_query($OggiSTI_conn_adm, $toDelete);
-        $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')";
-        mysqli_query($OggiSTI_conn_adm, $sql2);
-        header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+        $resultDelete = $OggiSTI_db->delete($toDelete);
+        if($resultDelete){
+            $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')");
+            if($resultInsert){
+                header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+            }
+        }        
     }else {
-        $result = mysqli_query($OggiSTI_conn_adm, $toinsert);	//order executes
+        $result = $OggiSTI_db->insert($toinsert);	//order executes
         if($result){
-            $inserito="Inserimento avvenuto correttamente";
             if($query!=""){
-                $resultUpdate = mysqli_query($OggiSTI_conn_adm, $query);
+                $resultUpdate = $OggiSTI_db->update($query);
                 if($resultUpdate){
-                    mysqli_query($OggiSTI_conn_adm, $toDelete);
+                    $resultDelete = $OggiSTI_db->delete($toDelete);
                 }
             }
-            $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')";
-            mysqli_query($OggiSTI_conn_adm, $sql2);
-            header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+            $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')");
+            if($resultInsert){
+                header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+            }
         }
     }
 }else{
-    $result = mysqli_query($OggiSTI_conn_adm, $toinsert);	//order executes
+    $result = $OggiSTI_db->insert($toinsert);	//order executes
     if($result){
-        $inserito="Inserimento avvenuto correttamente";
         if($query!=""){
-            $resultUpdate = mysqli_query($OggiSTI_conn_adm, $query);
+            $resultUpdate = $OggiSTI_db->update($query);
             if($resultUpdate){
-                mysqli_query($OggiSTI_conn_adm, $toDelete);
+                $resultDelete = $OggiSTI_db->delete($toDelete);
             }
         }
-        $sql2 = "INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')";
-        mysqli_query($OggiSTI_conn_adm, $sql2);
-        header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+        $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')");
+        if($resultInsert){
+            header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+        }
     }else{
-        $inserito="Inserimento non eseguito";
         header( "Location:../PHP/OggiSTI_allEvents.php?message=errore" );
     }
 }

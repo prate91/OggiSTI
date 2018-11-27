@@ -97,7 +97,13 @@ function estremoInf(msc) {
     if (weekday == 6) { return firstW.setDate(firstW.getDate(selectedDate) - 5); }
 }
 
-// Computes the last day of the week from any day
+
+/**
+ * Computes the last day of the week from any day
+ *
+ * @param {*} msc
+ * @returns
+ */
 function estremoSup(msc) {
     var selectedDate = msc;
     var d = new Date(selectedDate);
@@ -112,7 +118,13 @@ function estremoSup(msc) {
     if (weekday == 6) { return lastW.setDate(lastW.getDate(selectedDate) + 1); }
 }
 
-// Converts months from number to letters
+
+/**
+ * Converts months from number to letters
+ *
+ * @param {*} mese
+ * @returns
+ */
 function convertiMesi(mese) {
     if (mese == 1) mese = "gennaio";
     if (mese == 2) mese = "febbraio";

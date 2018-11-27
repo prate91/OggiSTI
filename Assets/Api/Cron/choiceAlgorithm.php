@@ -38,6 +38,8 @@
 
 
 require("../../../../Config/OggiSTI_config_adm.php");
+require_once __DIR__.'/../Config/databasesConfiguration.php';
+
 
 /**
  * This query select centenary events and its multiples

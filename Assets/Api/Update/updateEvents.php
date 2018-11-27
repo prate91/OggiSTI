@@ -39,34 +39,12 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-function imageCount($imageName)
-{
-  $pieces = explode("_", $imageName);
-  $piece = explode(".", $pieces[2]);
-  $number = intval($piece[0]);
-  return $number;
-}
+require_once __DIR__.'/../Utils/functions.php';
 
-function imgRename($eventDate, $eventId, $imageFileType, $number) 
-{
-  $unixDate = str_replace('-', '', $eventDate);
-  if($number==10){
-    return $unixDate . "_" . $eventId . "_" . "1" . "." . $imageFileType;
-  } else{
-    $number=$number+1;
-    return $unixDate . "_" . $eventId . "_" . $number . "." . $imageFileType;
-  }
-}
-
-function deleteImg($imgPath)
-{
-   unlink($imgPath);
-}
-
-//require("config.php");
-require("../../../../Config/OggiSTI_config_adm.php");
 include '../PHP/OggiSTI_sessionSet.php';
 include '../PHP/OggiSTI_controlLogged.php';
+
+$OggiSTI_db = OggiSTIDBConnect();
 
 // define variables and set to empty values
 $var = $eventDate = $eventDateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $itaDescription = $engDescription = $textReferences = $keywords = $editors =$saved= $state = $reviser1 = $reviser2 = "";
@@ -96,15 +74,15 @@ $reviser2 = isset($_POST["IIApprovation"]) ? $_POST['IIApprovation'] : '';
 
 $_SESSION['eventId'] = $eventId;    
 $_SESSION['eventDate'] = $var;
-$_SESSION['itaTitle'] = $itaTitle = mysqli_real_escape_string($OggiSTI_conn_adm, $itaTitle);
-$_SESSION['engTitle'] = $engTitle = mysqli_real_escape_string($OggiSTI_conn_adm, $engTitle);
-$_SESSION['itaAbstract'] = $itaAbstract = mysqli_real_escape_string($OggiSTI_conn_adm, $itaAbstract);
-$_SESSION['engAbstract'] = $engAbstract = mysqli_real_escape_string($OggiSTI_conn_adm, $engAbstract);
-$_SESSION['itaDescription'] = $itaDescription = mysqli_real_escape_string($OggiSTI_conn_adm, $itaDescription);
-$_SESSION['engDescription'] = $engDescription = mysqli_real_escape_string($OggiSTI_conn_adm, $engDescription);
-$_SESSION['keywords'] = $keywords = mysqli_real_escape_string($OggiSTI_conn_adm, $keywords);
-$_SESSION['textReferences'] = $textReferences = mysqli_real_escape_string($OggiSTI_conn_adm, $textReferences);
-$_SESSION['imageCaption'] = $imageCaption = mysqli_real_escape_string($OggiSTI_conn_adm, $imageCaption);
+$_SESSION['itaTitle'] = $itaTitle = $OggiSTI_db->escape_string($itaTitle);
+$_SESSION['engTitle'] = $engTitle = $OggiSTI_db->escape_string($engTitle);
+$_SESSION['itaAbstract'] = $itaAbstract = $OggiSTI_db->escape_string($itaAbstract);
+$_SESSION['engAbstract'] = $engAbstract = $OggiSTI_db->escape_string($engAbstract);
+$_SESSION['itaDescription'] = $itaDescription = $OggiSTI_db->escape_string($itaDescription);
+$_SESSION['engDescription'] = $engDescription = $OggiSTI_db->escape_string($engDescription);
+$_SESSION['keywords'] = $keywords = $OggiSTI_db->escape_string($keywords);
+$_SESSION['textReferences'] = $textReferences = $OggiSTI_db->escape_string($textReferences);
+$_SESSION['imageCaption'] = $imageCaption = $OggiSTI_db->escape_string($imageCaption);
 $_SESSION['image'] = $imageLink;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -196,19 +174,13 @@ $toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', 
 
 
 //declare in the order variable
-$result = mysqli_query($OggiSTI_conn_adm, $toinsert);	//order executes
+$result = $OggiSTI_db->insert($toinsert);	//order executes
 if($result){
-
-   $inserito="Inserimento avvenuto correttamente";
-   $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '3')";
-   mysqli_query($OggiSTI_conn_adm, $sql2);
-   header( "Location:../PHP/OggiSTI_reviewedEvents.php?message=inserito&messageImmagine=".$textMessage);
-
-	
-
+    $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '3')");
+    if($resultInsert){
+      header( "Location:../PHP/OggiSTI_reviewedEvents.php?message=inserito&messageImmagine=".$textMessage);
+    }
 }else{
-
-	$inserito="Inserimento non eseguito";
   header('Location:../PHP/OggiSTI_edit.php?message=errore');
 
 }
@@ -218,27 +190,18 @@ if($result){
 if(isset($_POST['salva'])) {
    // è state premuto il secondo pulsante
 
-
 //inserting data order
 $toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = 'In redazione', editing_events.Saved = '$saved' WHERE editing_events.Id = '$eventId'";
 
 //declare in the order variable
-$result = mysqli_query($OggiSTI_conn_adm, $toinsert); //order 
+$result = $OggiSTI_db->insert($toinsert);	//order executes
 if($result){
-
-   $inserito="Inserimento avvenuto correttamente";
-   $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')";
-   mysqli_query($OggiSTI_conn_adm, $sql2);
-   //$risultato = mysqli_query($OggiSTI_conn_adm, "SELECT MAX(eventId) FROM editing_events");
-   //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
-   //$id = $riga["MAX(eventId)"];
-   header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&messageImmagine=".$textMessage );
-
+  $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')");
+    if($resultInsert){
+     header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&messageImmagine=".$textMessage );
+    }
 } else{
-
-  $inserito="Inserimento non eseguito";
   header("Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
-
 }
 
 
@@ -256,19 +219,13 @@ if(isset($_POST['salvaChiudi'])) {
 
 
 //declare in the order variable
-$result = mysqli_query($OggiSTI_conn_adm, $toinsert); //order 
+$result = $OggiSTI_db->insert($toinsert);	//order executes
 if($result){
-
-  $inserito="Inserimento avvenuto correttamente";
-  $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '4')";
-  mysqli_query($OggiSTI_conn_adm, $sql2);
-  //$risultato = mysqli_query($OggiSTI_conn_adm, "SELECT MAX(eventId) FROM editing_events");
-  //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
-  //$id = $riga["MAX(eventId)"];
-  header( "Location:../PHP/OggiSTI_event.php?eventId=$eventId&stateId=$state");
-
+  $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '4')");
+    if($resultInsert){
+     header( "Location:../PHP/OggiSTI_event.php?eventId=$eventId&stateId=$state");
+    }
 } else{
-
  $inserito="Inserimento non eseguito";
  header("Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
 
@@ -285,22 +242,15 @@ if(isset($_POST['preview'])) {
     $toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = 'In redazione', editing_events.Saved = '$saved' WHERE editing_events.Id = '$eventId'";
 
 //declare in the order variable
-$result = mysqli_query($OggiSTI_conn_adm, $toinsert); //order 
+$result = $OggiSTI_db->insert($toinsert);	//order executes
 if($result){
-
-   $inserito="Inserimento avvenuto correttamente";
-   $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')";
-   mysqli_query($OggiSTI_conn_adm, $sql2);
-   //$risultato = mysqli_query($OggiSTI_conn_adm, "SELECT MAX(eventId) FROM editing_events");
-   //$riga = mysqli_fetch_array($risultato,MYSQLI_ASSOC);
-   //$id = $riga["MAX(eventId)"];
-   header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&preview=ok&messageImmagine=".$textMessage );
-
+  $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')");
+    if($resultInsert){
+       header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&preview=ok&messageImmagine=".$textMessage );
+    }
 } else{
-
   $inserito="Inserimento non eseguito";
   header("Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
-
 }
 
 

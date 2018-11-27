@@ -38,6 +38,67 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
+require_once __DIR__.'/Config/databasesConfiguration.php';
+
+/**
+ * Count how many image ar inserted of the same event
+ * 
+ * @author Nicolò Pratelli
+ * 
+ * @since 1.0
+ * 
+ * @param string $imageName the number is in the name of the image
+ * 
+ * @return int
+ */
+function imageCount($imageName)
+{
+  $pieces = explode("_", $imageName); // split the string by _
+  $piece = explode(".", $pieces[2]); // split the extension of the image (.jpg, .png, etc.)
+  $number = intval($piece[0]); // get the number and convert it to int
+  return $number;
+}
+
+/**
+ * Rename the image before inssert it in the directory
+ * 
+ * @author Nicolò Pratelli
+ * 
+ * @since 1.0
+ * 
+ * @param string $eventDate the date of the event
+ * @param string $eventId the id of the event
+ * @param string $imageFileType extension of the file  (.jpg, .png, etc.)
+ * @param int $number the number of the image
+ * 
+ * @return string
+ * 
+ */
+function imgRename($eventDate, $eventId, $imageFileType, $number) 
+{
+  $unixDate = str_replace('-', '', $eventDate);
+  if($number==10){
+    return $unixDate . "_" . $eventId . "_" . "1" . "." . $imageFileType;
+  } else{
+    $number=$number+1;
+    return $unixDate . "_" . $eventId . "_" . $number . "." . $imageFileType;
+  }
+}
+
+/**
+ * Delete the image from the directory 
+ * 
+ * @author Nicolò Pratelli
+ * 
+ * @since 1.0
+ * 
+ * @param string $imgPath path of the image
+ */
+function deleteImg($imgPath)
+{
+   unlink($imgPath);
+}
+
 
  /**
   * Clean a string from html tags. It introduces the space if there isn't.
@@ -46,7 +107,7 @@
   *
   * @since 2.0
   *
-  * @param string $string  the string to be cleaned
+  * @param string $string  the$database = new Database(); string to be cleaned
   */
 function cleanHTML($string)
 {
@@ -67,15 +128,20 @@ function cleanHTML($string)
   */
 function loadBriefName($idUser)
 {
-	require("../../../../Config/EPICAC_config_rd.php");
+	$EPICAC_db = EPICACDBConnect();
 	if($idUser==0){
 		return 0;
 	}
 	else{
 		$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
-		$userDataQueryResult = mysqli_query($EPICAC_conn_rd, $userDataQuery);
-		$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
-		return $userDataRow["Brief"];
+		$result =  $EPICAC_db->select($userDataQuery);
+		if(true == $result['success'])
+    	{
+			foreach($result['rows'] as $row)
+			{
+				return $row["Brief"];
+			}
+		}
 	}
 }
 
@@ -90,15 +156,20 @@ function loadBriefName($idUser)
   */
   function loadCompletefName($idUser)
   {
-	require("../../../../Config/EPICAC_config_rd.php");
+	$EPICAC_db = EPICACDBConnect();
 	if($idUser==0){
 		return 0;
 	}
 	else{
 		$userDataQuery = "SELECT * FROM people WHERE IdPp=$idUser";
-		$userDataQueryResult = mysqli_query($EPICAC_conn_rd, $userDataQuery);
-		$userDataRow = mysqli_fetch_array($userDataQueryResult,MYSQLI_ASSOC);
-		return $userDataRow["Name"] . " " . $userDataRow["Surname"];
+		$result =  $EPICAC_db->select($userDataQuery);
+		if(true == $result['success'])
+    	{
+			foreach($result['rows'] as $row)
+			{
+				return $row["Name"] . " " . $row["Surname"];
+			}
+		}
 	}
   }
 
@@ -113,11 +184,16 @@ function loadBriefName($idUser)
   */
 function loadPeopleId($idUser)
 {
-	require("../../../../Config/Users_config_adm.php");
+	$Users_db = UsersDBConnect();
 	$userQuery = "SELECT * FROM admin WHERE AuthId=$idUser";
-	$userQueryResult = mysqli_query($users_conn_adm, $userQuery);
-	$userRow = mysqli_fetch_array($userQueryResult,MYSQLI_ASSOC);
-	return $userRow["IdPp_Id"];
+	$result =  $Users_db->select($userQuery);
+	if(true == $result['success'])
+	{
+		foreach($result['rows'] as $row)
+		{
+			return $row["IdPp_Id"];
+		}
+	}
 }
 
 
@@ -133,12 +209,15 @@ function loadPeopleId($idUser)
   */
 function loadEditingChronology($eventId)
 {
+	$OggiSTI_db = OggiSTIDBConnect();
 	$editingsList = "";
-	require("../../../../Config/OggiSTI_config_adm.php");
 	$queryEditing = "SELECT * FROM editing WHERE Event_Id='$eventId'";
-	$resultEditing = mysqli_query($OggiSTI_conn_adm, $queryEditing);
-	while ($rowEditing = mysqli_fetch_assoc($resultEditing)) {
-		switch ($rowEditing["Type"]) {
+	$result =  $OggiSTI_db->select($queryEditing);
+	if(true == $result['success'])
+    {
+        foreach($result['rows'] as $row)
+        {
+           switch ($row["Type"]) {
 			case 1:
 				$type="creato";
 				break;
@@ -150,10 +229,11 @@ function loadEditingChronology($eventId)
 				break;
 			case 4:
 				$type="modifica rapida";
-		}
-		$editingsList = $editingsList . "<li>" . $rowEditing["EditDate"] . " - " .loadBriefName(loadPeopleId($rowEditing["Editor"])) .  " - ".  $type ."</li>";
 			}
-		return $editingsList;
+			$editingsList = $editingsList . "<li>" . $row["EditDate"] . " - " .loadBriefName(loadPeopleId($row["Editor"])) .  " - ".  $type ."</li>";
+		}
+	}
+	return $editingsList;
 }
 
 /**
@@ -168,33 +248,37 @@ function loadEditingChronology($eventId)
 function loadReviewChronology($eventId)
 {
 	$reviewsList = "";
-	require("../../../../Config/OggiSTI_config_adm.php");
+	$OggiSTI_db = OggiSTIDBConnect();
 	$queryReview = "SELECT * FROM review WHERE Event_Id='$eventId'";
-	$resurlReview = mysqli_query($OggiSTI_conn_adm, $queryReview);
-	while ($rowReview = mysqli_fetch_assoc($resurlReview)) {
-		switch ($rowReview["Type"]) {
-			case 1:
-				$type="approvato";
-				break;
-			case 2:
-				$type="inviato in redazione";
-				break;
-			case 3:
-				$type="pubblicabile su Facebook";
-				break;
-			case 4:
-				$type="non pubblicabile su Facebook";
-				break;
-			case 5:
-				$type="reso dormiente";
-				break;
-			case 6:
-				$type="reso disponibile";
-				break;
+	$result =  $OggiSTI_db->select($queryReview);
+	if(true == $result['success'])
+    {
+        foreach($result['rows'] as $row)
+        {
+			switch ($row["Type"]) {
+				case 1:
+					$type="approvato";
+					break;
+				case 2:
+					$type="inviato in redazione";
+					break;
+				case 3:
+					$type="pubblicabile su Facebook";
+					break;
+				case 4:
+					$type="non pubblicabile su Facebook";
+					break;
+				case 5:
+					$type="reso dormiente";
+					break;
+				case 6:
+					$type="reso disponibile";
+					break;
+			}
+			$reviewsList = $reviewsList . "<li>" . $row["ReviewDate"] . " - " . loadBriefName(loadPeopleId($row["Reviser"])) . " - ".  $type ."</li>";
 		}
-	$reviewsList = $reviewsList . "<li>" . $rowReview["ReviewDate"] . " - " . loadBriefName(loadPeopleId($rowReview["Reviser"])) . " - ".  $type ."</li>";
-		}
-		return $reviewsList;
+	}
+	return $reviewsList;
 }
 
  /**
@@ -209,16 +293,15 @@ function loadReviewChronology($eventId)
   * @param string $formatting it permitt to choose yes or no if you want the html formatted field or not
   */
 function loadDataTables($query, $fields, $formatting)
-{
-	// require("config.php");
-	require("../../../../Config/OggiSTI_config_adm.php");
+{	
+	$OggiSTI_db = OggiSTIDBConnect();
 	$result = array();
 	$i = 0;
-	$queryResult = mysqli_query($OggiSTI_conn_adm, $query);
-	
-	if($queryResult != false && mysqli_num_rows($queryResult) > 0)
+	$queryResult =  $OggiSTI_db->select($query);
+
+	if($queryResult != false &&  $queryResult['count'] > 0)
 	{
-		while($row = mysqli_fetch_assoc($queryResult))
+		foreach($queryResult['rows'] as $row)
 		{
 			$result[$i] = array();
 			foreach($fields as $field){
@@ -247,7 +330,7 @@ function loadDataTables($query, $fields, $formatting)
 					}
 					else
 					{
-						$result [$i][$field] = cleanHTML($row[$field]); // utf8_encode($row[$field])
+						$result [$i][$field] = cleanHTML($row[$field]);
 					}
 				}	
 			}

@@ -40,6 +40,7 @@
 
 require("../../../../Config/OggiSTI_config_adm.php");
 
+
 /**
  * Variable $ok that check if there is at least one event today
  */

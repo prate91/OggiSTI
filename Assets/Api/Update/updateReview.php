@@ -39,11 +39,11 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__.'/functions.php';
-include '../PHP/OggiSTI_sessionSet.php';
-include '../PHP/OggiSTI_controlLogged.php';
+require_once __DIR__.'/../Utils/functions.php';
+require_once __DIR__.'/../../PHP/OggiSTI_sessionSet.php';
+require_once __DIR__.'/../../PHP/OggiSTI_controlLogged.php';
 
-$OggiSTI_db = OggiSTIDBConnect();
+$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
 // define variables and set to empty values
 $eventId = $state = $comment = $inserito =  $comm = "";

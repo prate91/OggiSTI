@@ -37,16 +37,16 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require("functions.php");
-include '../PHP/OggiSTI_sessionSet.php';
+require_once __DIR__.'/../../PHP/OggiSTI_sessionSet.php';
+require_once __DIR__.'/../Utils/functions.php';
 
 $tableFields = array(
-		'Id',
-		'ItaTitle',
-		'Date',
-        'Editors',
-		'State',
-		'Saved'
+	'Id',
+	'ItaTitle',
+	'Date',
+	'Editors',
+	'State',
+	'Saved'
 );
 
 $publicatedTableFields = array(

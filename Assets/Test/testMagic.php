@@ -10,6 +10,8 @@
     if(true == $result['success'])
     {
         echo "Number of rows: " . $result['count'] ."<br />";
+        echo "Affected rows: " . $result['affected_rows'] ."<br />";
+         echo "Insert_id: " . $result['insert_id'] ."<br />";
         foreach($result['rows'] as $row)
         {
             echo "Id: "             . $row['Id']            ."<br />";

@@ -41,9 +41,13 @@
 
 
 // include PHP files
-require("../../../../Config/OggiSTI_config_adm.php");
-include 'OggiSTI_sessionSet.php';
-include 'OggiSTI_controlLogged.php';
+//require("../../../../Config/OggiSTI_config_adm.php");
+
+require_once __DIR__.'/../../../../Config/DatabaseConfig.class.php';
+require_once __DIR__.'/OggiSTI_sessionSet.php';
+require_once __DIR__.'/OggiSTI_controlLogged.php';
+
+$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
 // Control if user has redaction permission
 if($editorPermission==0&&$reviserPermission==0) {
@@ -101,47 +105,64 @@ if(isset($_GET["eventId"])){
     }else{
         $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
     }
-    $result = mysqli_query($OggiSTI_conn_adm,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $oldDate = $row["Date"];
-    $date = date('d-m-Y', strtotime($oldDate));
-    $dateCorr = str_replace('-', '/', $date);
-    $itaTitle = $row["ItaTitle"]; 
-    $engTitle = $row["EngTitle"];
-    $itaAbstract = $row["ItaAbstract"];
-    $engAbstract = $row["EngAbstract"];
-    $image = $row["Image"];
-    $imageCaption = $row["ImageCaption"];
-    $itaDescription = $row["ItaDescription"];
-    $engDescription = $row["EngDescription"];
-    $textReferences = $row["TextReferences"];
-    $keywords = $row["Keywords"];
-    $editors = $row["Editors"];
-    $comment = $row["Comment"];
-    $state = $row["State"];
-    $saved = $row["Saved"];
-    if($saved!=0&&$saved!=$userId&&$mess!="modificaVeloce"){
-         header("location: OggiSTI_no_permission.php");
-    }
-    if($state=="In redazione"){
-        $editorsMatch="/".$userId."/i";
-        if (preg_match($editorsMatch, $editors)) {
-            $editors = $editors;
-        }else{
-            $editors = $editors.", ".$userId;
+    $result = $OggiSTI_db->select($sql);
+    if(true == $result['success'])
+    {
+        foreach($result['rows'] as $row)
+        {
+            
+            // $result = mysqli_query($OggiSTI_conn_adm,$sql);
+            // $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+            $oldDate = $row["Date"];
+            $date = date('d-m-Y', strtotime($oldDate));
+            $dateCorr = str_replace('-', '/', $date);
+            $itaTitle = $row["ItaTitle"]; 
+            $engTitle = $row["EngTitle"];
+            $itaAbstract = $row["ItaAbstract"];
+            $engAbstract = $row["EngAbstract"];
+            $image = $row["Image"];
+            $imageCaption = $row["ImageCaption"];
+            $itaDescription = $row["ItaDescription"];
+            $engDescription = $row["EngDescription"];
+            $textReferences = $row["TextReferences"];
+            $keywords = $row["Keywords"];
+            $editors = $row["Editors"];
+            $comment = $row["Comment"];
+            $state = $row["State"];
+            $saved = $row["Saved"];
+            if($saved!=0&&$saved!=$userId&&$mess!="modificaVeloce"){
+                    header("location: OggiSTI_no_permission.php");
+            }
+            if($state=="In redazione"){
+                $editorsMatch="/".$userId."/i";
+                if (preg_match($editorsMatch, $editors)) {
+                    $editors = $editors;
+                }else{
+                    $editors = $editors.", ".$userId;
+                }
+            }
         }
     }
 }else{
     // Create a new event
     $menuEvento = "Aggiungi evento";
     $creationQuery = "INSERT INTO editing_events (ItaTitle) VALUES ('')";
-    mysqli_query($OggiSTI_conn_adm, $creationQuery);    
+    $OggiSTI_db->insert($creationQuery);
+    //mysqli_query($OggiSTI_conn_adm, $creationQuery);    
     $result = mysqli_query($OggiSTI_conn_adm, "SELECT MAX(Id) FROM editing_events");
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $eventId = $row["MAX(Id)"];
-    $editors=$userId;
-    $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '1')";
-    mysqli_query($OggiSTI_conn_adm, $sql2);
+    $result = $OggiSTI_db->select("SELECT MAX(Id) FROM editing_events");
+    if(true == $result['success'])
+    {
+        foreach($result['rows'] as $row)
+        {
+        //$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+            $eventId = $row["MAX(Id)"];
+            $editors=$userId;
+            $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '1')");
+        // $sql2 = "INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '1')";
+        // mysqli_query($OggiSTI_conn_adm, $sql2);
+        }
+    }
 }
 // Check if there is an image message
 if(isset($_GET["imageMessage"])){
@@ -254,7 +275,7 @@ if(isset($_GET["preview"])){
 <div class="oggiSTI_content_amm">
 <!-- OggiSTI navbar menu -->
 <?php
-    include 'OggiSTI_navbarMenu.php';
+    require_once __DIR__.'/OggiSTI_navbarMenu.php';
 ?>
 
 <!--<div id="visualizzaCommento" class="alert alert-info">
@@ -281,7 +302,7 @@ if(isset($_GET["preview"])){
 
 <!-- Form starts here -->
 <!-- This form allows the writing of events -->
-<form id="addEvent" method="post" action="../Api/updateEvents.php" enctype="multipart/form-data">
+<form id="addEvent" method="post" action="../Api/Update/updateEvents.php" enctype="multipart/form-data">
 
     <!-- ID -->
     <div class="col-xs-2">

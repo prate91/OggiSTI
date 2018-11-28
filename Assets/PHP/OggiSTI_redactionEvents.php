@@ -35,9 +35,9 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-include 'OggiSTI_sessionSet.php';
-include 'OggiSTI_controlLogged.php';
-include 'OggiSTI_manageMessagesTables.php';
+require_once __DIR__.'/OggiSTI_sessionSet.php';
+require_once __DIR__.'/OggiSTI_controlLogged.php';
+require_once __DIR__.'/OggiSTI_manageMessagesTables.php';
 
 ?>
 

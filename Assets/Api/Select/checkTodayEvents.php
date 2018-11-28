@@ -38,25 +38,20 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require("../../../../Config/OggiSTI_config_adm.php");
+require_once __DIR__.'/../../../../../Config/DatabaseConfig.class.php';
 
-
-/**
- * Variable $ok that check if there is at least one event today
- */
-$ok=0;
+$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
 /**
  * Execute the query,
  * if there is at least 1 row ok is setted
  */
 $query = "SELECT Id FROM today_events";
-$result = mysqli_query($OggiSTI_conn_adm,$query);
-if (mysqli_num_rows($result) > 0) {
-    $ok = 1;
-    echo $ok;
+$result = $OggiSTI_db->select($query);
+if(true == $result['success']){
+    echo 1;
 }else{
-    echo $ok;
+    echo 0;
 }
 
 	

@@ -38,7 +38,7 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__.'/Config/databasesConfiguration.php';
+require_once __DIR__.'/../../../../../Config/DatabaseConfig.class.php';
 
 /**
  * Count how many image ar inserted of the same event
@@ -128,7 +128,7 @@ function cleanHTML($string)
   */
 function loadBriefName($idUser)
 {
-	$EPICAC_db = EPICACDBConnect();
+	$EPICAC_db = DatabaseConfig::EPICACDBConnect();
 	if($idUser==0){
 		return 0;
 	}
@@ -156,7 +156,7 @@ function loadBriefName($idUser)
   */
   function loadCompletefName($idUser)
   {
-	$EPICAC_db = EPICACDBConnect();
+	$EPICAC_db = DatabaseConfig::EPICACDBConnect();
 	if($idUser==0){
 		return 0;
 	}
@@ -184,7 +184,7 @@ function loadBriefName($idUser)
   */
 function loadPeopleId($idUser)
 {
-	$Users_db = UsersDBConnect();
+	$Users_db = DatabaseConfig::UsersDBConnect();
 	$userQuery = "SELECT * FROM admin WHERE AuthId=$idUser";
 	$result =  $Users_db->select($userQuery);
 	if(true == $result['success'])
@@ -209,7 +209,7 @@ function loadPeopleId($idUser)
   */
 function loadEditingChronology($eventId)
 {
-	$OggiSTI_db = OggiSTIDBConnect();
+	$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 	$editingsList = "";
 	$queryEditing = "SELECT * FROM editing WHERE Event_Id='$eventId'";
 	$result =  $OggiSTI_db->select($queryEditing);
@@ -248,7 +248,7 @@ function loadEditingChronology($eventId)
 function loadReviewChronology($eventId)
 {
 	$reviewsList = "";
-	$OggiSTI_db = OggiSTIDBConnect();
+	$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 	$queryReview = "SELECT * FROM review WHERE Event_Id='$eventId'";
 	$result =  $OggiSTI_db->select($queryReview);
 	if(true == $result['success'])
@@ -294,7 +294,7 @@ function loadReviewChronology($eventId)
   */
 function loadDataTables($query, $fields, $formatting)
 {	
-	$OggiSTI_db = OggiSTIDBConnect();
+	$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 	$result = array();
 	$i = 0;
 	$queryResult =  $OggiSTI_db->select($query);

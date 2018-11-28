@@ -35,12 +35,12 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__.'/Config/databasesConfiguration.php';
-include '../PHP/OggiSTI_sessionSet.php';
-include '../PHP/OggiSTI_controlLogged.php';
+require_once __DIR__.'/../Utils/functions.php';
+require_once __DIR__.'/../../PHP/OggiSTI_sessionSet.php';
+require_once __DIR__.'/../../PHP/OggiSTI_controlLogged.php';
 
 
-$OggiSTI_db = OggiSTIDBConnect();
+$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
 // define variables and set to empty values
 $eventId = $command = $comment = $inserito =  $comm = $query = $controlIfExistQuery = "";
@@ -99,6 +99,7 @@ if(isset($_POST['updateState'])) {
             $typeReview = 6; // Make avaliable events
             break;
     }
+
 
 if($controlIfExistQuery!=""){
     $resultControl =  $OggiSTI_db->select($controlIfExistQuery);

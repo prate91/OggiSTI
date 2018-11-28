@@ -34,9 +34,9 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ////////////////////////////////////////////////////////////////////////
-include '../PHP/OggiSTI_sessionSet.php';
 
-require("functions.php");
+require_once __DIR__.'/../../PHP/OggiSTI_sessionSet.php';
+require_once __DIR__.'/../Utils/functions.php';
 
 $tableFiels = array(
 	'eventsNumber'

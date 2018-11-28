@@ -40,11 +40,11 @@
 // ////////////////////////////////////////////////////////////////////////
 
 require_once __DIR__.'/../Utils/functions.php';
+require_once __DIR__.'/../../PHP/OggiSTI_sessionSet.php';
+require_once __DIR__.'/../../PHP/OggiSTI_controlLogged.php';
 
-include '../PHP/OggiSTI_sessionSet.php';
-include '../PHP/OggiSTI_controlLogged.php';
 
-$OggiSTI_db = OggiSTIDBConnect();
+$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
 // define variables and set to empty values
 $var = $eventDate = $eventDateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $itaDescription = $engDescription = $textReferences = $keywords = $editors =$saved= $state = $reviser1 = $reviser2 = "";
@@ -178,10 +178,10 @@ $result = $OggiSTI_db->insert($toinsert);	//order executes
 if($result){
     $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '3')");
     if($resultInsert){
-      header( "Location:../PHP/OggiSTI_reviewedEvents.php?message=inserito&messageImmagine=".$textMessage);
+      header( "Location:../../PHP/OggiSTI_reviewedEvents.php?message=inserito&messageImmagine=".$textMessage);
     }
 }else{
-  header('Location:../PHP/OggiSTI_edit.php?message=errore');
+  header('Location:../../PHP/OggiSTI_edit.php?message=errore');
 
 }
 
@@ -198,10 +198,10 @@ $result = $OggiSTI_db->insert($toinsert);	//order executes
 if($result){
   $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')");
     if($resultInsert){
-     header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&messageImmagine=".$textMessage );
+     header( "Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&messageImmagine=".$textMessage );
     }
 } else{
-  header("Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
+  header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
 }
 
 
@@ -223,11 +223,11 @@ $result = $OggiSTI_db->insert($toinsert);	//order executes
 if($result){
   $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '4')");
     if($resultInsert){
-     header( "Location:../PHP/OggiSTI_event.php?eventId=$eventId&stateId=$state");
+     header( "Location:../../PHP/OggiSTI_event.php?eventId=$eventId&stateId=$state");
     }
 } else{
  $inserito="Inserimento non eseguito";
- header("Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
+ header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
 
 }
 
@@ -246,11 +246,11 @@ $result = $OggiSTI_db->insert($toinsert);	//order executes
 if($result){
   $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')");
     if($resultInsert){
-       header( "Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&preview=ok&messageImmagine=".$textMessage );
+       header( "Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&preview=ok&messageImmagine=".$textMessage );
     }
 } else{
   $inserito="Inserimento non eseguito";
-  header("Location:../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
+  header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
 }
 
 

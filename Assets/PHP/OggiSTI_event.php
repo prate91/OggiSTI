@@ -37,78 +37,92 @@
 // ////////////////////////////////////////////////////////////////////////
 
 // include PHP files
-require("../../../../Config/Users_config_adm.php");
-require("../../../../Config/OggiSTI_config_adm.php");
-include("../Api/functions.php");
-include 'OggiSTI_sessionSet.php';
-include 'OggiSTI_controlLogged.php';
+
+require_once __DIR__.'/OggiSTI_sessionSet.php';
+require_once __DIR__.'/OggiSTI_controlLogged.php';
+require_once __DIR__.'/../Api/Utils/functions.php';
+
+// require("../../../../Config/Users_config_adm.php");
+// require("../../../../Config/OggiSTI_config_adm.php");
+// include("../Api/functions.php");
+// include 'OggiSTI_sessionSet.php';
+// include 'OggiSTI_controlLogged.php';
+
+$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
 // initialize empty variables
-    $message = $mess = $errore = $notizia = "";
-    $eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $itaDescription = $engDescription = $textReferences = $keywords = $saved = $savedName = $imageCaption = $comment = $editors =  "";
-    $fb=0;
-    if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
-        $menuEvento = "Modifica evento";
-        $eventId = $_GET["eventId"];
-        $stateId = $_GET["stateId"];
-        if($stateId=="Pubblicato"){
-            $sql = "SELECT * FROM published_events WHERE Id = '$eventId'";
-        } else {
-            $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
-        }
-        $result = mysqli_query($OggiSTI_conn_adm, $sql);
-        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-        $oldDate = $row["Date"];
-        $date = date('d-m-Y', strtotime($oldDate));
-        $dateCorr = str_replace('-', '/', $date);
-        $itaTitle = $row["ItaTitle"];
-        $engTitle = $row["EngTitle"];
-        $itaAbstract = $row["ItaAbstract"];
-        $engAbstract = $row["EngAbstract"];
-        $image = $row["Image"];
-        $icon = $row["Icon"];
-        $imageCaption = $row["ImageCaption"];
-        $itaDescription = $row["ItaDescription"];
-        $engDescription = $row["EngDescription"];
-        $textReferences = $row["TextReferences"];
-        $keywords = $row["Keywords"];
-        $editors = $row["Editors"];
-        $pieces = explode(", ", $editors);
-        $editorsRow = "";
-        for($j=0; $j<sizeof($pieces); $j++){
+$message = $mess = $errore = $notizia = "";
+$eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $itaDescription = $engDescription = $textReferences = $keywords = $saved = $savedName = $imageCaption = $comment = $editors =  "";
+$fb=0;
+
+if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
+    $menuEvento = "Modifica evento";
+    $eventId = $_GET["eventId"];
+    $stateId = $_GET["stateId"];
+    if($stateId=="Pubblicato"){
+        $sql = "SELECT * FROM published_events WHERE Id = '$eventId'";
+    } else {
+        $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
+    }
+    $result = $OggiSTI_db->select($sql);
+    if(true == $result['success'])
+    {
+        foreach($result['rows'] as $row)
+        {
+            // $result = mysqli_query($OggiSTI_conn_adm, $sql);
+            // $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $oldDate = $row["Date"];
+            $date = date('d-m-Y', strtotime($oldDate));
+            $dateCorr = str_replace('-', '/', $date);
+            $itaTitle = $row["ItaTitle"];
+            $engTitle = $row["EngTitle"];
+            $itaAbstract = $row["ItaAbstract"];
+            $engAbstract = $row["EngAbstract"];
+            $image = $row["Image"];
+            $icon = $row["Icon"];
+            $imageCaption = $row["ImageCaption"];
+            $itaDescription = $row["ItaDescription"];
+            $engDescription = $row["EngDescription"];
+            $textReferences = $row["TextReferences"];
+            $keywords = $row["Keywords"];
+            $editors = $row["Editors"];
+            $pieces = explode(", ", $editors);
+            $editorsRow = "";
+            for($j=0; $j<sizeof($pieces); $j++){
             $idUser = intval($pieces[$j]);
             $editorsRow =  $editorsRow . loadCompletefName(loadPeopleId($idUser)) . "<br/> ";
             //$riga_utente["nome"] . " " . $riga_utente["cognome"]. "<br/> ";
-        }
-        $nameReviser1 = "";
-        $reviser1 = $row["Reviser_1"];
-        if($reviser1!=0){
+            }
+            $nameReviser1 = "";
+            $reviser1 = $row["Reviser_1"];
+            if($reviser1!=0){
             $idUser = intval($reviser1);
             $nameReviser1 =  loadCompletefName(loadPeopleId($idUser));
-        }
-        $reviser2 = $row["Reviser_2"];
-        $nameReviser2 = "";
-        if($reviser2!=0){
+            }
+            $reviser2 = $row["Reviser_2"];
+            $nameReviser2 = "";
+            if($reviser2!=0){
             $idUser = intval($reviser2);
             $nameReviser2 =  loadCompletefName(loadPeopleId($idUser));
-        }
-        $state = $row["State"];
-        if($stateId!="Pubblicato"){
+            }
+            $state = $row["State"];
+            if($stateId!="Pubblicato"){
             $saved = $row["Saved"];
             if($saved!=0){
                 $idUser = intval($saved);
                 $savedName =  loadCompletefName(loadPeopleId($idUser));
             }
-        }
-        $views = $row["Views"];
-        $comment = $row["Comment"];
-        if($stateId=="Pubblicato"){
+            }
+            $views = $row["Views"];
+            $comment = $row["Comment"];
+            if($stateId=="Pubblicato"){
             $fb = intval($row["Fb"]);
+            }
+                
         }
-                   
+    }          
                     
-                    
-    }
+}
      
 ?>
 <!DOCTYPE html><html lang='it'><head><meta charset="UTF-8">

@@ -79,7 +79,7 @@ $(document).ready(function () {
 
     // Built events tables
 
-    var url = "../Api/extractEvents.php"
+    var url = "../Api/Select/extractEvents.php"
     $.getJSON(url, { "state": state }, function (result) {
         $.each(result, function (index, item) {
             if (state == "Tutti") {

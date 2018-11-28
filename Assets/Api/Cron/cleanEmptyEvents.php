@@ -35,11 +35,13 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
+require_once __DIR__.'/../../../../../Config/DatabaseConfig.class.php';
 
-require("../../../../Config/OggiSTI_config_adm.php");
+
+$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
  $toDelete = "DELETE FROM editing_events WHERE Date = '0000-00-00' AND Editors = 0";
- mysqli_query($OggiSTI_conn_adm, $toDelete);
+ $OggiSTI_db->delete($toDelete);
  
 
 ?>

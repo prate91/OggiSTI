@@ -35,9 +35,9 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-include 'tablesFields.php';	
 
-require("functions.php");
+require_once __DIR__.'/../Utils/tablesFields.php';
+require_once __DIR__.'/../Utils/functions.php';
 
 
 if(isset($_GET['eventId']))

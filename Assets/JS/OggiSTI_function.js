@@ -33,7 +33,12 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-// Get parameter from URL
+/**
+ * Get parameter from URL
+ *
+ * @param {*} sParam
+ * @returns
+ */
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -49,7 +54,13 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-// Generates a new date in yyyy-mm-dd format
+
+/**
+ * Generates a new date in yyyy-mm-dd format
+ *
+ * @param {*} date
+ * @returns
+ */
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),

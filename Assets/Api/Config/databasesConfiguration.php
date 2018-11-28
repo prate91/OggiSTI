@@ -4,6 +4,7 @@ require_once __DIR__.'/../../../../../Config/OggiSTI_adm.php';
 require_once __DIR__.'/../../../../../Config/EPICAC_rd.php';
 require_once __DIR__.'/../../../../../Config/Users_adm.php';
 
+
 function OggiSTIDBConnect()
 {
     $OggiSTI_db = new Database(OGGISTI_HOST, OGGISTI_USER_ADM, OGGISTI_PASSWORD_ADM, OGGISTI_DB_NAME);

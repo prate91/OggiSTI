@@ -56,7 +56,7 @@ if(isset($_POST['facebookOn'])) {
   if($result){
       $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '3')");
       if($resultInsert){
-        header( "Location:../PHP/OggiSTI_event.php?eventId=$eventId&stateId=Pubblicato" );
+        header( "Location:../../PHP/OggiSTI_event.php?eventId=$eventId&stateId=Pubblicato" );
       }
   }
 }
@@ -68,7 +68,7 @@ if(isset($_POST['facebookOff'])) {
   if($result){
       $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '4')");
       if($resultInsert){
-        header( "Location:../PHP/OggiSTI_event.php?eventId=$eventId&stateId=Pubblicato" );
+        header( "Location:../../PHP/OggiSTI_event.php?eventId=$eventId&stateId=Pubblicato" );
       }
   }
 }
@@ -92,10 +92,10 @@ $result = $OggiSTI_db->insert($toinsert);	//order executes
 if($result){
   $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type, Comment) VALUES ('$eventId', '$userId', '2', '$comment')");
   if($resultInsert){
-    header( "Location:../PHP/OggiSTI_redactionEvents.php?message=redazione" );
+    header( "Location:../../PHP/OggiSTI_redactionEvents.php?message=redazione" );
   }
 }else{
-  header( "Location:../PHP/OggiSTI_redactionEvents.php?message=errore" );
+  header( "Location:../../PHP/OggiSTI_redactionEvents.php?message=errore" );
 }
 
 }
@@ -119,13 +119,13 @@ if(isset($_POST['approva'])) {
     $result = $OggiSTI_db->update($toUpdate);	//order executes
     if($result){
       $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type, Comment) VALUES ('$eventId', '$userId', '1', '$comment')");
-      header( "Location:../PHP/OggiSTI_reviewedEvents.php?message=approvato");
+      header( "Location:../../PHP/OggiSTI_reviewedEvents.php?message=approvato");
     }else{
-      header( "Location:../PHP/OggiSTI_reviewedEvents.php?message=errore" );
+      header( "Location:../../PHP/OggiSTI_reviewedEvents.php?message=errore" );
     }
   }else if($reviser1!=0 && $reviser2==0 ){ // Case 2: event with first review
     if($reviser1==$userId){
-        header( "Location:../PHP/OggiSTI_reviewedEvents.php?message=erroreappr" );
+        header( "Location:../../PHP/OggiSTI_reviewedEvents.php?message=erroreappr" );
     }else{
       $state = "Pubblicato";
       $reviser2 = $userId;
@@ -139,9 +139,9 @@ if(isset($_POST['approva'])) {
         $OggiSTI_db->update($toUpdate);
         $OggiSTI_db->delete($toDelete);
         $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type, Comment) VALUES ('$eventId', '$userId', '1', '$comment')");
-        header( "Location:../PHP/OggiSTI_publishedEvents.php?message=approvato");
+        header( "Location:../../PHP/OggiSTI_publishedEvents.php?message=approvato");
       }else{
-        header( "Location:../PHP/OggiSTI_publishedEvents.php?message=errore" );
+        header( "Location:../../PHP/OggiSTI_publishedEvents.php?message=errore" );
       }
     }
   }
@@ -167,10 +167,10 @@ if($result){
    $resultUpdate = $OggiSTI_db->update($toUpdate);
    if($resultUpdate){
       $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type, Comment) VALUES ('$eventId', '$userId', '2', '$comment')");	
-      header( "Location:../PHP/OggiSTI_redactionEvents.php?message=redazione" );
+      header( "Location:../../PHP/OggiSTI_redactionEvents.php?message=redazione" );
    }
 }else{
-  header( "Location:../PHP/OggiSTI_publishedEvents.php?message=errore" );
+  header( "Location:../../PHP/OggiSTI_publishedEvents.php?message=errore" );
 }
 
 

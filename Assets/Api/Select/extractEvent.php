@@ -61,6 +61,8 @@ if(isset($_GET['eventId']))
 	else
 	{
 		//echo json_encode(array("status" => "error", "details" => "parametro mancante"));
+		$sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
+		echo loadDataTables($sql, $tableFieldsAllEditing, "yes");
 	}
 }
 else

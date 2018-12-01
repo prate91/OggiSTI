@@ -42,6 +42,8 @@ require_once __DIR__.'/OggiSTI_sessionSet.php';
 require_once __DIR__.'/OggiSTI_controlLogged.php';
 require_once __DIR__.'/../Api/Utils/functions.php';
 
+require_once __DIR__.'/../Api/Objects/Event.class.php';
+
 // require("../../../../Config/Users_config_adm.php");
 // require("../../../../Config/OggiSTI_config_adm.php");
 // include("../Api/functions.php");
@@ -55,72 +57,41 @@ $message = $mess = $errore = $notizia = "";
 $eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $itaDescription = $engDescription = $textReferences = $keywords = $saved = $savedName = $imageCaption = $comment = $editors =  "";
 $fb=0;
 
+$event = new Event();
+
 if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
     $menuEvento = "Modifica evento";
     $eventId = $_GET["eventId"];
     $stateId = $_GET["stateId"];
-    if($stateId=="Pubblicato"){
-        $sql = "SELECT * FROM published_events WHERE Id = '$eventId'";
-    } else {
-        $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
-    }
-    $result = $OggiSTI_db->select($sql);
-    if(true == $result['success'])
-    {
-        foreach($result['rows'] as $row)
-        {
-            // $result = mysqli_query($OggiSTI_conn_adm, $sql);
-            // $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $oldDate = $row["Date"];
-            $date = date('d-m-Y', strtotime($oldDate));
-            $dateCorr = str_replace('-', '/', $date);
-            $itaTitle = $row["ItaTitle"];
-            $engTitle = $row["EngTitle"];
-            $itaAbstract = $row["ItaAbstract"];
-            $engAbstract = $row["EngAbstract"];
-            $image = $row["Image"];
-            $icon = $row["Icon"];
-            $imageCaption = $row["ImageCaption"];
-            $itaDescription = $row["ItaDescription"];
-            $engDescription = $row["EngDescription"];
-            $textReferences = $row["TextReferences"];
-            $keywords = $row["Keywords"];
-            $editors = $row["Editors"];
-            $pieces = explode(", ", $editors);
-            $editorsRow = "";
-            for($j=0; $j<sizeof($pieces); $j++){
-            $idUser = intval($pieces[$j]);
-            $editorsRow =  $editorsRow . loadCompletefName(loadPeopleId($idUser)) . "<br/> ";
-            //$riga_utente["nome"] . " " . $riga_utente["cognome"]. "<br/> ";
-            }
-            $nameReviser1 = "";
-            $reviser1 = $row["Reviser_1"];
-            if($reviser1!=0){
-            $idUser = intval($reviser1);
-            $nameReviser1 =  loadCompletefName(loadPeopleId($idUser));
-            }
-            $reviser2 = $row["Reviser_2"];
-            $nameReviser2 = "";
-            if($reviser2!=0){
-            $idUser = intval($reviser2);
-            $nameReviser2 =  loadCompletefName(loadPeopleId($idUser));
-            }
-            $state = $row["State"];
-            if($stateId!="Pubblicato"){
-            $saved = $row["Saved"];
-            if($saved!=0){
-                $idUser = intval($saved);
-                $savedName =  loadCompletefName(loadPeopleId($idUser));
-            }
-            }
-            $views = $row["Views"];
-            $comment = $row["Comment"];
-            if($stateId=="Pubblicato"){
-            $fb = intval($row["Fb"]);
-            }
-                
+    // if($stateId=="Pubblicato"){
+    //     $sql = "SELECT * FROM published_events WHERE Id = '$eventId'";
+    //     $event->readPublished($OggiSTI_db->select($sql));
+    // } else {
+    //     $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
+    //     $event->readEditing( $OggiSTI_db->select($sql));
+    // }
+    $event->read();
+    $editorsRow = buildEditors($event->getEditors());
+    $nameReviser1 = "";
+    $nameReviser2 = "";
+    $reviser1 = $event->getReviser1();
+    $reviser2 = $event->getReviser2();
+
+    $nameReviser1 = buildReviser($reviser1);
+    $nameReviser2 = buildReviser($reviser2);
+
+    $state = $event->getState();
+    if($stateId!="Pubblicato"){
+        $saved = $event->getSaved();
+        if($saved!=0){
+            $idUser = intval($saved);
+            $savedName =  loadCompletefName(loadPeopleId($idUser));
         }
-    }          
+    }
+
+    if($stateId=="Pubblicato"){
+        $fb = intval($event->getFb());
+    }  
                     
 }
      
@@ -195,29 +166,29 @@ if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
 ?>
 
     <table id="eventoAperto" class="table table-striped display"  width="100%" cellspacing="0">
-        <tr><td>Evento:</td><td id='idEvento'><?php echo $eventId; ?></td></tr>
-        <tr><td>Data:</td><td><?php echo $dateCorr; ?></td></tr>
-        <tr><td>Titolo:</td><td><?php echo $itaTitle; ?></td></tr>
-        <tr><td>Title:</td><td><?php echo $engTitle; ?></td></tr>
-        <tr><td>Immagine:</td><td><img id='oggiSTI_immagineEvento' src='../Img/eventi/<?php echo $image; ?>' alt='Nessuna image'/></td></tr>
-        <tr><td>Link image:</td><td><?php echo $image; ?></td></tr>
-        <tr><td>Fonte image:</td><td><?php echo $imageCaption; ?></td></tr>
-        <tr><td>Link icon:</td><td><?php echo $icon; ?></td></tr>
-        <tr><td>Descrizione Breve:</td><td><?php echo $itaAbstract; ?></td></tr>
-        <tr><td>Brief description:</td><td><?php echo $engAbstract; ?></td></tr>
-        <tr><td>Descrizione:</td><td><?php echo $itaDescription; ?></td></tr>
-        <tr><td>Description:</td><td><?php echo $engDescription; ?></td></tr>
-        <tr><td>Riferimenti:</td><td><?php echo $textReferences; ?></td></tr>
-        <tr><td>Keywords:</td><td><?php echo $keywords; ?></td></tr>
+        <tr><td>Evento:</td><td id='idEvento'><?php echo $event->getId(); ?></td></tr>
+        <tr><td>Data:</td><td><?php echo $event->getDate(); ?></td></tr>
+        <tr><td>Titolo:</td><td><?php echo $event->getItaTitle(); ?></td></tr>
+        <tr><td>Title:</td><td><?php echo $event->getEngTitle(); ?></td></tr>
+        <tr><td>Immagine:</td><td><img id='oggiSTI_immagineEvento' src='../Img/eventi/<?php echo $event->getImage(); ?>' alt='Nessuna image'/></td></tr>
+        <tr><td>Link image:</td><td><?php echo $event->getImage(); ?></td></tr>
+        <tr><td>Fonte image:</td><td><?php echo $event->getImageCaption(); ?></td></tr>
+        <tr><td>Link icon:</td><td><?php echo $event->getIcon(); ?></td></tr>
+        <tr><td>Descrizione Breve:</td><td><?php echo $event->getItaAbstract(); ?></td></tr>
+        <tr><td>Brief description:</td><td><?php echo $event->getEngAbstract(); ?></td></tr>
+        <tr><td>Descrizione:</td><td><?php echo $event->getItaDescription(); ?></td></tr>
+        <tr><td>Description:</td><td><?php echo $event->getEngDescription(); ?></td></tr>
+        <tr><td>Riferimenti:</td><td><?php echo $event->getTextReferences(); ?></td></tr>
+        <tr><td>Keywords:</td><td><?php echo $event->getKeywords(); ?></td></tr>
         <tr><td>Redattore:</td><td><?php echo $editorsRow; ?></td></tr>
         <tr><td>Verifica 1:</td><td><?php echo $nameReviser1; ?></td></tr>
         <tr><td>Verifica 2:</td><td><?php echo $nameReviser2; ?></td></tr>
-        <tr><td>Stato:</td><td id='idStato'><?php echo $state; ?></td></tr>
+        <tr><td>Stato:</td><td id='idStato'><?php echo $event->getState(); ?></td></tr>
         <tr><td>Salvato:</td><td><?php echo $savedName; ?></td></tr>
-        <tr><td>Usato:</td><td><?php echo $views; ?> volta/e</td></tr>
+        <tr><td>Usato:</td><td><?php echo $event->getViews(); ?> volta/e</td></tr>
         <tr><td>Facebook:</td><td>
         <?php 
-            echo '<form id = "formCommento" method = "post" action = "../Api/updateReview.php" class="form-horizontal">';
+            echo '<form id = "formCommento" method = "post" action = "../Api/Update/updateReview.php" class="form-horizontal">';
             if($fb==0){ 
                 echo '<button class="btn btn-danger" disabled> Non pubblicabile </button>';
                 if($state=="Pubblicato" && $reviserPermission==1){
@@ -303,7 +274,7 @@ if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
     <h4 class="modal-title">Cambia lo stato dell'evento</h4>
     </div>
     <div class="modal-body">
-    <form id="updateStateForm" method="post" action="../Api/updateState.php">
+    <form id="updateStateForm" method="post" action="../Api/Update/updateState.php">
     <div class="form-group">
         <input type="text" class="form-control hidden" name="eventId" value="<?php echo $eventId; ?>" readonly>
         <label for="selectCommand">Modifica evento</label>

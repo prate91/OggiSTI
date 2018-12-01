@@ -52,11 +52,13 @@ require_once __DIR__.'/../../../../../Config/DatabaseConfig.class.php';
  * @return int
  */
 function imageCount($imageName)
-{
-  $pieces = explode("_", $imageName); // split the string by _
-  $piece = explode(".", $pieces[2]); // split the extension of the image (.jpg, .png, etc.)
-  $number = intval($piece[0]); // get the number and convert it to int
-  return $number;
+{	
+	if($imageName!=""){
+  		$pieces = explode("_", $imageName); // split the string by _
+  		$piece = explode(".", $pieces[2]); // split the extension of the image (.jpg, .png, etc.)
+  		$number = intval($piece[0]); // get the number and convert it to int
+	 	return $number;
+	}
 }
 
 /**
@@ -99,6 +101,134 @@ function deleteImg($imgPath)
    unlink($imgPath);
 }
 
+
+/**
+ * Load correct image of the event
+ * 
+ * @author Nicolò Pratelli
+ * 
+ * @since 1.0
+ * 
+ * @param string $imageLink path of the old image, if exist
+ */
+function loadImage($imageLink,$eventDateCorr,$eventId)
+{
+  // If user is going to upload an image
+  if($_FILES["image"]["name"]!=""){
+
+    // UPLOAD IMAGE
+
+    // set the PATH
+    $target_dir = "Img/eventi/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+
+    // set a control variable
+    $uploadOk = 1;
+
+    // extract the extension of the image
+    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+
+    // if there are ten previous images
+    if (imageCount($imageLink)==10) {
+      // delete all the previous images
+      for($i=1; $i<10; $i++){
+        $tmp_img_name = imgRename($eventDateCorr, $eventId, $imageFileType, $i);
+        $tmp_img_name = __DIR__."/../../".$target_dir . $tmp_img_name;
+        deleteImg($tmp_img_name);
+      }
+    }
+    // initialize variable of new image name
+    $imgRename="";
+
+    // if there isn't a previous image
+    if($imageLink==""){
+      // rename the image
+      $imgRename = imgRename($eventDateCorr, $eventId, $imageFileType, 0);
+    }else{
+      // control the number of old version and rename the image 
+      $oldVersion = imageCount($imageLink);
+      $imgRename = imgRename($eventDateCorr, $eventId, $imageFileType, $oldVersion);
+    }
+
+    // set the PATH with new image name
+    $new_loc = $target_dir . $imgRename;
+    $indirizzo = __DIR__."/../../".$new_loc;
+    
+    // Check if image file is a actual image or fake image
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+    if($check !== false) {
+        $uploadOk = 1;
+    } else {
+        $uploadOk = 0;
+    }
+
+    // Check file size
+    if ($_FILES["image"]["size"] > 1048576) { // max size 1MB
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) { // only jpg, png, jpeg and gif
+        $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        $textMessage = "Mi spiace, l'image non è stata caricata.";
+        return $imageLink;
+
+    // if everything is ok, try to upload file
+    } else {
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $indirizzo)) {
+            $textMessage = "L'image ". basename( $_FILES["image"]["name"]). " è stata caricata con il nome ". $imgRename;
+            $imageLink = $imgRename;
+            $_SESSION['image'] = $imageLink;
+            return $imageLink;
+        } else {
+            $textMessage = "Mi space, c'è state un errore nel caricamento della tua image.";
+            return $imageLink;
+        }
+    }
+  }
+
+}
+
+
+/**
+ * Build the the string of complete names of editors, from string of ids of editors
+ * 
+ * @author Nicolò Pratelli
+ * 
+ * @since 4.0
+ * 
+ * @param string $editors ids of the editors
+ */
+function buildEditors($editors){
+	$pieces = explode(", ", $editors);
+	$editorsRow = "";
+	for($j=0; $j<sizeof($pieces); $j++){
+		$idUser = intval($pieces[$j]);
+		$editorsRow =  $editorsRow . loadCompletefName(loadPeopleId($idUser)) . "<br/> ";
+	}
+	return $editorsRow;
+}
+	
+/**
+ * Build the the string of complete names of revisers, from string of ids of revisers
+ * 
+ * @author Nicolò Pratelli
+ * 
+ * @since 4.0
+ * 
+ * @param string $reviser id of the reviser
+ */
+function buildReviser($reviser){
+	if($reviser!=0){
+		$idUser = intval($reviser);
+		$nameReviser =  loadCompletefName(loadPeopleId($idUser));
+		return $nameReviser;
+	}
+}
 
  /**
   * Clean a string from html tags. It introduces the space if there isn't.

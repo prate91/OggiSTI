@@ -110,7 +110,7 @@ if($controlIfExistQuery!=""){
         if($resultDelete){
             $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')");
             if($resultInsert){
-                header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+                header( "Location:../../PHP/OggiSTI_allEvents.php?message=successState" );
             }
         }        
     }else {
@@ -124,7 +124,7 @@ if($controlIfExistQuery!=""){
             }
             $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')");
             if($resultInsert){
-                header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+                header( "Location:../../PHP/OggiSTI_allEvents.php?message=successState" );
             }
         }
     }
@@ -139,10 +139,10 @@ if($controlIfExistQuery!=""){
         }
         $resultInsert = $OggiSTI_db->insert("INSERT INTO review (Event_Id, Reviser, Type) VALUES ('$eventId', '$userId', '$typeReview')");
         if($resultInsert){
-            header( "Location:../PHP/OggiSTI_allEvents.php?message=successState" );
+            header( "Location:../../PHP/OggiSTI_allEvents.php?message=successState" );
         }
     }else{
-        header( "Location:../PHP/OggiSTI_allEvents.php?message=errore" );
+        header( "Location:../../PHP/OggiSTI_allEvents.php?message=errore" );
     }
 }
 }

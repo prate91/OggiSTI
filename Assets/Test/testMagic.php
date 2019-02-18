@@ -1,17 +1,17 @@
 <?php
-      
-    require_once (__DIR__.'/../../../../Config/Database.class.php');
-    require_once (__DIR__.'/../../../../Config/OggiSTI_adm.php');
 
-    require_once __DIR__.'/../Api/Select/extractEvent.php';
+require_once(__DIR__ . '/../../../../Config/Database.class.php');
+require_once(__DIR__ . '/../../../../Config/OggiSTI_adm.php');
 
+require_once __DIR__ . '/../Api/Select/extractEvent.php';
 
-    $data = ob_get_contents();
-    $event = json_decode($data);
+$data = file_get_contents(__DIR__ . '/../Select/extractEvent.php');
+$data = ob_get_contents();
+$event = json_decode($data);
 
-    echo '<br/>';
+echo '<br/>';
 
-    echo $event[0]->Id;
+echo $event[0]->Id;
 
 
     // $OggiSTI_db = new Database(OGGISTI_HOST, OGGISTI_USER_ADM, OGGISTI_PASSWORD_ADM, OGGISTI_DB_NAME);

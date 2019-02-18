@@ -39,15 +39,15 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__.'/../Utils/functions.php';
-require_once __DIR__.'/../../PHP/OggiSTI_sessionSet.php';
-require_once __DIR__.'/../../PHP/OggiSTI_controlLogged.php';
+require_once __DIR__ . '/../Utils/functions.php';
+require_once __DIR__ . '/../../PHP/OggiSTI_sessionSet.php';
+require_once __DIR__ . '/../../PHP/OggiSTI_controlLogged.php';
 
 
 $OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
 // define variables and set to empty values
-$var = $eventDate = $eventDateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $itaDescription = $engDescription = $textReferences = $keywords = $editors =$saved= $state = $reviser1 = $reviser2 = "";
+$var = $eventDate = $eventDateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $itaDescription = $engDescription = $textReferences = $keywords = $editors = $saved = $state = $reviser1 = $reviser2 = "";
 $imageLink = $image = $inserito = $imageCaption = $textMessage = "";
 $nessunaImmagine = 0;
 
@@ -72,7 +72,7 @@ $saved = isset($_POST["saved"]) ? $_POST['saved'] : '';
 $reviser1 = isset($_POST["IApprovation"]) ? $_POST['IApprovation'] : '';
 $reviser2 = isset($_POST["IIApprovation"]) ? $_POST['IIApprovation'] : '';
 
-$_SESSION['eventId'] = $eventId;    
+$_SESSION['eventId'] = $eventId;
 $_SESSION['eventDate'] = $var;
 $_SESSION['itaTitle'] = $itaTitle = $OggiSTI_db->escape_string($itaTitle);
 $_SESSION['engTitle'] = $engTitle = $OggiSTI_db->escape_string($engTitle);
@@ -90,97 +90,97 @@ $_SESSION['image'] = $imageLink;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $imageLink = loadImage($imageLink, $eventDateCorr, $eventId);
-  
+	$imageLink = loadImage($imageLink, $eventDateCorr, $eventId);
+
 }
 
 // pressed invia button
-if(isset($_POST['invia'])) {
+if (isset($_POST['invia'])) {
    
 
 //inserting data order
-$toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = '$state' WHERE editing_events.Id = '$eventId'";
+	$toinsert = "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = '$state' WHERE editing_events.Id = '$eventId'";
 
 
 //declare in the order variable
-$result = $OggiSTI_db->insert($toinsert);	//order executes
-if($result){
-    $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '3')");
-    if($resultInsert){
-      header( "Location:../../PHP/OggiSTI_reviewedEvents.php?message=inserito&messageImmagine=".$textMessage);
-    }
-}else{
-  header('Location:../../PHP/OggiSTI_edit.php?message=errore');
+	$result = $OggiSTI_db->insert($toinsert);	//order executes
+	if ($result) {
+		$resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '3')");
+		if ($resultInsert) {
+			header("Location:../../PHP/OggiSTI_reviewedEvents.php?message=inserito&messageImmagine=" . $textMessage);
+		}
+	} else {
+		header('Location:../../PHP/OggiSTI_edit.php?message=errore');
+
+	}
 
 }
 
-}
-
-if(isset($_POST['salva'])) {
+if (isset($_POST['salva'])) {
    // è state premuto il secondo pulsante
 
 //inserting data order
-$toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = 'In redazione', editing_events.Saved = '$saved' WHERE editing_events.Id = '$eventId'";
+	$toinsert = "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = 'In redazione', editing_events.Saved = '$saved' WHERE editing_events.Id = '$eventId'";
 
 //declare in the order variable
-$result = $OggiSTI_db->insert($toinsert);	//order executes
-if($result){
-  $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')");
-    if($resultInsert){
-    header( "Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&messageImmagine=".$textMessage );
-    }
-} else{
-    header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
-}
+	$result = $OggiSTI_db->insert($toinsert);	//order executes
+	if ($result) {
+		$resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')");
+		if ($resultInsert) {
+			header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&messageImmagine=" . $textMessage);
+		}
+	} else {
+		header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
+	}
 
 
 }
 
-if(isset($_POST['salvaChiudi'])) {
+if (isset($_POST['salvaChiudi'])) {
   // è state premuto il secondo pulsante
 
-  if($state=="Pubblicato"){
-    $toinsert =  "UPDATE published_events SET published_events.Date = '$eventDateCorr', published_events.ItaTitle ='$itaTitle', published_events.EngTitle = '$engTitle', published_events.Image = '$imageLink', published_events.ImageCaption = '$imageCaption', published_events.ItaAbstract = '$itaAbstract', published_events.EngAbstract = '$engAbstract', published_events.ItaDescription = '$itaDescription', published_events.EngDescription = '$engDescription', published_events.TextReferences = '$textReferences', published_events.Keywords = '$keywords' WHERE published_events.Id = '$eventId'";
-  }else{
+	if ($state == "Pubblicato") {
+		$toinsert = "UPDATE published_events SET published_events.Date = '$eventDateCorr', published_events.ItaTitle ='$itaTitle', published_events.EngTitle = '$engTitle', published_events.Image = '$imageLink', published_events.ImageCaption = '$imageCaption', published_events.ItaAbstract = '$itaAbstract', published_events.EngAbstract = '$engAbstract', published_events.ItaDescription = '$itaDescription', published_events.EngDescription = '$engDescription', published_events.TextReferences = '$textReferences', published_events.Keywords = '$keywords' WHERE published_events.Id = '$eventId'";
+	} else {
     //inserting data order
-    $toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords' WHERE editing_events.Id = '$eventId'";
-  }
+		$toinsert = "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords' WHERE editing_events.Id = '$eventId'";
+	}
 
 
 //declare in the order variable
-$result = $OggiSTI_db->insert($toinsert);	//order executes
-if($result){
-  $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '4')");
-    if($resultInsert){
-     header( "Location:../../PHP/OggiSTI_event.php?eventId=$eventId&stateId=$state");
-    }
-} else{
- $inserito="Inserimento non eseguito";
- header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
+	$result = $OggiSTI_db->insert($toinsert);	//order executes
+	if ($result) {
+		$resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '4')");
+		if ($resultInsert) {
+			header("Location:../../PHP/OggiSTI_event.php?eventId=$eventId&stateId=$state");
+		}
+	} else {
+		$inserito = "Inserimento non eseguito";
+		header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
+
+	}
+
 
 }
 
-
-}
-
-if(isset($_POST['preview'])) {
+if (isset($_POST['preview'])) {
    // è state premuto il secondo pulsante
 
 
 //inserting data order
-    $toinsert =  "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = 'In redazione', editing_events.Saved = '$saved' WHERE editing_events.Id = '$eventId'";
+	$toinsert = "UPDATE editing_events SET editing_events.Date = '$eventDateCorr', editing_events.ItaTitle ='$itaTitle', editing_events.EngTitle = '$engTitle', editing_events.Image = '$imageLink', editing_events.ImageCaption = '$imageCaption', editing_events.ItaAbstract = '$itaAbstract', editing_events.EngAbstract = '$engAbstract', editing_events.ItaDescription = '$itaDescription', editing_events.EngDescription = '$engDescription', editing_events.TextReferences = '$textReferences', editing_events.Keywords = '$keywords', editing_events.Editors = '$editors', editing_events.Reviser_1 = '$reviser1', editing_events.Reviser_2 = '$reviser2', editing_events.State = 'In redazione', editing_events.Saved = '$saved' WHERE editing_events.Id = '$eventId'";
 
 //declare in the order variable
-$result = $OggiSTI_db->insert($toinsert);	//order executes
-if($result){
-  $resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')");
-    if($resultInsert){
-       header( "Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&preview=ok&messageImmagine=".$textMessage );
-    }
-} else{
-  $inserito="Inserimento non eseguito";
-  header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
-}
+	$result = $OggiSTI_db->insert($toinsert);	//order executes
+	if ($result) {
+		$resultInsert = $OggiSTI_db->insert("INSERT INTO editing (Event_Id, Editor, Type) VALUES ('$eventId', '$userId', '2')");
+		if ($resultInsert) {
+			header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=salva&preview=ok&messageImmagine=" . $textMessage);
+		}
+	} else {
+		$inserito = "Inserimento non eseguito";
+		header("Location:../../PHP/OggiSTI_edit.php?eventId=$eventId&message=errore");
+	}
 
 
 }

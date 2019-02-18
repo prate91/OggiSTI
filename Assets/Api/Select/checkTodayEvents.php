@@ -38,7 +38,7 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__.'/../../../../../Config/DatabaseConfig.class.php';
+require_once __DIR__ . '/../../../../../Config/DatabaseConfig.class.php';
 
 $OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
@@ -48,11 +48,11 @@ $OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
  */
 $query = "SELECT Id FROM today_events";
 $result = $OggiSTI_db->select($query);
-if(true == $result['success']){
+if (true == $result['success']) {
     echo 1;
-}else{
+} else {
     echo 0;
 }
 
-	
+
 ?>

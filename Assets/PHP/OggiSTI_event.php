@@ -38,38 +38,25 @@
 
 // include PHP files
 
-require_once __DIR__.'/OggiSTI_sessionSet.php';
-require_once __DIR__.'/OggiSTI_controlLogged.php';
-require_once __DIR__.'/../Api/Utils/functions.php';
+require_once __DIR__ . '/OggiSTI_sessionSet.php';
+require_once __DIR__ . '/OggiSTI_controlLogged.php';
+require_once __DIR__ . '/../Api/Utils/functions.php';
+require_once __DIR__ . '/../Api/Objects/Event.class.php';
 
-require_once __DIR__.'/../Api/Objects/Event.class.php';
-
-// require("../../../../Config/Users_config_adm.php");
-// require("../../../../Config/OggiSTI_config_adm.php");
-// include("../Api/functions.php");
-// include 'OggiSTI_sessionSet.php';
-// include 'OggiSTI_controlLogged.php';
 
 $OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
 
 // initialize empty variables
 $message = $mess = $errore = $notizia = "";
-$eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $itaDescription = $engDescription = $textReferences = $keywords = $saved = $savedName = $imageCaption = $comment = $editors =  "";
-$fb=0;
+$eventId = $dateCorr = $itaTitle = $engTitle = $itaAbstract = $engAbstract = $image = $itaDescription = $engDescription = $textReferences = $keywords = $saved = $savedName = $imageCaption = $comment = $editors = "";
+$fb = 0;
 
 $event = new Event();
 
-if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
+if (isset($_GET["eventId"]) && isset($_GET["stateId"])) {
     $menuEvento = "Modifica evento";
     $eventId = $_GET["eventId"];
     $stateId = $_GET["stateId"];
-    // if($stateId=="Pubblicato"){
-    //     $sql = "SELECT * FROM published_events WHERE Id = '$eventId'";
-    //     $event->readPublished($OggiSTI_db->select($sql));
-    // } else {
-    //     $sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
-    //     $event->readEditing( $OggiSTI_db->select($sql));
-    // }
     $event->read();
     $editorsRow = buildEditors($event->getEditors());
     $nameReviser1 = "";
@@ -81,20 +68,20 @@ if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
     $nameReviser2 = buildReviser($reviser2);
 
     $state = $event->getState();
-    if($stateId!="Pubblicato"){
+    if ($stateId != "Pubblicato") {
         $saved = $event->getSaved();
-        if($saved!=0){
+        if ($saved != 0) {
             $idUser = intval($saved);
-            $savedName =  loadCompletefName(loadPeopleId($idUser));
+            $savedName = loadCompletefName(loadPeopleId($idUser));
         }
     }
 
-    if($stateId=="Pubblicato"){
+    if ($stateId == "Pubblicato") {
         $fb = intval($event->getFb());
-    }  
-                    
+    }
+
 }
-     
+
 ?>
 <!DOCTYPE html><html lang='it'><head><meta charset="UTF-8">
 
@@ -162,7 +149,7 @@ if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
 <div class="oggiSTI_content_amm">
 <!-- OggiSTI navbar menu -->
 <?php
-    include 'OggiSTI_navbarMenu.php';
+include 'OggiSTI_navbarMenu.php';
 ?>
 
     <table id="eventoAperto" class="table table-striped display"  width="100%" cellspacing="0">
@@ -188,23 +175,23 @@ if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
         <tr><td>Usato:</td><td><?php echo $event->getViews(); ?> volta/e</td></tr>
         <tr><td>Facebook:</td><td>
         <?php 
-            echo '<form id = "formCommento" method = "post" action = "../Api/Update/updateReview.php" class="form-horizontal">';
-            if($fb==0){ 
-                echo '<button class="btn btn-danger" disabled> Non pubblicabile </button>';
-                if($state=="Pubblicato" && $reviserPermission==1){
-                    echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle"> ON </button>';
-                }
-            }else{
-                echo '<button class="btn btn-success" disabled> Pubblicabile </button>';
-                if($state=="Pubblicato" && $reviserPermission==1){
-                    echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle"> OFF </button>';
-                }
-            } 
+        echo '<form id = "formCommento" method = "post" action = "../Api/Update/updateReview.php" class="form-horizontal">';
+        if ($fb == 0) {
+            echo '<button class="btn btn-danger" disabled> Non pubblicabile </button>';
+            if ($state == "Pubblicato" && $reviserPermission == 1) {
+                echo '<button type = "submit" name = "facebookOn" id = "facebookOn" class="btn btn-success btn-circle"> ON </button>';
+            }
+        } else {
+            echo '<button class="btn btn-success" disabled> Pubblicabile </button>';
+            if ($state == "Pubblicato" && $reviserPermission == 1) {
+                echo '<button type = "submit" name = "facebookOff" id = "facebookOff" class="btn btn-danger btn-circle"> OFF </button>';
+            }
+        }
         ?></td></tr>
         <tr class='rigaCommento'><td>Commento:</td><td><?php echo $comment; ?></td></tr>
     </table>
-    <?php if(($state=="Approvazione 0/2"||$state=="Approvazione 1/2"||$state=="Pubblicato")&&($reviserPermission==1)) {
-       
+    <?php if (($state == "Approvazione 0/2" || $state == "Approvazione 1/2" || $state == "Pubblicato") && ($reviserPermission == 1)) {
+
         echo '<div id = "spazioCommento" class="form-group">';
         echo "<input type = 'hidden' class='hidden_eventId' name = 'eventId' value = '$eventId' />";
         echo "<input type = 'hidden' id = 'hidden_reviser1' name = 'reviser1' value = '$reviser1' />";
@@ -212,46 +199,46 @@ if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
         echo '<label for="comment" > Commento:</label >';
         echo '<textarea class="form-control" name = "comment" rows = "5" id = "comment" ></textarea >';
         echo '<span class="help-block" > Inserisci un comment </span>';
-    }?>
+    } ?>
     <?php
-        echo '<div id="bottoniCommento" class="btn-group">';
+    echo '<div id="bottoniCommento" class="btn-group">';
 
         // Edit event button, only if isn't saved or saved by user that has editing permission
         // and the state is "In editing"
-        if((($state=="In redazione")&&($editorPermission==1)&&(($saved==$userId)||($saved==0)))) {
-            echo '<button type = "button" id = "modificaEvento" class="btn btn-warning" > Modifica Evento </button>';
-        }
+    if ((($state == "In redazione") && ($editorPermission == 1) && (($saved == $userId) || ($saved == 0)))) {
+        echo '<button type = "button" id = "modificaEvento" class="btn btn-warning" > Modifica Evento </button>';
+    }
 
         // Quick change button, only if user has review permission 
         // and event isn't in editing state
-        if($reviserPermission==1 && $state!="In redazione") {
-            echo '<button type = "button" id = "modificaVeloce" class="btn btn-warning" > Modifica Veloce </button>';
-        }
+    if ($reviserPermission == 1 && $state != "In redazione") {
+        echo '<button type = "button" id = "modificaVeloce" class="btn btn-warning" > Modifica Veloce </button>';
+    }
 
         // Send in editing and approve buttons, only if event is in review states 
         // and user has review permission
-        if((($state=="Approvazione 0/2")||($state=="Approvazione 1/2"))&&($reviserPermission==1)) {
-            echo '<button type = "submit" name = "redazione" id = "redazione" class="btn btn-default" > Manda in redazione </button >';
-            echo '<button type = "submit" name = "approva" id = "approva" class="btn btn-default" > Approva</button >';
-        }
+    if ((($state == "Approvazione 0/2") || ($state == "Approvazione 1/2")) && ($reviserPermission == 1)) {
+        echo '<button type = "submit" name = "redazione" id = "redazione" class="btn btn-default" > Manda in redazione </button >';
+        echo '<button type = "submit" name = "approva" id = "approva" class="btn btn-default" > Approva</button >';
+    }
 
         // Send in editing from published state
-        if($state=="Pubblicato"){
+    if ($state == "Pubblicato") {
         echo '<button type = "submit" name = "redazionePubblicato" id = "redazionePubblicato" class="btn btn-default" > Manda in redazione </button>';
-        }
+    }
 
     echo "</div>";
-        
-    
+
+
     echo "<p>Admin buttons</p>";
     echo '<div class="btn-group">';
-        if($administratorPermission==1){
-            echo '<button type="button" id="updateEventState" class="btn btn-danger" data-toggle="modal" data-target="#updateStateModal">Aggiorna stato</button>';
-        }
+    if ($administratorPermission == 1) {
+        echo '<button type="button" id="updateEventState" class="btn btn-danger" data-toggle="modal" data-target="#updateStateModal">Aggiorna stato</button>';
+    }
     echo "</div>";
-    
+
     echo "</form>";
-        ?>
+    ?>
 
     <h2>Cronologia delle modifiche</h2>
     <ul class="fixed-panel">
@@ -280,12 +267,12 @@ if(isset($_GET["eventId"])&&isset($_GET["stateId"])) {
         <label for="selectCommand">Modifica evento</label>
         <select class="form-control" name="selectCommand">
             <?php
-            if(isset($_GET["stateId"])) {
-                $stateId=$_GET["stateId"];
-                if($stateId=="Pubblicato"){
+            if (isset($_GET["stateId"])) {
+                $stateId = $_GET["stateId"];
+                if ($stateId == "Pubblicato") {
                     echo "<option value='makeSleepyPublished'>Sposta tra i dormienti</option>";
                     echo "<option value='makeEditingPublished'>Rendi disponibile</option>";
-                }else{
+                } else {
                     echo "<option value='makeSleepy'>Sposta tra i dormienti</option>";
                     echo "<option value='makeEditing'>Rendi disponibile</option>";
                 }

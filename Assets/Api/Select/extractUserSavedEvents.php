@@ -35,8 +35,8 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__.'/../../PHP/OggiSTI_sessionSet.php';
-require_once __DIR__.'/../Utils/functions.php';
+require_once __DIR__ . '/../../PHP/OggiSTI_sessionSet.php';
+require_once __DIR__ . '/../Utils/functions.php';
 
 $tableFields = array(
 	'Id',
@@ -51,6 +51,6 @@ $tableFields = array(
  */
 $sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE Saved=$userId ORDER BY MONTH(Date), DAY(Date)";
 echo loadDataTables($sql, $tableFields, "no");
-		
+
 
 ?>

@@ -36,37 +36,28 @@
 // ////////////////////////////////////////////////////////////////////////
 
 
-require_once __DIR__.'/../Utils/tablesFields.php';
-require_once __DIR__.'/../Utils/functions.php';
+require_once __DIR__ . '/../Utils/tablesFields.php';
+require_once __DIR__ . '/../Utils/functions.php';
 
 
-if(isset($_GET['eventId']))
-{
+if (isset($_GET['eventId'])) {
 	$eventId = $_GET['eventId'];
-	if(isset($_GET['stateId']))
-	{
+	if (isset($_GET['stateId'])) {
 		$stateId = $_GET['stateId'];
 		$sql = "";
-		if($stateId=="Pubblicato")
-		{
+		if ($stateId == "Pubblicato") {
 			$sql = "SELECT * FROM published_events WHERE Id='$eventId'";
 			echo loadDataTables($sql, $tableFieldsAllPublicated, "yes");
-		}
-		else
-		{
+		} else {
 			$sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
 			echo loadDataTables($sql, $tableFieldsAllEditing, "yes");
 		}
-	}
-	else
-	{
+	} else {
 		//echo json_encode(array("status" => "error", "details" => "parametro mancante"));
 		$sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
 		echo loadDataTables($sql, $tableFieldsAllEditing, "yes");
 	}
-}
-else
-{
+} else {
 	//echo json_encode(array("status" => "error", "details" => "parametro mancante"));
 }
 

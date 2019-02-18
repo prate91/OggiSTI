@@ -35,8 +35,8 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__.'/../../PHP/OggiSTI_sessionSet.php';
-require_once __DIR__.'/../Utils/functions.php';
+require_once __DIR__ . '/../../PHP/OggiSTI_sessionSet.php';
+require_once __DIR__ . '/../Utils/functions.php';
 
 $tableFiels = array(
 	'eventsNumber'
@@ -47,7 +47,7 @@ $tableFiels = array(
  */
 $sql = "SELECT COUNT(Id) as eventsNumber FROM (SELECT Id, Editors FROM published_events WHERE Editors LIKE '% $userId%' UNION SELECT Id, Editors FROM published_events WHERE Editors LIKE '$userId') AS t";
 echo loadDataTables($sql, $tableFiels, "no");
-		
+
 
 ?>
 

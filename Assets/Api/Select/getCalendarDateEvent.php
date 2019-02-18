@@ -35,20 +35,17 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__.'/../Utils/tablesFields.php';
-require_once __DIR__.'/../Utils/functions.php';
+require_once __DIR__ . '/../Utils/tablesFields.php';
+require_once __DIR__ . '/../Utils/functions.php';
 
 /**
  * it get a Date and takes from database the least dispayed event
  */
-if(isset($_GET['eventDate']))
-{
+if (isset($_GET['eventDate'])) {
 	$eventDate = $_GET['eventDate'];
 	$query = "SELECT * FROM published_events WHERE DAY(Date)=DAY('$eventDate') AND MONTH(Date)=MONTH('$eventDate') ORDER BY Views, DATE_FORMAT(Date, '%Y')";
 	echo loadDataTables($query, $tableFieldsAllPublicated, "yes");
-}
-else
-{
+} else {
 	echo json_encode(array("status" => "error", "details" => "parametro mancante"));
 }
 ?>

@@ -160,7 +160,7 @@
 }
 
 #oggiSTI_logoedata{
-   padding: 18px 18px;
+   padding: 18px 0;
     background-color: white;
     /*border-right: 3px solid #eee;
     border-bottom: 3px solid #eee;*/
@@ -169,12 +169,12 @@
 #oggiSTI_logo{
     width:200px;
     display: block;
-  margin:18px auto;
+  margin:18px 0;
 }
 
 #oggiSTI_dataOggi{
     text-align:center;
-    margin-right: 18px;
+    margin-right: 70px;
     height: 145px;
 }
 
@@ -193,14 +193,19 @@
 }
 
 #oggiSTI_titoloStessoGiorno{
-    margin: 37px auto auto auto;
-    padding-left: 23px;
+    margin: auto;
+    padding-left: 22px;
     color: #606060;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 #oggiSTI_eventiLaterali{
     padding-left: 7px;
+}
+
+.panel-title{
+    font-size: 11px;
+
 }
 .oggiSTI_apriEvento{
     cursor: pointer;
@@ -238,6 +243,7 @@
 
 #oggiSTI_menuLaterale ul{ 
     list-style-type: none;
+    padding-left: 22px;
 }
 #oggiSTI_menuLaterale li{
     margin: 9px 0;
@@ -304,7 +310,7 @@
 
 #oggiSTI_differenzaTempo{
     position: relative;
-    top: 18px;
+    top: 17px;
     font-size: 24px;
 }
 

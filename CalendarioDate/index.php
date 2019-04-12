@@ -362,9 +362,9 @@ while ($row = mysqli_fetch_row($result)) {
                 echo '</tr><tr><td>Dic&nbsp;</td>';
             }
             if ($giorniAnno[$n] > 0) {
-                echo '<td style="border: 1px solid #9E9E9E; background: #F293BA;">&nbsp;&nbsp;' . $giorniAnno[$n] . '&nbsp;&nbsp;</td>';
+                echo '<td class = "cellTableEventsFull">&nbsp;&nbsp;' . $giorniAnno[$n] . '&nbsp;&nbsp;</td>';
             } else {
-                echo '<td style="border: 1px solid #9E9E9E; background:#F9F9F9;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>';
+                echo '<td class = "cellTableEventsEmpty">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>';
             }
         }
         echo '</tr></table>';

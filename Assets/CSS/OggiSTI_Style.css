@@ -349,6 +349,24 @@
     margin: 9px;
 }
 
+/* -------------------- CALENDARIO DATE --------- */
+.cellTableEventsFull{
+    border: 1px solid #9E9E9E;
+    background: #F293BA;
+    color:#F293BA;
+    cursor: pointer;
+    
+}
+
+.cellTableEventsFull:hover {
+   color:black;
+}
+
+.cellTableEventsEmpty{
+    border: 1px solid #9E9E9E; 
+    background:#F9F9F9;
+}
+
 /* ***************** **
 ** 5. Administration **
 ** ***************** */

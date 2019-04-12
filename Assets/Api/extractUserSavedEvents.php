@@ -5,15 +5,15 @@
 // Project: OggiSTI
 // Package:  API OggiSTI
 // Title: Query of event
-// File: countPublishedEvents.php
+// File: extractUserSavedEvents.php
 // Path: Assets/Api
 // Type: php
-// Started: 2018.10.256
+// Started: 2018.10.25
 // Author(s): Nicolò Pratelli
 // State: in use
 //
 // Version history.
-// - 2018.10.26 Nicolò
+// - 2018.10.25 Nicolò
 // First version
 //
 // ////////////////////////////////////////////////////////////////////////
@@ -34,21 +34,23 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ////////////////////////////////////////////////////////////////////////
+include '../PHP/OggiSTI_sessionSet.php';
 
-require_once __DIR__ . '/../../PHP/OggiSTI_sessionSet.php';
-require_once __DIR__ . '/../Utils/functions.php';
+require("functions.php");
 
-$tableFiels = array(
-	'eventsNumber'
+$tableFields = array(
+		'Id',
+		'ItaTitle',
+		'Date',
+        'Editors',
+		'State'
 );
 
 /**
- * This query counts how many events have been published by the authenticated user
+ * Query to extract user saved events 
  */
-$sql = "SELECT COUNT(Id) as eventsNumber FROM (SELECT Id, Editors FROM published_events WHERE Editors LIKE '% $userId%' UNION SELECT Id, Editors FROM published_events WHERE Editors LIKE '$userId') AS t";
-echo loadDataTables($sql, $tableFiels, "no");
-
+$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE Saved=$userId ORDER BY MONTH(Date), DAY(Date)";
+echo loadDataTables($sql, $tableFields, "no");
+		
 
 ?>
-
-

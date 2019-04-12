@@ -35,35 +35,35 @@
 // //////////////////////////////////////////////////////////////////////////
 
 $message = $mess = $errore = $notizia = "";
-if (isset($_GET["message"])) {
-    $mess = $_GET["message"];
-    if ($mess == "redazione") {
-        $notizia = '<div class="alert alert-success" id="alertEvento">
+if(isset($_GET["message"])){
+    $mess=$_GET["message"];
+    if($mess=="redazione"){
+        $notizia='<div class="alert alert-success" id="alertEvento">
         <button type="button" class="close" data-dismiss="alert">x</button>
         <p>Evento mandato in redazione</p></div>';
     }
-    if ($mess == "approvato") {
-        $notizia = '<div class="alert alert-success" id="alertEvento">
+    if($mess=="approvato"){
+       $notizia='<div class="alert alert-success" id="alertEvento">
     <button type="button" class="close" data-dismiss="alert">x</button>
-    <p>Evento approvato da ' . $completeName . '</p></div>';
+    <p>Evento approvato da '.$completeName.'</p></div>';
     }
-    if ($mess == "errore") {
-        $notizia = '<div class="alert alert-danger" id="alertEvento">
+    if($mess=="errore"){
+        $notizia='<div class="alert alert-danger" id="alertEvento">
     <button type="button" class="close" data-dismiss="alert">x</button>
     <p>Errore</p></div>';
     }
-    if ($mess == "erroreappr") {
-        $notizia = '<div class="alert alert-danger" id="alertEvento">
+    if($mess=="erroreappr"){
+        $notizia='<div class="alert alert-danger" id="alertEvento">
     <button type="button" class="close" data-dismiss="alert">x</button>
     <p>La stessa persona non può approvare un evento due volte</p></div>';
     }
-    if ($mess == "eliminato") {
-        $notizia = '<div class="alert alert-success" id="alertEvento">
+     if($mess=="eliminato"){
+        $notizia='<div class="alert alert-success" id="alertEvento">
     <button type="button" class="close" data-dismiss="alert">x</button>
     <p>Evento eliminato</p></div>';
     }
-    if ($mess == "successState") {
-        $notizia = '<div class="alert alert-success" id="alertEvento">
+    if($mess=="successState"){
+       $notizia='<div class="alert alert-success" id="alertEvento">
     <button type="button" class="close" data-dismiss="alert">x</button>
     <p>Cambiamento di stato effettuato con successo</p></div>';
     }

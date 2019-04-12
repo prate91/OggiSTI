@@ -1,22 +1,19 @@
 <?php
 
-
 // ////////////////////////////////////////////////////////////////////////
 //
 // Project: OggiSTI
-// Package:  API Almanac OggiSTI
-// Title: Query to check if there is an event today
-// File: checkTodayEvents.php
-// Path: OggiSTI/Assets/Api
+// Package: OggiSTI administration
+// Title: clean from empty events once a month
+// File: cleanEmptyEvents.php
+// Path: OggiSTI/assets/Api
 // Type: php
-// Started: 2018.10.25
+// Started: 2018-11-16
 // Author(s): Nicolò Pratelli
 // State: in use
 //
 // Version history.
-// - 2018.11.05 Nicolò
-// Changed query with new names of tables and columns
-// - 2018.10.26 Nicolò
+// - 208.11.15 Nicolò
 // First version
 //
 // ////////////////////////////////////////////////////////////////////////
@@ -38,21 +35,11 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__ . '/../../../../../Config/DatabaseConfig.class.php';
 
-$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
+require("../../../../Config/OggiSTI_config_adm.php");
 
-/**
- * Execute the query,
- * if there is at least 1 row ok is setted
- */
-$query = "SELECT Id FROM today_events";
-$result = $OggiSTI_db->select($query);
-if (true == $result['success']) {
-    echo 1;
-} else {
-    echo 0;
-}
-
+ $toDelete = "DELETE FROM editing_events WHERE Date = '0000-00-00' AND Editors = 0";
+ mysqli_query($OggiSTI_conn_adm, $toDelete);
+ 
 
 ?>

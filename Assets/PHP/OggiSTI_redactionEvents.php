@@ -35,9 +35,9 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__ . '/OggiSTI_sessionSet.php';
-require_once __DIR__ . '/OggiSTI_controlLogged.php';
-require_once __DIR__ . '/OggiSTI_manageMessagesTables.php';
+include 'OggiSTI_sessionSet.php';
+include 'OggiSTI_controlLogged.php';
+include 'OggiSTI_manageMessagesTables.php';
 
 ?>
 
@@ -109,15 +109,15 @@ require_once __DIR__ . '/OggiSTI_manageMessagesTables.php';
 <div class="oggiSTI_content_amm">
 	<!-- OggiSTI navbar menu -->
     <?php
-    include 'OggiSTI_navbarMenu.php';
+        include 'OggiSTI_navbarMenu.php';
     ?>
     <?php echo $notizia; ?>
     <!-- Tabella tutti gli eventi -->
     <h1 class="titoloTabelleEventi">Eventi in redazione</h1>
 	<?php
-$content = file_get_contents('../HTML/OggiSTI_mainTable.html');
-echo $content;
-?>
+        $content = file_get_contents('../HTML/OggiSTI_mainTable.html');
+        echo $content;
+    ?>
     
 
 

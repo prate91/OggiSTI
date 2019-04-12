@@ -39,7 +39,7 @@ var notSavedList = "";
 var countSaved = 0;
 var countNotSaved = 0;
 
-var url = "../Api/Select/extractUserSavedEvents.php"
+var url = "../Api/extractUserSavedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
         if (index == "status") {
@@ -56,7 +56,7 @@ $.getJSON(url, function (result) {
     $("#savedCount").html(countSaved);
 });
 
-var url = "../Api/Select/extractNotSavedEvents.php"
+var url = "../Api/extractNotSavedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
         if (index == "status") {
@@ -75,7 +75,7 @@ $.getJSON(url, function (result) {
 
 
 var numberRedacted = "";
-var url = "../Api/Select/countRedactedEvents.php"
+var url = "../Api/countRedactedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
         numberRedacted = item.eventsNumber;
@@ -84,7 +84,7 @@ $.getJSON(url, function (result) {
 });
 
 var numberPublished = "";
-var url = "../Api/Select/countPublishedEvents.php"
+var url = "../Api/countPublishedEvents.php"
 $.getJSON(url, function (result) {
     $.each(result, function (index, item) {
         numberPublished = item.eventsNumber;

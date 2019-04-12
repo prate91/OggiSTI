@@ -1,19 +1,22 @@
 <?php
 
+
 // ////////////////////////////////////////////////////////////////////////
 //
 // Project: OggiSTI
-// Package:  API OggiSTI
-// Title: Get events from calendar date
-// File: getCalendarDateEvent.php
+// Package:  API Almanac OggiSTI
+// Title: Query to check if there is an event today
+// File: checkTodayEvents.php
 // Path: OggiSTI/Assets/Api
 // Type: php
-// Started: 2018.06.24
+// Started: 2018.10.25
 // Author(s): Nicolò Pratelli
 // State: in use
 //
 // Version history.
-// - 2018.06.24 Nicolò
+// - 2018.11.05 Nicolò
+// Changed query with new names of tables and columns
+// - 2018.10.26 Nicolò
 // First version
 //
 // ////////////////////////////////////////////////////////////////////////
@@ -35,17 +38,25 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__ . '/../Utils/tablesFields.php';
-require_once __DIR__ . '/../Utils/functions.php';
+require("../../../../Config/OggiSTI_config_adm.php");
 
 /**
- * it get a Date and takes from database the least dispayed event
+ * Variable $ok that check if there is at least one event today
  */
-if (isset($_GET['eventDate'])) {
-	$eventDate = $_GET['eventDate'];
-	$query = "SELECT * FROM published_events WHERE DAY(Date)=DAY('$eventDate') AND MONTH(Date)=MONTH('$eventDate') ORDER BY Views, DATE_FORMAT(Date, '%Y')";
-	echo loadDataTables($query, $tableFieldsAllPublicated, "yes");
-} else {
-	echo json_encode(array("status" => "error", "details" => "parametro mancante"));
+$ok=0;
+
+/**
+ * Execute the query,
+ * if there is at least 1 row ok is setted
+ */
+$query = "SELECT Id FROM today_events";
+$result = mysqli_query($OggiSTI_conn_adm,$query);
+if (mysqli_num_rows($result) > 0) {
+    $ok = 1;
+    echo $ok;
+}else{
+    echo $ok;
 }
+
+	
 ?>

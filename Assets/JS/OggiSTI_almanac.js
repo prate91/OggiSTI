@@ -40,6 +40,7 @@
 //var eventDate="";
 var panels = "";
 
+
 $(document).ready(function () {
 
 
@@ -65,7 +66,7 @@ $(document).ready(function () {
             var dataSelezionata = this.value; // assign today date
             var eventDate = reformatDateToEng(dataSelezionata); // data convert in yyyy-mm-dd format
             // set url of the query that get event of choosen date by user
-            var url = "Assets/Api/Select/getCalendarDateEvent.php";
+            var url = "Assets/Api/getCalendarDateEvent.php";
             var count = 0;
             var panelId = 1;
             panels = "";
@@ -91,7 +92,7 @@ $(document).ready(function () {
                         var weekPanelId = 1;
                         panels = "";
                         // set url of other event in the week
-                        var url = "Assets/Api/Select/getWeekEvents.php";
+                        var url = "Assets/Api/getWeekEvents.php";
                         $.getJSON(url, { "lowerDate": lowerDate, "upperDate": upperDate }, function (result) {
                             $.each(result, function (index, item) {
                                 if (index == "status") {
@@ -103,7 +104,7 @@ $(document).ready(function () {
                                         $("#oggiSTI_sopraTitolo").css("visibility", "visible");
                                         var eventId = item.Id;
                                         // update counter of the event
-                                        var urlGet = "Assets/Api/Update/updateCounter.php";
+                                        var urlGet = "Assets/Api/updateCounter.php";
                                         $.get(urlGet, { "eventId": eventId });
                                     } else {
                                         $("#oggiSTI_titoloStessoGiorno").html("Altri eventi della settimana");
@@ -124,7 +125,7 @@ $(document).ready(function () {
                             modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
                             $("#oggiSTI_sopraTitolo").css("visibility", "hidden");
                             var eventId = item.Id;
-                            var urlGet = "Assets/Api/Update/updateCounter.php";
+                            var urlGet = "Assets/Api/updateCounter.php";
                             //chiamata AJAX
                             $.get(urlGet, { "eventId": eventId });
                         } else {
@@ -151,7 +152,7 @@ $(document).ready(function () {
         var eventIdStr = $(this).attr("id");
         idArr = eventIdStr.split("-");
         var eventId = idArr[1];
-        var url = "Assets/Api/Select/getLateralEvent.php";
+        var url = "Assets/Api/getLateralEvent.php";
         var panelId = 1;
         panels = "";
         // Ajax call
@@ -162,11 +163,11 @@ $(document).ready(function () {
                 $("#oggiSTI_giornoDiverso").html("");
                 $("#oggiSTI_meseDiverso").html("");
                 var eventId = item.Id;
-                var urlGet = "Assets/Api/Update/updateCounter.php";
+                var urlGet = "Assets/Api/updateCounter.php";
                 //chiamata AJAX
                 $.get(urlGet, { "eventId": eventId });
                 $("#oggiSTI_titoloStessoGiorno").html("");
-                var url = "Assets/Api/Select/getLateralEvents.php";
+                var url = "Assets/Api/getLateralEvents.php";
                 //chiamata AJAX
                 $.getJSON(url, { "eventId": eventId }, function (result) {
                     $.each(result, function (index, item) {
@@ -192,7 +193,7 @@ $(document).ready(function () {
     // extract event by id
     var id = getUrlParameter('id');
     if (id) {
-        var url = "Assets/Api/Select/getLateralEvent.php";
+        var url = "Assets/Api/getLateralEvent.php";
         var panelId = 1;
         panels = "";
         //chiamata AJAX
@@ -209,7 +210,7 @@ $(document).ready(function () {
                     var urlGet = "asset/api/updateCounter.php";
                     //chiamata AJAX
                     $.get(urlGet, { "eventId": eventId });
-                    var url = "Assets/Api/Select/getLateralEvents.php";
+                    var url = "Assets/Api/getLateralEvents.php";
                     //chiamata AJAX
                     $.getJSON(url, { "eventId": eventId }, function (result) {
                         $.each(result, function (index, item) {
@@ -251,12 +252,12 @@ $(document).ready(function () {
         var upperDate = formatDate(s);
 
         //var url = "asset/api/controllaEventiGiornalieri.php"
-        $.get("Assets/Api/Select/checkTodayEvents.php", function (data) {
+        $.get("Assets/Api/checkTodayEvents.php", function (data) {
             if (data == 0) {
                 var weekEventCount = 0;
                 var weekPanelId = 1;
                 panels = "";
-                var url = "Assets/Api/Select/getWeekEvents.php";
+                var url = "Assets/Api/getWeekEvents.php";
                 $.getJSON(url, { "lowerDate": lowerDate, "upperDate": upperDate }, function (result) {
                     $.each(result, function (index, item) {
                         if (index == "status") {
@@ -266,7 +267,7 @@ $(document).ready(function () {
                                 modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
                                 $("#oggiSTI_sopraTitolo").css("visibility", "visible");
                                 var eventId = item.Id;
-                                var urlGet = "Assets/Api/Update/updateCounter.php";
+                                var urlGet = "Assets/Api/updateCounter.php";
                                 //chiamata AJAX
                                 $.get(urlGet, { "eventId": eventId });
                             } else {
@@ -284,24 +285,24 @@ $(document).ready(function () {
                 });
             } else {
                 var eventDate = dataOggi;
-                var url = "Assets/Api/Select/getTodayEvent.php";
+                var url = "Assets/Api/getTodayEvent.php";
                 var panelId = 1;
                 panels = "";
                 //chiamata AJAX
                 $.getJSON(url, function (result) {
                     $.each(result, function (index, item) {
                         if (index == "status") {
-                            $.get("Assets/Api/Select/choiceAlgorithm.php", function (data) {
+                            $.get("Assets/Api/estraiEventoGiornaliero.php", function (data) {
                                 location.reload();
                             });
                             //window.location = "asset/api/estraiEventoGiornaliero.php";
                         } else {
                             modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
                             var eventId = item.Id;
-                            var urlGet = "Assets/Api/Update/updateCounter.php";
+                            var urlGet = "Assets/Api/updateCounter.php";
                             //chiamata AJAX
                             $.get(urlGet, { "eventId": eventId });
-                            var url = "Assets/Api/Select/getLateralEvents.php";
+                            var url = "Assets/Api/getLateralEvents.php";
                             //chiamata AJAX
                             $.getJSON(url, { "eventId": eventId }, function (result) {
                                 $.each(result, function (index, item) {

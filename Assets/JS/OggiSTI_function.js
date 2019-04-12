@@ -33,12 +33,7 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-/**
- * Get parameter from URL
- *
- * @param {*} sParam
- * @returns
- */
+// Get parameter from URL
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -54,13 +49,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-
-/**
- * Generates a new date in yyyy-mm-dd format
- *
- * @param {*} date
- * @returns
- */
+// Generates a new date in yyyy-mm-dd format
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -108,13 +97,7 @@ function estremoInf(msc) {
     if (weekday == 6) { return firstW.setDate(firstW.getDate(selectedDate) - 5); }
 }
 
-
-/**
- * Computes the last day of the week from any day
- *
- * @param {*} msc
- * @returns
- */
+// Computes the last day of the week from any day
 function estremoSup(msc) {
     var selectedDate = msc;
     var d = new Date(selectedDate);
@@ -129,13 +112,7 @@ function estremoSup(msc) {
     if (weekday == 6) { return lastW.setDate(lastW.getDate(selectedDate) + 1); }
 }
 
-
-/**
- * Converts months from number to letters
- *
- * @param {*} mese
- * @returns
- */
+// Converts months from number to letters
 function convertiMesi(mese) {
     if (mese == 1) mese = "gennaio";
     if (mese == 2) mese = "febbraio";

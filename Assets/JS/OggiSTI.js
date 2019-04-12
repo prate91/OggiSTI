@@ -79,7 +79,7 @@ $(document).ready(function () {
 
     // Built events tables
 
-    var url = "../Api/Select/extractEvents.php"
+    var url = "../Api/extractEvents.php"
     $.getJSON(url, { "state": state }, function (result) {
         $.each(result, function (index, item) {
             if (state == "Tutti") {
@@ -363,38 +363,6 @@ $(document).ready(function () {
         $('#formEngTitle').removeClass("hidden");
         $('#formEngAbstract').removeClass("hidden");
         $('#formEngDescription').removeClass("hidden");
-    });
-
-    //al click sul bottone del form
-    $("#salva").click(function () {
-
-        //associo variabili
-        var eventId = $("#eventId").val();
-        var eventDate = $("#eventDate").val();
-        var itaTitle = $("#itaTitle").val();
-        var itaAbstract = $("#itaAbstract").val();
-
-        //chiamata ajax
-        $.ajax({
-
-            //imposto il tipo di invio dati (GET O POST)
-            type: "POST",
-
-            //Dove devo inviare i dati recuperati dal form?
-            url: "../Api/Update/saveEvent.php",
-
-            //Quali dati devo inviare?
-            data: "eventId=" + eventId + "&eventDate=" + eventDate + "&itaTitle=" + itaTitle + "&itaAbstract=" + itaAbstract,
-            dataType: "html",
-
-            //Inizio visualizzazione errori
-            success: function (msg) {
-                $("#risultato").html(msg); // messaggio di avvenuta aggiunta valori al db (preso dal file risultato_aggiunta.php) potete impostare anche un alert("Aggiunto, grazie!");
-            },
-            error: function () {
-                alert("Chiamata fallita, si prega di riprovare..."); //sempre meglio impostare una callback in caso di fallimento
-            }
-        });
     });
 
 

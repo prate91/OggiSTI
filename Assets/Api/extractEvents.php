@@ -37,16 +37,16 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__ . '/../../PHP/OggiSTI_sessionSet.php';
-require_once __DIR__ . '/../Utils/functions.php';
+require("functions.php");
+include '../PHP/OggiSTI_sessionSet.php';
 
 $tableFields = array(
-	'Id',
-	'ItaTitle',
-	'Date',
-	'Editors',
-	'State',
-	'Saved'
+		'Id',
+		'ItaTitle',
+		'Date',
+        'Editors',
+		'State',
+		'Saved'
 );
 
 $publicatedTableFields = array(
@@ -59,10 +59,10 @@ $publicatedTableFields = array(
 );
 
 $allTableFiels = array(
-	'Id',
-	'ItaTitle',
-	'Date',
-	'Editors',
+    'Id',
+    'ItaTitle',
+    'Date',
+    'Editors',
 	'State',
 	'Views',
 	'Fb'
@@ -71,10 +71,12 @@ $allTableFiels = array(
 /**
  *  Control the state, taken from url, an execute the right query
  */
-if (isset($_GET['state'])) {
+if(isset($_GET['state']))
+{
 	$state = $_GET['state'];
 	$sql = "";
-	switch ($state) {
+	switch($state)
+	{
 		case 'Salvato':
 			$sql = "SELECT Id, ItaTitle, Date, Editors, State, Saved FROM editing_events WHERE Saved=$userId";
 			echo loadDataTables($sql, $tableFields, "no");
@@ -100,7 +102,9 @@ if (isset($_GET['state'])) {
 			exit(1);
 	}
 
-} else {
+}
+else
+{
 	echo json_encode(array("parametro mancante"));
 }
 

@@ -4,16 +4,16 @@
 //
 // Project: OggiSTI
 // Package:  API OggiSTI
-// Title: Query of event
-// File: extractUserSavedEvents.php
-// Path: Assets/Api
+// Title: Get events from calendar date
+// File: getCalendarDateEvent.php
+// Path: OggiSTI/Assets/Api
 // Type: php
-// Started: 2018.10.25
+// Started: 2018.06.24
 // Author(s): Nicolò Pratelli
 // State: in use
 //
 // Version history.
-// - 2018.10.25 Nicolò
+// - 2018.06.24 Nicolò
 // First version
 //
 // ////////////////////////////////////////////////////////////////////////
@@ -35,22 +35,20 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
-require_once __DIR__ . '/../../PHP/OggiSTI_sessionSet.php';
-require_once __DIR__ . '/../Utils/functions.php';
-
-$tableFields = array(
-	'Id',
-	'ItaTitle',
-	'Date',
-	'Editors',
-	'State'
-);
+include 'tablesFields.php';
+require("functions.php");
 
 /**
- * Query to extract user saved events 
+ * it get a Date and takes from database the least dispayed event
  */
-$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE Saved=$userId ORDER BY MONTH(Date), DAY(Date)";
-echo loadDataTables($sql, $tableFields, "no");
-
-
+if(isset($_GET['eventDate']))
+{
+	$eventDate = $_GET['eventDate'];
+	$query = "SELECT * FROM published_events WHERE DAY(Date)=DAY('$eventDate') AND MONTH(Date)=MONTH('$eventDate') ORDER BY Views, DATE_FORMAT(Date, '%Y')";
+	echo loadDataTables($query, $tableFieldsAllPublicated, "yes");
+}
+else
+{
+	echo json_encode(array("status" => "error", "details" => "parametro mancante"));
+}
 ?>

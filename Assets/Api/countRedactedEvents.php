@@ -3,17 +3,17 @@
 // ////////////////////////////////////////////////////////////////////////
 //
 // Project: OggiSTI
-// Package: OggiSTI administration
-// Title: clean from empty events once a month
-// File: cleanEmptyEvents.php
-// Path: OggiSTI/assets/Api
+// Package:  API OggiSTI
+// Title: Query of event
+// File: countRedactedEvents.php
+// Path: Assets/Api
 // Type: php
-// Started: 2018-11-16
+// Started: 2018.10.256
 // Author(s): Nicolò Pratelli
 // State: in use
 //
 // Version history.
-// - 208.11.15 Nicolò
+// - 2018.10.26 Nicolò
 // First version
 //
 // ////////////////////////////////////////////////////////////////////////
@@ -34,14 +34,21 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ////////////////////////////////////////////////////////////////////////
+include '../PHP/OggiSTI_sessionSet.php';
 
-require_once __DIR__ . '/../../../../../Config/DatabaseConfig.class.php';
+require("functions.php");
 
+$tableFields = array(
+	'eventsNumber'
+);
 
-$OggiSTI_db = DatabaseConfig::OggiSTIDBConnect();
-
-$toDelete = "DELETE FROM editing_events WHERE Date = '0000-00-00' AND Editors = 0";
-$OggiSTI_db->delete($toDelete);
-
+/**
+ * This query counts how many events have been redacted by the authenticated user
+ */
+$sql = "SELECT COUNT(Id) as eventsNumber FROM (SELECT Id, Editors FROM published_events WHERE Editors LIKE '% $userId%' UNION SELECT Id, Editors FROM published_events WHERE Editors LIKE '$userId' UNION SELECT Id, Editors FROM editing_events WHERE Editors LIKE '% $userId%' UNION SELECT Id, Editors FROM editing_events WHERE Editors LIKE '$userId') AS t";
+echo loadDataTables($sql, $tableFields, "no");
+		
 
 ?>
+
+

@@ -5,15 +5,15 @@
 // Project: OggiSTI
 // Package:  API OggiSTI
 // Title: Query of event
-// File: extractEvents
-// Path: asset/api
+// File: extractNotSavedEvents.php
+// Path: Assets/Api
 // Type: php
-// Started: 2018.02.26
+// Started: 2018.10.26
 // Author(s): Nicolò Pratelli
 // State: in use
 //
 // Version history.
-// - 2018-02.26 Nicolò
+// - 2018.10.26 Nicolò
 // First version
 //
 // ////////////////////////////////////////////////////////////////////////
@@ -34,32 +34,23 @@
 // along with this program; if not, see <http://www.gnu.org/licenses/>.
 //
 // ////////////////////////////////////////////////////////////////////////
+include '../PHP/OggiSTI_sessionSet.php';
 
+require("functions.php");
 
-require_once __DIR__ . '/../Utils/tablesFields.php';
-require_once __DIR__ . '/../Utils/functions.php';
+$tableFields = array(
+		'Id',
+		'ItaTitle',
+		'Date',
+        'Editors',
+		'State'
+);
 
-
-if (isset($_GET['eventId'])) {
-	$eventId = $_GET['eventId'];
-	if (isset($_GET['stateId'])) {
-		$stateId = $_GET['stateId'];
-		$sql = "";
-		if ($stateId == "Pubblicato") {
-			$sql = "SELECT * FROM published_events WHERE Id='$eventId'";
-			echo loadDataTables($sql, $tableFieldsAllPublicated, "yes");
-		} else {
-			$sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
-			echo loadDataTables($sql, $tableFieldsAllEditing, "yes");
-		}
-	} else {
-		//echo json_encode(array("status" => "error", "details" => "parametro mancante"));
-		$sql = "SELECT * FROM editing_events WHERE Id = '$eventId'";
-		echo loadDataTables($sql, $tableFieldsAllEditing, "yes");
-	}
-} else {
-	//echo json_encode(array("status" => "error", "details" => "parametro mancante"));
-}
-
+/**
+ * Query to extract not saved events with state 'In redazione' (In editing)
+ */
+$sql = "SELECT Id, ItaTitle, Date, Editors, State FROM editing_events WHERE State='In redazione' AND Saved=0 ORDER BY MONTH(Date), DAY(Date) ";
+echo loadDataTables($sql, $tableFields, "no");
+		
 
 ?>

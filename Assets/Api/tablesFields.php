@@ -7,21 +7,21 @@ $tableFieldsAllPublicated = array(
 	'ItaTitle',
 	'EngTitle',
 	'Image',
-	'ImageCaption',
+    'ImageCaption',
 	'Icon',
 	'ItaAbstract',
 	'EngAbstract',
 	'ItaDescription',
 	'EngDescription',
-	'TextReferences',
+    'TextReferences',
 	'Keywords',
 	'Editors',
 	'Reviser_1',
 	'Reviser_2',
 	'State',
-	'Comment',
-	'Views',
-	'Fb'
+    'Comment',
+    'Views',
+    'Fb'
 );
 
 // Table for Select * in editing_events
@@ -31,20 +31,20 @@ $tableFieldsAllEditing = array(
 	'ItaTitle',
 	'EngTitle',
 	'Image',
-	'ImageCaption',
+    'ImageCaption',
 	'Icon',
 	'ItaAbstract',
 	'EngAbstract',
 	'ItaDescription',
 	'EngDescription',
-	'TextReferences',
+    'TextReferences',
 	'Keywords',
 	'Editors',
 	'Reviser_1',
 	'Reviser_2',
-	'State',
-	'Saved',
-	'Comment',
+    'State',
+    'Saved',
+    'Comment',
 	'Views'
 );
 

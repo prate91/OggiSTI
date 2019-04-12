@@ -41,9 +41,10 @@
 
 
 // include PHP files
-require_once __DIR__ . '/OggiSTI_sessionSet.php';
-require_once __DIR__ . '/OggiSTI_controlLogged.php';
-
+require("../../../../Config/OggiSTI_config_adm.php");
+include 'OggiSTI_sessionSet.php';
+include 'OggiSTI_controlLogged.php';
+    
 ?>
 
 <!DOCTYPE html><html lang='it'><head><meta charset="UTF-8">
@@ -111,7 +112,7 @@ require_once __DIR__ . '/OggiSTI_controlLogged.php';
 <div class="oggiSTI_content_amm">
 <!-- OggiSTI navbar menu -->
 <?php
-require_once __DIR__ . '/OggiSTI_navbarMenu.php';
+    include 'OggiSTI_navbarMenu.php';
 ?>
 
 <!--<div id="visualizzaCommento" class="alert alert-info">

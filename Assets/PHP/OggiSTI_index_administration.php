@@ -108,7 +108,7 @@ include 'OggiSTI_controlLogged.php';
     
 <!-- OggiSTI navbar menu -->
 <?php
-include 'OggiSTI_navbarMenu.php';
+    include 'OggiSTI_navbarMenu.php';
 ?>
    
 <div class="jumbotron">

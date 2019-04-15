@@ -276,8 +276,8 @@ function modificaInfoEvento(data_evento, titolo_ita, abstr_ita, desc_ita, riferi
 // Cleans event information in the page
 function pulisciCampi() {
     $("#oggiSTI_dataEvento").html("");
-    $("#oggiSTI_titoloEvento").html("Nessun evento oggi <br/>e nessun evento questa settimana");
-    $("#oggiSTI_descrizione_breve").html("In questo giorno e in questa settimana non è presente nessun evento. " +
+    $("#oggiSTI_titoloEvento").html("Nessun evento oggi");
+    $("#oggiSTI_descrizione_breve").html("In questo giorno non è presente nessun evento. " +
         "Se vuoi collaborare con noi visita la pagina " + "<a href='Collaborare/'>come collaborare</a>");
     $("#oggiSTI_descrizione").html("");
     $("#oggiSTI_riferimenti").html("");

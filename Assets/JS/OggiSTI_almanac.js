@@ -37,6 +37,7 @@
 //
 // ////////////////////////////////////////////////////////////////////////
 
+
 //var eventDate="";
 var panels = "";
 
@@ -57,10 +58,51 @@ function getSameDayEvents(eventId) {
                 var eventDate = item.Date;
                 var eventDateArray = eventDate.split('-');
                 var eventYear = eventDateArray[0];
-                panels += '<div><a href=?id=' + item.Id + '>' + eventYear + '<br/>' + item.ItaTitle + '</a></div>'
+                panels += '<div class="itemLateral"><a href=?id=' + item.Id + '>' + eventYear + ' - ' + item.ItaTitle + '</a></div>'
             }
         });
-        $("#oggiSTI_titoloStessoGiorno").html("Altri eventi del giorno");
+        $("#oggiSTI_titoloStessoGiorno").html("Altri eventi nello stesso giorno");
+        $("#oggiSTI_eventiLaterali").html(panels);
+    });
+
+}
+
+
+function getNearestEvent(giorno, mese, count) {
+    var ordinale = calcolaOrdinaleGiorno(giorno, mese);
+    console.log(giorno);
+    console.log(mese);
+    ordinale = ordinale + count;
+    console.log(ordinale);
+    var data = calcolaGiornoDaOrdinale(ordinale);
+    console.log(data);
+    var eventDateArray = data.split('-');
+    var eventDay = eventDateArray[0];
+    var eventMonth = eventDateArray[1];
+
+    var url = "Assets/Api/getEventsByDate.php";
+    $.getJSON(url, { "eventDay": eventDay, "eventMonth": eventMonth }, function (result) {
+        $.each(result, function (index, item) {
+            if (index == "status") {
+                // $("#oggiSTI_eventiLaterali").html(panels);
+                if (count % 2 == 0) {
+                    count = -1 * count;
+                    count = count + 1;
+                } else {
+                    count = count + 1;
+                    count = -1 * count;
+                }
+                getNearestEvent(giorno, mese, count);
+            } else {
+                var eventDate = item.Date;
+                var eventDateArray = eventDate.split('-');
+                var eventYear = eventDateArray[0];
+                var eventMonth = eventDateArray[1];
+                var eventDay = eventDateArray[2];
+                panels += '<div class="itemLateral"><a href=?id=' + item.Id + '>' + eventYear + '/' + eventMonth + '/' + eventDay + ' - ' + item.ItaTitle + '</a></div>'
+            }
+        });
+        $("#oggiSTI_titoloStessoGiorno").html("Eventi nel giorno più vicino");
         $("#oggiSTI_eventiLaterali").html(panels);
     });
 
@@ -129,6 +171,7 @@ $(document).ready(function () {
         giorno = data.getDay();
         gg = data.getDate();
         mm = (data.getMonth()) + 1;
+        numberMonth = mm;
         aaaa = data.getFullYear();
         var dataOggi = aaaa + "-" + mm + "-" + gg;
         mm = convertiMesi(mm);
@@ -142,7 +185,7 @@ $(document).ready(function () {
             if (data == 0) {
                 pulisciCampi();
                 // get the events in the nearest day
-                // ...
+                getNearestEvent(gg, numberMonth, 1);
             } else {
                 var eventDate = dataOggi;
                 var url = "Assets/Api/getTodayEvent.php";

@@ -144,6 +144,89 @@ function convertiGiorni(giorno) {
 }
 
 
+function calcolaOrdinaleGiorno(giorno, mese) {
+    ordinale = 0;
+    switch (mese) {
+        case 1:
+            return ordinale = giorno - 1;
+        case 2:
+            return ordinale = 31 + giorno - 1;
+        case 3:
+            return ordinale = 60 + giorno - 1;
+        case 4:
+            return ordinale = 91 + giorno - 1;
+        case 5:
+            return ordinale = 121 + giorno - 1;
+        case 6:
+            return ordinale = 152 + giorno - 1;
+        case 7:
+            return ordinale = 182 + giorno - 1;
+        case 8:
+            return ordinale = 213 + giorno - 1;
+        case 9:
+            return ordinale = 244 + giorno - 1;
+        case 10:
+            return ordinale = 274 + giorno - 1;
+        case 11:
+            return ordinale = 305 + giorno - 1;
+        case 12:
+            return ordinale = 335 + giorno - 1;
+    }
+}
+
+
+function calcolaGiornoDaOrdinale(ordinale) {
+    ordinale = ordinale + 1;
+    if (ordinale >= 1 && ordinale <= 31) {
+        return ordinale + "-1";
+    }
+    if (ordinale >= 32 && ordinale <= 60) {
+        ordinale = ordinale - 31;
+        return ordinale + "-2";
+    }
+    if (ordinale >= 61 && ordinale <= 91) {
+        ordinale = ordinale - 60;
+        return ordinale + "-3";
+    }
+    if (ordinale >= 92 && ordinale <= 121) {
+        ordinale = ordinale - 91;
+        return ordinale + "-4";
+    }
+    if (ordinale >= 122 && ordinale <= 152) {
+        ordinale = ordinale - 121;
+        return ordinale + "-5";
+    }
+    if (ordinale >= 153 && ordinale <= 182) {
+        ordinale = ordinale - 152;
+        return ordinale + "-6";
+    }
+    if (ordinale >= 183 && ordinale <= 213) {
+        ordinale = ordinale - 182;
+        return ordinale + "-7";
+    }
+    if (ordinale >= 214 && ordinale <= 244) {
+        ordinale = ordinale - 213;
+        return ordinale + "-8";
+    }
+    if (ordinale >= 245 && ordinale <= 274) {
+        ordinale = ordinale - 244;
+        return ordinale + "-9";
+    }
+    if (ordinale >= 275 && ordinale <= 305) {
+        ordinale = ordinale - 274;
+        return ordinale + "-10";
+    }
+    if (ordinale >= 306 && ordinale <= 335) {
+        ordinale = ordinale - 305;
+        return ordinale + "-11";
+    }
+    if (ordinale >= 336 && ordinale <= 366) {
+        ordinale = ordinale - 335;
+        return ordinale + "-12";
+    }
+}
+
+
 // Insert event information in the page
 function modificaInfoEvento(data_evento, titolo_ita, abstr_ita, desc_ita, riferimenti, redattore, revisore1, revisore2, fonteimmagine, immagine) {
     var data = new Date();

@@ -221,14 +221,27 @@
 ** *********************** */
 
 #oggiSTI_dataPicker{
-    width: 220px;
-    margin: -30px auto 0 auto;
+    width: 500px;
 }
 #oggiSTI_dataPicker input{
     display: inline;
-    width: 99px;
+    width: 400px;
 }
 #oggiSTI_dataPicker img{
+    display: inline;
+    margin: 0 0 3px 3px;
+    width: 30px;
+}
+ 
+#oggiSTI_dataLink{
+    width: 220px;
+    margin: -30px auto 0 auto;
+}
+#oggiSTI_dataLink input{
+    display: inline;
+    width: 99px;
+}
+#oggiSTI_dataLink img{
     display: inline;
     margin: 0 0 3px 3px;
     width: 30px;

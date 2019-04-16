@@ -232,7 +232,7 @@ while ($row = mysqli_fetch_row($result)) {
     <script src='../Assets/JS/datepicker-it.js'></script>
     <script src='../../Assets/Libs/Bootstrap/JS/bootstrap.js'></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
-    <script src='../../Assets/JS/calcolaPunteggio.js'></script>
+    <script src='../Assets/JS/OggiSTI_calendar.js'></script>
 
 
     <!-- Load HMR CSS styles & fonts -->
@@ -249,10 +249,10 @@ while ($row = mysqli_fetch_row($result)) {
     <script type='text/javascript' src='../../Assets/JS/HMR_CreaHTML.js'></script>
 
     <!-- Load OggiSTI standard Javascript -->
-    <script src='Assets/JS/OggiSTI_function.js'></script>
+    <script src='../Assets/JS/OggiSTI_function.js'></script>
 
     <!-- Load OggiSTI Almanac Javascript -->
-    <script src='Assets/JS/OggiSTI_almanac.js'></script>
+    <script src='../Assets/JS/OggiSTI_almanac.js'></script>
 
     <meta name="description" content="HMR.OggiSTI" />
 
@@ -287,6 +287,13 @@ while ($row = mysqli_fetch_row($result)) {
 
     <!-- Actual page content starts here ///////////////////////////////////////-->
     <div class="HMR_Content">
+
+        <h1 class="stop">Cerca un evento</h1>
+        <div id="oggiSTI_dataPicker">
+            <input class="form-control" id="oggiSTI_picker" name="oggiSTI_picker" type='text' />
+        </div>
+
+        <div id="OggiSTI_calendarEventsQuery"></div>
 
         <h1 class="stop">Calendario degli eventi pubblicati</h1>
         <?php

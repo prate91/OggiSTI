@@ -150,8 +150,8 @@ $(document).ready(function () {
             $.each(result, function (index, item) {
                 if (index == "status") {
                     pulisciCampi();
-                    // get the events in the nearest day
-                    // ...
+                    // Load home page
+                    window.location = window.location.href.split("?")[0];
                 } else {
                     modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
                     $("#oggiSTI_sopraTitolo").css("visibility", "hidden");

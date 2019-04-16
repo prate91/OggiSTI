@@ -369,7 +369,7 @@ while ($row = mysqli_fetch_row($result)) {
                 echo '</tr><tr><td>Dic&nbsp;</td>';
             }
             if ($giorniAnno[$n] > 0) {
-                echo '<td class = "cellTableEventsFull">&nbsp;&nbsp;' . $giorniAnno[$n] . '&nbsp;&nbsp;</td>';
+                echo '<td id="' . $n . '" class = "cellTableEventsFull">&nbsp;&nbsp;' . $giorniAnno[$n] . '&nbsp;&nbsp;</td>';
             } else {
                 echo '<td class = "cellTableEventsEmpty">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>';
             }

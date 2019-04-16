@@ -101,4 +101,31 @@ $(document).ready(function () {
         //$("#messaggio").html("Got change event from field");
     }, $.datepicker.regional["it"]);
 
+
+    $("#oggiSTI_visualizza_eventi").on("click", ".cellTableEventsFull", function () {
+        var dayOrdinal = $(this).attr("id");
+        var day = calcolaGiornoDaOrdinale(parseInt(dayOrdinal));
+        var eventDateArray = day.split('-');
+        var eventDay = eventDateArray[0];
+        var eventMonth = eventDateArray[1];
+        panels = "";
+        var url = "../Assets/Api/getEventsByDate.php";
+        $.getJSON(url, { "eventDay": eventDay, "eventMonth": eventMonth }, function (result) {
+            $.each(result, function (index, item) {
+                if (index == "status") {
+                    // Empty
+                } else {
+                    var eventDate = item.Date;
+                    var eventDateArray = eventDate.split('-');
+                    var eventYear = eventDateArray[0];
+                    panels += "<div>(" + eventYear + ") <a href='../?id=" + item.Id + "'>" + item.ItaTitle + "</a></div>";
+                }
+            });
+            $("#OggiSTI_calendarEventsQuery").html(panels);
+        });
+
+    });
+
+
+
 });

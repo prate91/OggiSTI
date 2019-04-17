@@ -88,10 +88,6 @@ function getNearestEvent(giorno, mese, count) {
                     count = count + 1;
                     count = -1 * count;
                 }
-                var data = calcolaGiornoDaOrdinale(ordinale);
-                var eventDateArray = data.split('-');
-                var eventDay = eventDateArray[0];
-                var eventMonth = eventDateArray[1];
                 getNearestEvent(eventDay, eventMonth, count);
             } else {
                 var eventDate = item.Date;

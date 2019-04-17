@@ -75,6 +75,8 @@ function getNearestEvent(giorno, mese, count) {
     var eventDateArray = data.split('-');
     var eventDay = eventDateArray[0];
     var eventMonth = eventDateArray[1];
+    giorno = eventDay;
+    mese = eventMonth;
 
     var url = "Assets/Api/getEventsByDate.php";
     $.getJSON(url, { "eventDay": eventDay, "eventMonth": eventMonth }, function (result) {
@@ -88,7 +90,7 @@ function getNearestEvent(giorno, mese, count) {
                     count = count + 1;
                     count = -1 * count;
                 }
-                getNearestEvent(eventDay, eventMonth, count);
+                getNearestEvent(giorno, mese, count);
             } else {
                 var eventDate = item.Date;
                 var eventDateArray = eventDate.split('-');

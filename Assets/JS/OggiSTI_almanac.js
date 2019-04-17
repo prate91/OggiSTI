@@ -69,20 +69,17 @@ function getSameDayEvents(eventId) {
 
 
 function getNearestEvent(giorno, mese, count) {
-    var ordinale = calcolaOrdinaleGiorno(giorno, mese);
+    var ordinale = calcolaOrdinaleGiorno(parseInt(giorno), parseInt(mese));
     ordinale = ordinale + count;
-    var data = calcolaGiornoDaOrdinale(ordinale);
-    var eventDateArray = data.split('-');
+    var day = calcolaGiornoDaOrdinale(ordinale);
+    var eventDateArray = day.split('-');
     var eventDay = eventDateArray[0];
     var eventMonth = eventDateArray[1];
-    giorno = eventDay;
-    mese = eventMonth;
 
     var url = "Assets/Api/getEventsByDate.php";
     $.getJSON(url, { "eventDay": eventDay, "eventMonth": eventMonth }, function (result) {
         $.each(result, function (index, item) {
             if (index == "status") {
-                // $("#oggiSTI_eventiLaterali").html(panels);
                 if (count % 2 == 0) {
                     count = -1 * count;
                     count = count + 1;

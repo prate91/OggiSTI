@@ -87,7 +87,7 @@ function getNearestEvent(giorno, mese, count) {
                     count = count + 1;
                     count = -1 * count;
                 }
-                getNearestEvent(giorno, mese, count);
+                getNearestEvent(eventDay, eventMonth, count);
             } else {
                 var eventDate = item.Date;
                 var eventDateArray = eventDate.split('-');

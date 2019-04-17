@@ -71,8 +71,8 @@ function getSameDayEvents(eventId) {
 function getNearestEvent(giorno, mese, count) {
     var ordinale = calcolaOrdinaleGiorno(parseInt(giorno), parseInt(mese));
     ordinale = ordinale + count;
-    var day = calcolaGiornoDaOrdinale(ordinale);
-    var eventDateArray = day.split('-');
+    var eventDate = calcolaGiornoDaOrdinale(ordinale);
+    var eventDateArray = eventDate.split('-');
     var eventDay = eventDateArray[0];
     var eventMonth = eventDateArray[1];
 

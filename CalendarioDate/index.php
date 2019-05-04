@@ -288,8 +288,9 @@ while ($row = mysqli_fetch_row($result)) {
     <!-- Actual page content starts here ///////////////////////////////////////-->
     <div class="HMR_Content">
 
-        <h1 class="stop">Cerca un evento</h1>
+
         <div id="oggiSTI_dataPicker">
+            <h1 class="stop">Cerca un evento</h1>
             <input class="form-control" id="oggiSTI_picker" name="oggiSTI_picker" type='text' />
         </div>
 

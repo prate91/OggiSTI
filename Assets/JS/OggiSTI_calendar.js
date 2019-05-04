@@ -119,6 +119,7 @@ $(document).ready(function () {
                     var eventDateArray = eventDate.split('-');
                     var eventYear = eventDateArray[0];
                     panels += "<div>(" + eventYear + ") <a href='../?id=" + item.Id + "'>" + item.ItaTitle + "</a></div>";
+                    $("#oggiSTI_picker").val(reformatDateToIta(eventDate));
                 }
             });
             $("#OggiSTI_calendarEventsQuery").html(panels);

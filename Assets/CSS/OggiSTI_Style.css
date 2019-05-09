@@ -226,25 +226,24 @@
     float: left;
 }
 #oggiSTI_dataPicker input{
-    display: inline;
+    display: inline-block;
     width: 175px;
 }
 #oggiSTI_dataPicker img{
-    display: inline;
+    display: inline-block;
     margin: 0 0 3px 3px;
     width: 30px;
 }
- 
 #oggiSTI_dataLink{
     width: 220px;
     margin: -30px auto 0 auto;
 }
 #oggiSTI_dataLink input{
-    display: inline;
+    display: inline-block;
     width: 99px;
 }
 #oggiSTI_dataLink img{
-    display: inline;
+    display: inline-block;
     margin: 0 0 3px 3px;
     width: 30px;
 }

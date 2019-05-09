@@ -11,12 +11,14 @@
 // State: in use
 //
 //  Version history.
-// - 2017.12.10 Nicolò Pratelli
-// Added the file and copyright information
-// - 2017.12.09 Nicolò Pratelli
-// Manage the extraction through url
 // - 2017.03.08 Nicolò Pratelli
 // First version
+// - 2017.12.09 Nicolò Pratelli
+// Manage the extraction through url
+// - 2017.12.10 Nicolò Pratelli
+// Added the file and copyright information
+// - 2019.05.04 Nicolò Pratelli
+// Changed GUI of events
 //
 // ////////////////////////////////////////////////////////////////////////
 //

@@ -78,7 +78,7 @@ $(document).ready(function () {
                         var eventDate = item.Date;
                         var eventDateArray = eventDate.split('-');
                         var eventYear = eventDateArray[0];
-                        panels += "<div>(" + eventYear + ") <a href='../?id=" + item.Id + "'>" + item.ItaTitle + "</a></div>";
+                        panels += "<div>(" + eventYear + ") <a href='../?id=" + item.Id + "' target='_blank'>" + item.ItaTitle + "</a></div>";
                         // if (count == 0) {
                         //     modificaInfoEvento(item.Date, item.ItaTitle, item.ItaAbstract, item.ItaDescription, item.TextReferences, item.Editors, item.Reviser_1, item.Reviser_2, item.ImageCaption, item.Image);
                         //     $("#oggiSTI_sopraTitolo").css("visibility", "hidden");
@@ -120,7 +120,7 @@ $(document).ready(function () {
                     var eventDate = item.Date;
                     var eventDateArray = eventDate.split('-');
                     var eventYear = eventDateArray[0];
-                    panels += "<div>(" + eventYear + ") <a href='../?id=" + item.Id + "'>" + item.ItaTitle + "</a></div>";
+                    panels += "<div>(" + eventYear + ") <a href='../?id=" + item.Id + "' target='_blank'>" + item.ItaTitle + "</a></div>";
                     $("#oggiSTI_picker").val(reformatDateToIta(eventDate));
                 }
             });

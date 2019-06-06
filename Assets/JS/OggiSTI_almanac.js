@@ -61,7 +61,7 @@ function getSameDayEvents(eventId) {
                 panels += '<div class="itemLateral"><a href=?id=' + item.Id + '>' + eventYear + ' - ' + item.ItaTitle + '</a></div>'
             }
         });
-        $("#oggiSTI_titoloStessoGiorno").html("Altri eventi nello stesso giorno");
+        $("#oggiSTI_titoloStessoGiorno").html("Nello stesso giorno");
         $("#oggiSTI_eventiLaterali").html(panels);
     });
 
@@ -99,7 +99,7 @@ function getNearestEvent(giorno, mese, count) {
                 panels += '<div class="itemLateral"><a href=?id=' + item.Id + '>' + eventYear + '/' + eventMonth + '/' + eventDay + ' - ' + item.ItaTitle + '</a></div>'
             }
         });
-        $("#oggiSTI_titoloStessoGiorno").html("Eventi nel giorno più vicino");
+        $("#oggiSTI_titoloStessoGiorno").html("Nel giorno più vicino");
         $("#oggiSTI_eventiLaterali").html(panels);
     });
 

@@ -179,14 +179,14 @@
 }
 
 #oggiSTI_dataGiorno{
-    color:black;
+    color:#202020;
     font-size:100px;
     position: relative;
     top: 30px;  
 }
 
 #oggiSTI_dataMese{
-    color:black;
+    color:#202020;
     font-size:24px;
     position: relative;
     top: 54px;
@@ -194,7 +194,7 @@
 
 #oggiSTI_titoloStessoGiorno{
     margin: auto;
-    color: #606060;
+    color: #202020;
     font-size: 16px;
 }
 
@@ -221,13 +221,14 @@
 ** *********************** */
 
 #oggiSTI_dataPicker{
-    width: 225px;
+    width: 180px;
     margin-bottom: 27px;
     float: left;
 }
 #oggiSTI_dataPicker input{
     display: inline-block;
-    width: 175px;
+    width: 99px;
+    height: 27px;
 }
 #oggiSTI_dataPicker img{
     display: inline-block;
@@ -236,8 +237,9 @@
 }
 
 #oggiSTI_dataLink{
-    width: 220px;
-    margin: -30px auto 0 auto;
+    width: 277px;
+    font-size: 24px;
+margin: 2px auto 32px auto;
 }
 #oggiSTI_dataLink input{
     display: inline-block;
@@ -251,7 +253,8 @@
 
 #OggiSTI_calendarEventsQuery{
     float: right;
-    width: 576px;
+    width: 675px;
+    margin-top: 7px;
 }
 
 
@@ -375,15 +378,43 @@
 /* -------------------- CALENDARIO DATE --------- */
 .cellTableEventsFull{
     border: 1px solid #9E9E9E;
-    background: #F293BA;
-    color:#F293BA;
+   /* background: #F293BA;
+    color:#F293BA;*/
     cursor: pointer;
     
 }
 
 .cellTableEventsFull:hover {
-   color:black;
+   color:#202020;
 }
+
+/* Palette colori per presenza eventi 
+** Per adesso sono un max di 3 eventi al giorno
+** #f293ba 7    3
+** #f39dc0 6 
+** #f4a8c7 5
+** #f5b3ce 4    2
+** #f7bed5 3
+** #f8c9dc 2
+** #f9d3e3 1    1
+*********************************/
+
+.cellTableEventsFull-3{
+    background: #f293ba;
+    color:#f293ba; 
+}
+
+.cellTableEventsFull-2{
+    background: #f5b3ce;
+    color:#f5b3ce; 
+}
+
+.cellTableEventsFull-1{
+    background: #f9d3e3;
+    color:#f9d3e3; 
+}
+
+
 
 .cellTableEventsEmpty{
     border: 1px solid #9E9E9E; 

@@ -370,7 +370,7 @@ while ($row = mysqli_fetch_row($result)) {
                 echo '</tr><tr><td>Dic&nbsp;</td>';
             }
             if ($giorniAnno[$n] > 0) {
-                echo '<td id="' . $n . '" class = "cellTableEventsFull">&nbsp;&nbsp;' . $giorniAnno[$n] . '&nbsp;&nbsp;</td>';
+                echo '<td id="' . $n . '" class = "cellTableEventsFull cellTableEventsFull-' . $giorniAnno[$n] . '">&nbsp;&nbsp;' . $giorniAnno[$n] . '&nbsp;&nbsp;</td>';
             } else {
                 echo '<td class = "cellTableEventsEmpty">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>';
             }
@@ -391,7 +391,7 @@ while ($row = mysqli_fetch_row($result)) {
             $spaceString = str_replace('<', ' <', $row["ItaTitle"]);
             $doubleSpace = strip_tags($spaceString);
             $singleSpace = str_replace('  ', ' ', $doubleSpace);
-            echo formatDatemmddyyyy($row["Date"]) . " <a href='../?id=" . $row["Id"] . "'>" . $singleSpace . "</a>";
+            echo formatDatemmddyyyy($row["Date"]) . " <a href='../?id=" . $row["Id"] . "' target='_blank'>" . $singleSpace . "</a>";
             if ($row["Fb"] == 1) {
                 echo ' <img class="fbIcon" src="../Assets/Img/iconFacebook.png" alt="FB Icon">';
             }
